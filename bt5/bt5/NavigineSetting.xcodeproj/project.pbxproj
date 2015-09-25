@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C3458A2F1A0C368500D24D2C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3458A2E1A0C368500D24D2C /* MainViewController.m */; };
+		C3458A321A0CE6AB00D24D2C /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = C3458A311A0CE6AB00D24D2C /* UIAlertView+Blocks.m */; };
+		C348ED0F19E467290063C926 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C348ED0E19E467290063C926 /* main.m */; };
+		C348ED1219E467290063C926 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C348ED1119E467290063C926 /* AppDelegate.m */; };
+		C348ED1519E467290063C926 /* bt5.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C348ED1319E467290063C926 /* bt5.xcdatamodeld */; };
+		C348ED1819E467290063C926 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C348ED1719E467290063C926 /* ViewController.m */; };
+		C348ED1B19E467290063C926 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C348ED1919E467290063C926 /* Main.storyboard */; };
+		C348ED1D19E467290063C926 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C348ED1C19E467290063C926 /* Images.xcassets */; };
+		C348ED3619E467750063C926 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C348ED3519E467750063C926 /* CoreLocation.framework */; };
+		C348ED3819E4677C0063C926 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C348ED3719E4677C0063C926 /* CoreBluetooth.framework */; };
+		C38CADC019E8382F00AA1D4E /* libkontakt-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C38CADBF19E8382F00AA1D4E /* libkontakt-ios-sdk.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C3458A2D1A0C368500D24D2C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		C3458A2E1A0C368500D24D2C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C3458A301A0CE6AB00D24D2C /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
+		C3458A311A0CE6AB00D24D2C /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
+		C348ED0919E467290063C926 /* NavigineSetting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigineSetting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C348ED0D19E467290063C926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C348ED0E19E467290063C926 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C348ED1019E467290063C926 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C348ED1119E467290063C926 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C348ED1419E467290063C926 /* bt5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bt5.xcdatamodel; sourceTree = "<group>"; };
+		C348ED1619E467290063C926 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C348ED1719E467290063C926 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C348ED1A19E467290063C926 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C348ED1C19E467290063C926 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C348ED2A19E467290063C926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C348ED2B19E467290063C926 /* bt5Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bt5Tests.m; sourceTree = "<group>"; };
+		C348ED3519E467750063C926 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C348ED3719E4677C0063C926 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		C38CADA119E8382F00AA1D4E /* KontaktSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KontaktSDK.h; sourceTree = "<group>"; };
+		C38CADA219E8382F00AA1D4E /* KTKAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKAction.h; sourceTree = "<group>"; };
+		C38CADA319E8382F00AA1D4E /* KTKActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKActionManager.h; sourceTree = "<group>"; };
+		C38CADA419E8382F00AA1D4E /* KTKBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKBeacon.h; sourceTree = "<group>"; };
+		C38CADA519E8382F00AA1D4E /* KTKBeaconDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKBeaconDevice.h; sourceTree = "<group>"; };
+		C38CADA619E8382F00AA1D4E /* KTKBeaconDeviceV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKBeaconDeviceV2.h; sourceTree = "<group>"; };
+		C38CADA719E8382F00AA1D4E /* KTKBeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKBeaconManager.h; sourceTree = "<group>"; };
+		C38CADA819E8382F00AA1D4E /* KTKBluetoothDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKBluetoothDevice.h; sourceTree = "<group>"; };
+		C38CADA919E8382F00AA1D4E /* KTKBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKBluetoothManager.h; sourceTree = "<group>"; };
+		C38CADAA19E8382F00AA1D4E /* KTKCharacteristicDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKCharacteristicDescriptor.h; sourceTree = "<group>"; };
+		C38CADAB19E8382F00AA1D4E /* KTKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKClient.h; sourceTree = "<group>"; };
+		C38CADAC19E8382F00AA1D4E /* KTKCompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKCompany.h; sourceTree = "<group>"; };
+		C38CADAD19E8382F00AA1D4E /* KTKConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKConverter.h; sourceTree = "<group>"; };
+		C38CADAE19E8382F00AA1D4E /* KTKDataTransferObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKDataTransferObject.h; sourceTree = "<group>"; };
+		C38CADAF19E8382F00AA1D4E /* KTKDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKDescriptor.h; sourceTree = "<group>"; };
+		C38CADB019E8382F00AA1D4E /* KTKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKError.h; sourceTree = "<group>"; };
+		C38CADB119E8382F00AA1D4E /* KTKFirmware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKFirmware.h; sourceTree = "<group>"; };
+		C38CADB219E8382F00AA1D4E /* KTKHexConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKHexConverter.h; sourceTree = "<group>"; };
+		C38CADB319E8382F00AA1D4E /* KTKLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKLocationManager.h; sourceTree = "<group>"; };
+		C38CADB419E8382F00AA1D4E /* KTKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKManager.h; sourceTree = "<group>"; };
+		C38CADB519E8382F00AA1D4E /* KTKNumberConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKNumberConverter.h; sourceTree = "<group>"; };
+		C38CADB619E8382F00AA1D4E /* KTKNumberDiscreteConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKNumberDiscreteConverter.h; sourceTree = "<group>"; };
+		C38CADB719E8382F00AA1D4E /* KTKNumberLinearConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKNumberLinearConverter.h; sourceTree = "<group>"; };
+		C38CADB819E8382F00AA1D4E /* KTKRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKRegion.h; sourceTree = "<group>"; };
+		C38CADB919E8382F00AA1D4E /* KTKServiceDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKServiceDescriptor.h; sourceTree = "<group>"; };
+		C38CADBA19E8382F00AA1D4E /* KTKStringConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKStringConverter.h; sourceTree = "<group>"; };
+		C38CADBB19E8382F00AA1D4E /* KTKSubordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKSubordinate.h; sourceTree = "<group>"; };
+		C38CADBC19E8382F00AA1D4E /* KTKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKUser.h; sourceTree = "<group>"; };
+		C38CADBD19E8382F00AA1D4E /* KTKUUIDConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKUUIDConverter.h; sourceTree = "<group>"; };
+		C38CADBE19E8382F00AA1D4E /* KTKVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKVenue.h; sourceTree = "<group>"; };
+		C38CADBF19E8382F00AA1D4E /* libkontakt-ios-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libkontakt-ios-sdk.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C348ED0619E467280063C926 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C38CADC019E8382F00AA1D4E /* libkontakt-ios-sdk.a in Frameworks */,
+				C348ED3819E4677C0063C926 /* CoreBluetooth.framework in Frameworks */,
+				C348ED3619E467750063C926 /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C348ED0019E467280063C926 = {
+			isa = PBXGroup;
+			children = (
+				C38CADA019E8382F00AA1D4E /* kontakt-ios-sdk */,
+				C38CADBF19E8382F00AA1D4E /* libkontakt-ios-sdk.a */,
+				C348ED3719E4677C0063C926 /* CoreBluetooth.framework */,
+				C348ED3519E467750063C926 /* CoreLocation.framework */,
+				C348ED0B19E467290063C926 /* bt5 */,
+				C348ED2819E467290063C926 /* bt5Tests */,
+				C348ED0A19E467290063C926 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C348ED0A19E467290063C926 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C348ED0919E467290063C926 /* NavigineSetting.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C348ED0B19E467290063C926 /* bt5 */ = {
+			isa = PBXGroup;
+			children = (
+				C3458A301A0CE6AB00D24D2C /* UIAlertView+Blocks.h */,
+				C3458A311A0CE6AB00D24D2C /* UIAlertView+Blocks.m */,
+				C348ED1019E467290063C926 /* AppDelegate.h */,
+				C348ED1119E467290063C926 /* AppDelegate.m */,
+				C348ED1619E467290063C926 /* ViewController.h */,
+				C348ED1719E467290063C926 /* ViewController.m */,
+				C348ED1919E467290063C926 /* Main.storyboard */,
+				C348ED1C19E467290063C926 /* Images.xcassets */,
+				C348ED1319E467290063C926 /* bt5.xcdatamodeld */,
+				C348ED0C19E467290063C926 /* Supporting Files */,
+				C3458A2D1A0C368500D24D2C /* MainViewController.h */,
+				C3458A2E1A0C368500D24D2C /* MainViewController.m */,
+			);
+			path = bt5;
+			sourceTree = "<group>";
+		};
+		C348ED0C19E467290063C926 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C348ED0D19E467290063C926 /* Info.plist */,
+				C348ED0E19E467290063C926 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C348ED2819E467290063C926 /* bt5Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C348ED2B19E467290063C926 /* bt5Tests.m */,
+				C348ED2919E467290063C926 /* Supporting Files */,
+			);
+			path = bt5Tests;
+			sourceTree = "<group>";
+		};
+		C348ED2919E467290063C926 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C348ED2A19E467290063C926 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C38CADA019E8382F00AA1D4E /* kontakt-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				C38CADA119E8382F00AA1D4E /* KontaktSDK.h */,
+				C38CADA219E8382F00AA1D4E /* KTKAction.h */,
+				C38CADA319E8382F00AA1D4E /* KTKActionManager.h */,
+				C38CADA419E8382F00AA1D4E /* KTKBeacon.h */,
+				C38CADA519E8382F00AA1D4E /* KTKBeaconDevice.h */,
+				C38CADA619E8382F00AA1D4E /* KTKBeaconDeviceV2.h */,
+				C38CADA719E8382F00AA1D4E /* KTKBeaconManager.h */,
+				C38CADA819E8382F00AA1D4E /* KTKBluetoothDevice.h */,
+				C38CADA919E8382F00AA1D4E /* KTKBluetoothManager.h */,
+				C38CADAA19E8382F00AA1D4E /* KTKCharacteristicDescriptor.h */,
+				C38CADAB19E8382F00AA1D4E /* KTKClient.h */,
+				C38CADAC19E8382F00AA1D4E /* KTKCompany.h */,
+				C38CADAD19E8382F00AA1D4E /* KTKConverter.h */,
+				C38CADAE19E8382F00AA1D4E /* KTKDataTransferObject.h */,
+				C38CADAF19E8382F00AA1D4E /* KTKDescriptor.h */,
+				C38CADB019E8382F00AA1D4E /* KTKError.h */,
+				C38CADB119E8382F00AA1D4E /* KTKFirmware.h */,
+				C38CADB219E8382F00AA1D4E /* KTKHexConverter.h */,
+				C38CADB319E8382F00AA1D4E /* KTKLocationManager.h */,
+				C38CADB419E8382F00AA1D4E /* KTKManager.h */,
+				C38CADB519E8382F00AA1D4E /* KTKNumberConverter.h */,
+				C38CADB619E8382F00AA1D4E /* KTKNumberDiscreteConverter.h */,
+				C38CADB719E8382F00AA1D4E /* KTKNumberLinearConverter.h */,
+				C38CADB819E8382F00AA1D4E /* KTKRegion.h */,
+				C38CADB919E8382F00AA1D4E /* KTKServiceDescriptor.h */,
+				C38CADBA19E8382F00AA1D4E /* KTKStringConverter.h */,
+				C38CADBB19E8382F00AA1D4E /* KTKSubordinate.h */,
+				C38CADBC19E8382F00AA1D4E /* KTKUser.h */,
+				C38CADBD19E8382F00AA1D4E /* KTKUUIDConverter.h */,
+				C38CADBE19E8382F00AA1D4E /* KTKVenue.h */,
+			);
+			path = "kontakt-ios-sdk";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C348ED0819E467280063C926 /* NavigineSetting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C348ED2F19E467290063C926 /* Build configuration list for PBXNativeTarget "NavigineSetting" */;
+			buildPhases = (
+				C348ED0519E467280063C926 /* Sources */,
+				C348ED0619E467280063C926 /* Frameworks */,
+				C348ED0719E467280063C926 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NavigineSetting;
+			productName = bt5;
+			productReference = C348ED0919E467290063C926 /* NavigineSetting.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C348ED0119E467280063C926 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = Navigine;
+				TargetAttributes = {
+					C348ED0819E467280063C926 = {
+						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = 9L9SSEDTLA;
+					};
+				};
+			};
+			buildConfigurationList = C348ED0419E467280063C926 /* Build configuration list for PBXProject "NavigineSetting" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C348ED0019E467280063C926;
+			productRefGroup = C348ED0A19E467290063C926 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C348ED0819E467280063C926 /* NavigineSetting */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C348ED0719E467280063C926 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C348ED1B19E467290063C926 /* Main.storyboard in Resources */,
+				C348ED1D19E467290063C926 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C348ED0519E467280063C926 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C348ED1519E467290063C926 /* bt5.xcdatamodeld in Sources */,
+				C348ED1219E467290063C926 /* AppDelegate.m in Sources */,
+				C348ED1819E467290063C926 /* ViewController.m in Sources */,
+				C3458A321A0CE6AB00D24D2C /* UIAlertView+Blocks.m in Sources */,
+				C3458A2F1A0C368500D24D2C /* MainViewController.m in Sources */,
+				C348ED0F19E467290063C926 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C348ED1919E467290063C926 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C348ED1A19E467290063C926 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C348ED2D19E467290063C926 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "f0df16b3-f50f-432e-a572-484934cec78a";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C348ED2E19E467290063C926 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "f0df16b3-f50f-432e-a572-484934cec78a";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C348ED3019E467290063C926 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
+				INFOPLIST_FILE = bt5/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = NavigineSetting;
+				PROVISIONING_PROFILE = "f0df16b3-f50f-432e-a572-484934cec78a";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C348ED3119E467290063C926 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pavel Tychinin (VQ24B66RK8)";
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
+				INFOPLIST_FILE = bt5/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = NavigineSetting;
+				PROVISIONING_PROFILE = "f0df16b3-f50f-432e-a572-484934cec78a";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C348ED0419E467280063C926 /* Build configuration list for PBXProject "NavigineSetting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C348ED2D19E467290063C926 /* Debug */,
+				C348ED2E19E467290063C926 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C348ED2F19E467290063C926 /* Build configuration list for PBXNativeTarget "NavigineSetting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C348ED3019E467290063C926 /* Debug */,
+				C348ED3119E467290063C926 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C348ED1319E467290063C926 /* bt5.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C348ED1419E467290063C926 /* bt5.xcdatamodel */,
+			);
+			currentVersion = C348ED1419E467290063C926 /* bt5.xcdatamodel */;
+			path = bt5.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = C348ED0119E467280063C926 /* Project object */;
+}
