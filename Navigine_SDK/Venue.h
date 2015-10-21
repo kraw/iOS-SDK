@@ -25,7 +25,8 @@
 @property(nonatomic, strong) NSNumber *ky;
 @property(nonatomic, strong) NSString *image;     // url path to image of venue content
 @property(nonatomic, strong) NSString *phone;     // phone number of venue
-@property(nonatomic, strong) NSString *descript;  // other info about venue
+@property(nonatomic, strong) NSString *descriptionEn;  // other info about venue
+@property(nonatomic, strong) NSString *descriptionRu;  // other info about venue
 @property(nonatomic, assign) NSInteger category;
 
 @end

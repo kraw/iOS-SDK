@@ -3,7 +3,7 @@
 //  NavigineSDK
 //
 //  Created by Pavel Tychinin on 22.09.14.
-//  Copyright (c) 2014 Navigine. All rights reserved.
+//  Copyright (c) 2015 Navigine. All rights reserved.
 //
 #import <CoreGraphics/CGGeometry.h>
 
@@ -27,8 +27,10 @@ typedef NS_ENUM(NSInteger, NCBluetoothState) {
 /**
  *  Structure with results of Navigation
  */
-typedef struct _NavigationResults
-{
+typedef struct _NavigationResults{
+  double outStepLength;  // delete before deploy
+  int    outStepCounter; // delete before deploy
+  
   int    outLocation;    // location id of your position
   int    outSubLocation; // sublocation id of your position
   double X;              // X coordinate of your position (m).
@@ -216,7 +218,7 @@ typedef struct _NavigationResults
  *
  *  @return error (0 if ok)
  */
-- (NSDictionary *) indexToIdDictionary: (NSError * __autoreleasing *)error;
+- (NSArray *) arrayWithSublocationsId: (NSError * __autoreleasing *)error;
 /**
  *  Function is used for getting width and height
  *
@@ -301,6 +303,8 @@ typedef struct _NavigationResults
 
 - (void) didRangeBeacons:(NSArray *)beacons;
 - (void) getLattitude: (double)lattitude Longitude:(double)longitude;
+
+-(void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
 @end
 
 @protocol NCBluetoothStateDelegate <NSObject>
