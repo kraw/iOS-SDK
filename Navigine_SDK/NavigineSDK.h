@@ -54,13 +54,15 @@ typedef struct _NavigationResults{
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
 
 /**
- *  Function is used to initialize NavigineCore for beacons with specific UUID
+ *  Function is used to initialize NavigineCore for beacons with specific server
  *
- *  @param uuid beacons UUID
+ *  @param server server which SDK use
+ *  @param ssl YES if ssl enable
  *
  *  @return object of super class
  */
-- (id) initWithUUIDString :(NSString *)uuid;
+- (id) initWithServer :(NSString *)server
+                  ssl :(BOOL) ssl;
 
 /**
  *  Function is used for downloading location and start navigation
