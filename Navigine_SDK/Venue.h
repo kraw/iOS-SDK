@@ -17,10 +17,6 @@
 @property(nonatomic, assign) NSInteger locationId;
 @property(nonatomic, assign) NSInteger sublocationId;  // sublocation id of venue
 @property(nonatomic, strong) NSString *name;      // name of venue
-@property(nonatomic, assign) NSInteger coordX;
-@property(nonatomic, assign) NSInteger coordY;
-@property(nonatomic, strong) NSNumber *realX;     // X coordinate of venue (m)
-@property(nonatomic, strong) NSNumber *realY;     // Y coordinate of venue (m)
 @property(nonatomic, strong) NSNumber *kx;
 @property(nonatomic, strong) NSNumber *ky;
 @property(nonatomic, strong) NSString *image;     // url path to image of venue content
