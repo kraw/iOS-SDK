@@ -1,5 +1,5 @@
-# <a href="http://navigine.com"><img src="https://navigine.com/wp-content/themes/flat-theme/assets/images/img/w_menuLogo.svg" align="left" height="60" width="180" hspace="10" vspace="5"></a> 
-# iOS SDK
+# iOS SDK <a href="http://navigine.com" align="left"><img src="https://navigine.com/wp-content/themes/flat-theme/assets/images/img/w_menuLogo.svg" align="left" height="60" width="180" hspace="10" vspace="5"></a> 
+
 
 The following sections describe the contents of the Navigine iOS SDK repository. The files in our public repository for iOS are:
 
@@ -31,7 +31,7 @@ For complete guidelines on using the Demo, refer to the [corresponding sections 
 Navigine SDK for iOS enables you to develop indoor navigation applications using the well-developed methods, classes, and functions created by the Navigine team.
 SDK and corresponding header files reside in the Navigine_SDK folder.
 
-Refer to the [navigation_sdk sub-folder](https://github.com/Navigine/Indoor-navigation-algorithms/tree/master/navigation_SDK/Navigine_iOS_SDK) for header files used for iOS indoor navigation.
+Refer to the [Navigation_SDK sub-folder](https://github.com/Navigine/iOS-SDK/tree/master/Navigine_SDK) for header files used for iOS indoor navigation.
 
 ## iBeacon Configuration Application
 
