@@ -1,5 +1,6 @@
-# iOS SDK <a href="http://navigine.com" align="left"><img src="https://navigine.com/wp-content/themes/flat-theme/assets/images/img/w_menuLogo.svg" align="left" height="60" width="180" hspace="10" vspace="5"></a> 
+<a href="http://navigine.com"><img src="https://navigine.com/wp-content/themes/flat-theme/assets/images/img/w_menuLogo.svg" align="right" height="60" width="180" hspace="10" vspace="5"></a> 
 
+# iOS SDK 
 
 The following sections describe the contents of the Navigine iOS SDK repository. The files in our public repository for iOS are:
 
