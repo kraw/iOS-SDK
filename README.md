@@ -6,7 +6,7 @@ The following sections describe the contents of the Navigine iOS SDK repository.
 
 - sources of the Navigine Demo Application for iOS
 - Navigine SDK for iOS - header files and resources
-- kontakt.io application sources for setting up iBeacon infrastructure
+- Sources of the Navigine application for setting up iBeacon (kontakt.io) infrastructure
 
 ## Useful Links
 
@@ -36,7 +36,7 @@ Refer to the [Navigation_SDK sub-folder](https://github.com/Navigine/iOS-SDK/tre
 
 ## iBeacon Configuration Application
 
-You can use the kontakt.io application for setting up your iBeacon infrastructure. Source files for this application reside in the bt5 folder.
-Besides the kontakt.io bt5 application sources, the folder contains all necessary header files, XCode project files, tests, and whatever you might need when working with the bt5 application for setting up your iBeacon infrastructure.
+You can use the Navigine application for setting up your iBeacon infrastructure. Source files for this application reside in the bt5 folder.
+Besides the bt5 application sources, the folder contains all necessary header files, XCode project files, tests, and whatever you might need when working with the bt5 application for setting up your iBeacon infrastructure.
 
 Refer to [Setting Up iBeacon Infrastructure](http://docs.navigine.com/is_ibeacon_configuration.html) for details on creating an infrastructure based on using iBeacons.
