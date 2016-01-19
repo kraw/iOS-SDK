@@ -10,6 +10,7 @@
 #import "Vertex.h"
 #import "Venue.h"
 #import "Category.h"
+#import "Location.h"
 
 
 typedef NS_ENUM(NSInteger, NCBluetoothState) {
@@ -34,7 +35,9 @@ typedef struct _NavigationResults{
   int    outLocation;    // location id of your position
   int    outSubLocation; // sublocation id of your position
   double X;              // X coordinate of your position (m).
+  double kX;
   double Y;              // Y coordinate of your position (m)
+  double kY;
   double Yaw;            // yaw angle(radians)
   double R;              // Accuracy radius
   int    ErrorCode;      // Error code. If 0 - all is good.
@@ -49,6 +52,8 @@ typedef struct _NavigationResults{
 @interface NavigineCore : NSObject{
   BOOL STRICT_MODE;
 }
+
+@property (nonatomic, strong) Location *location;
 
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
@@ -304,9 +309,10 @@ typedef struct _NavigationResults{
 
 
 - (void) didRangeBeacons:(NSArray *)beacons;
-- (void) getLattitude: (double)lattitude Longitude:(double)longitude;
+- (void) getLatitude: (double)latitude Longitude:(double)longitude;
 
--(void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
+- (void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
+- (void) yawCalculatedByIos: (double)yaw;
 @end
 
 @protocol NCBluetoothStateDelegate <NSObject>
