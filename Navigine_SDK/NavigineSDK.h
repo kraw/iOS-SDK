@@ -68,7 +68,8 @@ typedef struct _NavigationResults{
  *
  *  @return object of super class
  */
-- (id) initWithServer :(NSString *)server;
+- (id) initWithServer :(NSString *)server
+                  ssl :(BOOL) ssl;
 
 /**
  *  Function is used for downloading location and start navigation
@@ -170,6 +171,13 @@ typedef struct _NavigationResults{
  */
 - (NSArray *) makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
 
+
+- (void) addTatget:(int)id :(double)x :(double)y;
+
+- (void) cancelTargets;
+
+- (NSArray *) routePaths;
+- (NSArray *) routeDistances;
 /**
  *  Function is used for cheking pushes from web site
  */
@@ -261,16 +269,6 @@ typedef struct _NavigationResults{
  *  @param data      GPS coordinates
  */
 - (void) localToGps: (float) x :(float) y :(float) azimuth :(double) latitude :(double) longitude :(double*) data;
-
-/**
- *  Function is used for sending data to server using POST requests
- */
-- (void) startSendingPostRequests:(NSError **)error;
-
-/**
- * Function is used to stop sending data to server
- */
-- (void) stopSendingPostRequests;
 
 @end
 
