@@ -64,12 +64,10 @@ typedef struct _NavigationResults{
  *  Function is used to initialize NavigineCore for beacons with specific server
  *
  *  @param server server which SDK use
- *  @param ssl YES if ssl enable
  *
  *  @return object of super class
  */
-- (id) initWithServer :(NSString *)server
-                  ssl :(BOOL) ssl;
+- (id) initWithServer :(NSString *)server;
 
 /**
  *  Function is used for downloading location and start navigation
@@ -270,6 +268,8 @@ typedef struct _NavigationResults{
  */
 - (void) localToGps: (float) x :(float) y :(float) azimuth :(double) latitude :(double) longitude :(double*) data;
 
+- (void) startSendingPostRequests:(NSError **)error;
+- (void) stopSendingPostRequests;
 @end
 
 @protocol NavigineCoreDelegate <NSObject>
