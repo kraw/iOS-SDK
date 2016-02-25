@@ -167,7 +167,7 @@ typedef struct _NavigationResults{
  *
  *  @return NSArray object – array with Vertex structures.
  */
-- (NSArray *) makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
+//- (NSArray *) makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
 
 
 - (void) addTatget:(int)id :(double)x :(double)y;
@@ -268,7 +268,14 @@ typedef struct _NavigationResults{
  */
 - (void) localToGps: (float) x :(float) y :(float) azimuth :(double) latitude :(double) longitude :(double*) data;
 
+/**
+ *  Function is used for sending data to server using POST sequests
+ */
 - (void) startSendingPostRequests:(NSError **)error;
+
+/**
+ *  Function is used to stop sending data to server
+ */
 - (void) stopSendingPostRequests;
 @end
 
