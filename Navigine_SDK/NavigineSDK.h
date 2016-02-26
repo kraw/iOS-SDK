@@ -153,7 +153,7 @@ typedef struct _NavigationResults{
  *  @param error - error if archive invalid.
  */
 
-- (void) loadArchive: (NSString *)location error:(NSError * __autoreleasing *)error;
+- (void) loadArchive: (NSString *)location error:(NSError **)error;
 
 /**
  *  Function is used for making route from one position to other.
@@ -167,8 +167,6 @@ typedef struct _NavigationResults{
  *
  *  @return NSArray object – array with Vertex structures.
  */
-//- (NSArray *) makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
-
 
 - (void) addTatget:(int)id :(double)x :(double)y;
 
@@ -193,7 +191,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSInteger) locationId:(NSError * __autoreleasing *)error;
+- (NSInteger) locationId:(NSError **)error;
 
 /**
  *  Function is used for getting image from zip (SVG, PNG)
@@ -203,8 +201,8 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSData *) dataForSVGImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error;
-- (NSData *) dataForPNGImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error;
+- (NSData *) dataForSVGImageAtIndex:(NSInteger)index error:(NSError **)error;
+- (NSData *) dataForPNGImageAtIndex:(NSInteger)index error:(NSError **)error;
 
 /**
  *  Function is used for getting image from zip (SVG, PNG)
@@ -214,8 +212,8 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSData *) dataForSVGImageAtId:(NSInteger)id error:(NSError * __autoreleasing *)error;
-- (NSData *) dataForPNGImageAtId:(NSInteger)id error:(NSError * __autoreleasing *)error;
+- (NSData *) dataForSVGImageAtId:(NSInteger)id error:(NSError **)error;
+- (NSData *) dataForPNGImageAtId:(NSInteger)id error:(NSError **)error;
 
 /**
  *  Function is used for getting current location version
@@ -224,7 +222,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSInteger) currentVersion:(NSError * __autoreleasing *)error;
+- (NSInteger) currentVersion:(NSError **)error;
 /**
  *  Function is used for getting "index"->"id" sublocation dictionary
  *
@@ -232,7 +230,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSArray *) arrayWithSublocationsId: (NSError * __autoreleasing *)error;
+- (NSArray *) arrayWithSublocationsId: (NSError **)error;
 /**
  *  Function is used for getting width and height
  *
@@ -243,7 +241,7 @@ typedef struct _NavigationResults{
  *  @return error (0 if ok)
  */
 
-- (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error;
+- (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError **)error;
 
 /**
  *  Function is used for getting width and height of sublocation
@@ -254,7 +252,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (CGSize) sizeForImageAtId:(NSInteger)id error:(NSError * __autoreleasing *)error;
+- (CGSize) sizeForImageAtId:(NSInteger)id error:(NSError **)error;
 
 /**
  *  Function is used for converting local coordinates to GPS coordinates
