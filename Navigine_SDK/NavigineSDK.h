@@ -270,11 +270,11 @@ typedef struct _NavigationResults{
  *  Function is used for sending data to server using POST sequests
  */
 - (void) startSendingPostRequests:(NSError **)error;
-
 /**
- *  Function is used to stop sending data to server
+ * Function is used to stop sending data to server
  */
 - (void) stopSendingPostRequests;
+
 @end
 
 @protocol NavigineCoreDelegate <NSObject>
