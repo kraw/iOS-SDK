@@ -13,6 +13,7 @@
 #import "NavMacros.h"
 #import "LogFile.h"
 #import "JGActionSheet.h"
+#import "MapViewController.h"
 
 @interface LogView : UITableViewController<JGActionSheetDelegate,SWTableViewCellDelegate>
 

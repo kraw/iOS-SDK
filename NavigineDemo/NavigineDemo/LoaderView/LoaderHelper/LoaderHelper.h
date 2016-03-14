@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UserHashHelper.h"
+#import "LoginHelper.h"
 
 @protocol LoaderHelperDelegate;
 
-@interface LoaderHelper : NSObject<UserHashHelperDelegate>
+@interface LoaderHelper : NSObject<LoginHelperDelegate>
 @property (nonatomic, weak) id <LoaderHelperDelegate> loaderDelegate;
 @property (nonatomic, strong) NSString *userHash;
 @property (nonatomic ,strong) NSMutableArray *loadedLocations;
@@ -23,9 +23,10 @@
 - (void) startDownloadProcess: (LocationInfo *)location :(BOOL)forced;
 - (void) stopDownloadProcess: (LocationInfo *)location;
 - (void) startNavigine;
+- (void) stopNavigine;
 - (void) startRangePushes;
 - (void) startRangeVenues;
-- (void) setLocation :(LocationInfo *)location error:(NSError *__autoreleasing *)error;
+- (void) selectLocation :(LocationInfo *)location error:(NSError *__autoreleasing *)error;
 - (void) deleteLocation :(NSString *)locationForDelete;
 - (void) deleteAllLocations;
 - (void) refreshLocationList;

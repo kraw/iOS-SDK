@@ -29,7 +29,7 @@ DebugView *sharedConsole = nil;
   CustomTabBarViewController *slide = (CustomTabBarViewController *)self.tabBarController;
   slide.tabBar.hidden = YES;
   
-  self.title = @"DEBUG MODE";
+  self.title = @"SETTINGS MODE";
   
   [self addLeftButton];
   

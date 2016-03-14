@@ -22,11 +22,13 @@
   self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.translucent = NO;
   
-  self.title = @"SETTINGS";
+//  self.title = @"SETTINGS";
   self.navigineManager = [NavigineManager sharedManager];
   self.pushSwitcher.onTintColor = kColorFromHex(0x4AADD4);
   self.pushSwitcher.tintColor = kColorFromHex(0xBDBDBD);
-  [self addLeftButton];
+  self.calibrateViewSwitcher.onTintColor = kColorFromHex(0x4AADD4);
+  self.calibrateViewSwitcher.tintColor = kColorFromHex(0xBDBDBD);
+//  [self addLeftButton];
   
 //  self.sv.contentSize = CGSizeMake(320, 457);
   self.sv.contentSize = CGSizeMake(320, 471);
@@ -55,6 +57,11 @@
   [super viewDidAppear:animated];
 }
 
+- (void) viewWillDisappear:(BOOL)animated{
+  [super viewWillDisappear:animated];
+  [self dismissKeyboard:nil];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
   [textField resignFirstResponder];
   return YES;
@@ -69,35 +76,16 @@
   
 }
 
-- (void)addLeftButton {
-  UIImage *buttonImage = [UIImage imageNamed:@"btnMenu"];
-  UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-  leftButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width,   buttonImage.size.height);
-  UIBarButtonItem *aBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-  [leftButton addTarget:self action:@selector(menuPressed:)  forControlEvents:UIControlEventTouchUpInside];
-  
-  UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-  [negativeSpacer setWidth:-17];
-  
-  [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer,aBarButtonItem,nil] animated:YES];
-  
+- (IBAction)shouldDisplayCalibration:(id)sender {
+  UISwitch *sw = (UISwitch *)sender;
+  [self.navigineManager shouldDisplayCalibration:sw.on];
 }
 
-- (IBAction)menuPressed:(id)sender {
-  if(self.slidingPanelController.sideDisplayed == MSSPSideDisplayedLeft){
-    [self.slidingPanelController closePanel];
-  }
-  else{
-    [self.slidingPanelController openLeftPanel];
-  }
-}
 
 - (IBAction)pushSwitcherPressed:(id)sender {
   [self.navigineManager changePushNotificationAvialiability];
 }
 
 - (IBAction)usingDemoPressed:(id)sender {
-//  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://docs.navigine.com/ud_ios_demo.html"]];
 }
 @end

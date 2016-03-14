@@ -43,6 +43,7 @@
     self.images = [NSMutableArray new];
     self.sublocId = [NSArray new];
     self.floor = 0;
+    self.navigationType = NavigationTypeRegular;
     viewScale = [NSMutableArray new];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setNewLocation:)
@@ -113,6 +114,8 @@
     currentView.delegate = self;
     currentView.bounds = CGRectMake(0, 0, s.width, s.height);
     
+//    NSString *html = [NSString stringWithFormat:@"document.body.style.backgroundImage='url(%@)';", [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
+
     NSString *html = [NSString stringWithFormat:@"<img src='data:%@;base64,%@' />",mimeType, [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
     [currentView loadHTMLString:html baseURL:nil];
     [currentView setOpaque:NO];
@@ -146,10 +149,10 @@
 - (void)start{
   if(timerNavigation == nil) {
     timerNavigation = [NSTimer scheduledTimerWithTimeInterval:1.0/10
-                                                        target:self
-                                                      selector:@selector(changeCoordinates:)
-                                                      userInfo:nil
-                                                       repeats:YES];
+                                                       target:self
+                                                     selector:@selector(changeCoordinates:)
+                                                     userInfo:nil
+                                                      repeats:YES];
   }
 }
 

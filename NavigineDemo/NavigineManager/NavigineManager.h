@@ -32,11 +32,13 @@
     NSInteger locationId;
     BOOL pushEnable;
 }
-
+@property (nonatomic, strong) NSArray *superUsers;
+@property (nonatomic, assign) BOOL su;
+@property (nonatomic, strong) NSString *server;
 @property (nonatomic, weak) NSObject <NavigineManagerDelegate> *dataDelegate;
 @property (nonatomic, weak) NSObject <NavigineManagerStepsDelegate> *stepsDelegate;
 
-@property (nonatomic, strong) Location *location;
+//@property (nonatomic, strong,readonly) Location *location;
 
 @property (nonatomic, strong) NSString *userHash;
 @property (nonatomic, assign) NSInteger currentVersion;
@@ -45,10 +47,9 @@
 @property double DEFAULT_WIDTH;
 @property double DEFAULT_HEIGHT;
 
-- (NSString*) getAccelerometer;
-- (NSString*) getGyroscope;
-- (NSString*) getMagnetometer;
-- (NSString*) getOrientation;
+- (NSArray *) arrayWithAccelerometerData;
+- (NSArray *) arrayWithGyroscopeData;
+- (NSArray *) arrayWithMagnetometerData;
 
 + (id) sharedManager;
 - (void) startNavigine;
@@ -62,7 +63,7 @@
 - (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError **)error;
 - (CGSize) sizeForImageAtId:(NSInteger)id error:(NSError **)error;
 - (NSInteger) currentVersion:(NSError **)error;
-- (int) getCurrentVersion :(NSInteger *)currentVersion at :(NSString *)zipPath;
+- (NSInteger) currentVersionAt:(NSString *)path error:(NSError **)error;
 
 - (int) getConnectionStatusWriteSocket;
 - (int) getConnectionStatusReadSocket;
@@ -80,16 +81,19 @@
 - (void) regularScanEnabled: (BOOL)enabled;
 - (void) fastScanEnabled: (BOOL)enabled;
 
-- (void) startMQueue;
+- (void) startMQueue:(NSError **)error;
 - (void) stopMQueue;
-
+- (void) changeBaseServerTo:(NSString *) server;
+- (void) shouldDisplayCalibration: (BOOL)displaying;
 - (void) changePushNotificationAvialiability;
 @end
 
 @protocol NavigineManagerDelegate <NSObject>
 - (void) didRangeBeacons: (NSArray *)beacons;
+- (void) getLatitude: (double)latitude Longitude:(double)longitude;
 @end
 
 @protocol NavigineManagerStepsDelegate <NSObject>
 - (void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
+- (void) yawCalculatedByIos: (double)yaw;
 @end

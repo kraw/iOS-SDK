@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 @property (weak, nonatomic) IBOutlet UILabel *size;
 @property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *version;
 
 @end

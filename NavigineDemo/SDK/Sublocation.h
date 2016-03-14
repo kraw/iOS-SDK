@@ -10,29 +10,86 @@
 #define NavigineSDK_Sublocation_h
 
 #endif
+/**
+ *  Sublocation in your personal account
+ */
+@interface Sublocation :NSObject<NSCoding>
 
-@interface Sublocation :NSObject <NSCoding>{
-}
+/**
+ *  Sublocation id in personal account
+ */
+@property (nonatomic, assign) NSInteger id;
 
-@property (nonatomic,assign) NSInteger id;
-@property (nonatomic,copy)   NSString  *name;
+/**
+ *  Sublocation name in personal account
+ */
+@property (nonatomic, copy)   NSString  *name;
 
-@property (nonatomic,copy)   NSString  *svgFile;
-@property (nonatomic,copy)   NSString  *pngFile;
-@property (nonatomic,copy)   NSString  *jpgFile;
+/**
+ *  Name of svg image or nil if svg image not exists
+ */
+@property (nonatomic, copy)   NSString  *svgFile;
 
-@property (nonatomic,copy)   NSData    *svgImage;
-@property (nonatomic,copy)   NSData    *pngImage;
-@property (nonatomic,copy)   NSData    *jpgImage;
+/**
+ *  Name of png image or nil if png image not exists
+ */
+@property (nonatomic, copy)   NSString  *pngFile;
 
-@property (nonatomic,assign) float     width;
-@property (nonatomic,assign) float     height;
-@property (nonatomic,assign) float     azimuth;
-@property (nonatomic,assign) double    gpsLatitude;
-@property (nonatomic,assign) double    gpsLongitude;
+/**
+ *  Name of jpg image or nil if jpg image not exists
+ */
+@property (nonatomic, copy)   NSString  *jpgFile;
 
+/**
+ *  Data of svg image or nil if svg image not exists
+ */
+@property (nonatomic, copy)   NSData    *svgImage;
+
+/**
+ *  Data of png image or nil if png image not exists
+ */
+@property (nonatomic, copy)   NSData    *pngImage;
+
+/**
+ *  Data of jpg image or nil if jpg image not exists
+ */
+@property (nonatomic, copy)   NSData    *jpgImage;
+
+/**
+ *  Width of image in meters
+ */
+@property (nonatomic, assign) float     width;
+
+/**
+ *  Height of image in meters
+ */
+@property (nonatomic, assign) float     height;
+
+/**
+ *  Azimuth of image in degree
+ */
+@property (nonatomic, assign) float     azimuth;
+
+/**
+ *  Magnetic declination of image in degree
+ */
+@property (nonatomic, assign) float     magneticDeclination;
+
+/**
+ *  GPS latitude
+ */
+@property (nonatomic, assign) double    gpsLatitude;
+
+/**
+ *  GPS longitude
+ */
+@property (nonatomic, assign) double    gpsLongitude;
+
+/**
+ *  Name of archive file
+ */
 @property (nonatomic,copy) NSString    *archiveFile;
 
--(id) initWithSublocation: (Sublocation *)sublocation;
 -(NSArray *)getGpsCoordinates: (float)x :(float)y;
+-(id) initWithSublocation: (Sublocation *)sublocation;
 @end

@@ -10,7 +10,7 @@
 NSString *const kTitleLocationInfo = @"NLocationInfo";
 
 @interface UserHashHelper(){
-
+  int loaderId;
 }
 
 @property (nonatomic, strong) NavigineManager *navigineManager;
@@ -32,6 +32,7 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
 -(id)init{
   self = [super init];
   if(self){
+    loaderId = 0;
     self.navigineManager = [NavigineManager sharedManager];
     self.userHashValid = YES;
     [self getUserHashFromFile];
@@ -68,7 +69,6 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
     NSLog(@"error in fileContent");
   }
   else{
-    
     TBXML *sourceXML = [[TBXML alloc] initWithXMLString:fileContent error:&error];
     if(error || !sourceXML){
       NSLog(@"error in sourceXML %@",[error localizedDescription]);
@@ -102,8 +102,8 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
       NSString *pathToZip = [[pathToDir stringByAppendingPathComponent:newLocation.location.name] stringByAppendingString:@".zip"];
       
       if ([[NSFileManager defaultManager] fileExistsAtPath: pathToZip ]){
-        int err = [self.navigineManager getCurrentVersion:&version at:pathToZip];
-        if(err == 0)
+        version = [self.navigineManager currentVersionAt:pathToZip error:&error];
+        if(!error)
           newLocation.location.version = version;
       }
       [localLocations addObject:newLocation];
@@ -153,21 +153,21 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
   else{
     __block int loadProcess = 0;
     [self.navigineManager setUserHash:self.userHash];
-    [self.navigineManager startLocationLoader:self.userHash :location];
+    loaderId = [self.navigineManager startLocationLoader:self.userHash :location];
 
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       loadProcess = 0;
       while (loadProcess < 100) {
-        loadProcess = [self.navigineManager checkLocationLoader:0];
+        loadProcess = [self.navigineManager checkLocationLoader:loaderId];
         if(loadProcess == 255){
-          [self.navigineManager stopLocationLoader:0];
+          [self.navigineManager stopLocationLoader:loaderId];
           [self performSelectorOnMainThread:@selector(errorWhileDownloadingLocationList) withObject:nil waitUntilDone:YES];
           break;
         }
         [self performSelectorOnMainThread:@selector(changeDownloadingLocationListValue:) withObject:[NSNumber numberWithInt: loadProcess] waitUntilDone:YES];
         
         if(loadProcess == 100){
-          [self.navigineManager stopLocationLoader:0];
+          [self.navigineManager stopLocationLoader:loaderId];
           [self performSelectorOnMainThread:@selector(successfullDownloadingLocationList) withObject:nil waitUntilDone:YES];
           break;
         }

@@ -10,8 +10,11 @@
 #import "MenuTableViewCell.h"
 
 
-@interface MenuViewController ()
+@interface MenuViewController (){
 
+}
+
+@property (nonatomic, strong) NavigineManager *navigineManager;
 @end
 
 @implementation MenuViewController
@@ -31,8 +34,13 @@
   // Do any additional setup after loading the view.
   
   self.view.backgroundColor = kColorFromHex(0x14263B);
+  self.navigineManager = [NavigineManager sharedManager];
+  BOOL su = self.navigineManager.su;
   
-  menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Debug mode",@"Settings", nil];
+  if(su)
+    menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings",@"Debug mode", nil];
+  else
+    menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings", nil];
   
   [_tv selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
   [[NSNotificationCenter defaultCenter] addObserver:self

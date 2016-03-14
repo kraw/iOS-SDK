@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NavigineManager.h"
 
 @interface MenuViewController : UIViewController {
     NSMutableArray *menuArray;

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UserHashHelper.h"
+#import "LoginHelper.h"
 
 @protocol DetailLoaderViewHelperDelegate;
 

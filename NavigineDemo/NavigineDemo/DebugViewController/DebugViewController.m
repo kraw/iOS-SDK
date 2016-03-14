@@ -14,7 +14,9 @@
   __block UIWindow *statusWindow;
   UILabel *label;
 }
+@property (nonatomic, strong) NSString *server;
 @property (nonatomic, strong) NavigineManager *navigineManager;
+@property (nonatomic, strong) LoaderHelper *loaderHelper;
 @end
 
 @implementation DebugViewController
@@ -36,6 +38,7 @@
   self.frequency.returnKeyType = UIReturnKeyDone;
   
   self.navigineManager = [NavigineManager sharedManager];
+  self.loaderHelper = [LoaderHelper sharedInstance];
   self.cleanFrequency.hidden = YES;
   self.cleanIpAddress.hidden = YES;
   
@@ -69,15 +72,21 @@
 
 - (void)viewDidUnload{
   [super viewDidUnload];
-  
 }
 
 - (void)viewWillAppear:(BOOL)animated{
   [super viewWillAppear:animated];
+  [self getServerFromFile];
+  self.ipAddress.text = self.server;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+  [super viewWillDisappear:animated];
+  [self dismissKeyboard: nil];
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -86,17 +95,20 @@
 - (void)dismissKeyboard :(UITapGestureRecognizer *)gesture {
   [self.frequency resignFirstResponder];
   [self.ipAddress resignFirstResponder];
+  self.saveLogToFile.hidden = NO;
+  self.deletePreviousLog.hidden = NO;
+  self.line.hidden = NO;
 }
 
 - (IBAction)switchPressed:(id)sender {
+  NSError *error = nil;
   if (self.swith.on){
-    [self.navigineManager startMQueue];
-//    [self startTimer];
-//    [self startDataSending];
+    [self.navigineManager startMQueue:&error];
   }
   else
     [self.navigineManager stopMQueue];
-//    [self stopDataSending];
+  if(error)
+    self.swith.on = NO;
 }
 
 - (IBAction)btnCleanIpAddress:(id)sender {
@@ -307,6 +319,33 @@
   textField.right = 296.f;
   if(textField == self.ipAddress){
     self.cleanIpAddress.hidden = YES;
+    if (![self.server isEqualToString:textField.text]){
+      [UIAlertView showWithTitle:@"Are you really want to change server?"
+                         message:@"You will be logged out"
+               cancelButtonTitle:@"Cancel"
+               otherButtonTitles:[NSArray arrayWithObject:@"Yes"]
+               andTextFieldStyle:UIAlertViewStyleDefault
+                andTextFieldText:nil
+                        tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                          switch (buttonIndex) {
+                            case 0:
+                              self.ipAddress.text = self.server;
+                              break;
+                            case 1:
+                              self.server = textField.text;
+                              [self saveSereverToFile];
+                              [self.navigineManager changeBaseServerTo:textField.text];
+                              [self.loaderHelper stopNavigine];
+                              [self.loaderHelper deleteAllLocations];
+                              [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed"
+                                                                                  object:nil
+                                                                                userInfo:@{@"index": [NSIndexPath indexPathForItem:0 inSection:0]}];
+                              break;
+                            default:
+                              break;
+                          }
+                        }];
+    }
   }
   else{
     self.cleanFrequency.hidden = YES;
@@ -314,7 +353,7 @@
   return YES;
 }
 
--(void)showStatusBarMessage:(NSString *)message withColor:(UIColor *)color{
+- (void)showStatusBarMessage:(NSString *)message withColor:(UIColor *)color{
   label.textAlignment = NSTextAlignmentLeft;
   label.backgroundColor = color;
   label.textColor = kColorFromHex(0xF9F9F9);
@@ -334,11 +373,35 @@
   }];
 }
 
--(void) hideStatusBar{
+- (void) hideStatusBar{
   [UIView animateWithDuration:0.5 animations:^{
     label.bottom = statusWindow.top;
   }completion:^(BOOL finished){
     [[[UIApplication sharedApplication].delegate window] makeKeyAndVisible];
   }];
+}
+
+- (void) getServerFromFile{
+  NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+  NSString *currentLevelKey = @"server";
+  if ([preferences objectForKey:currentLevelKey]){
+    //  Get current level
+    self.server = [preferences objectForKey:currentLevelKey];
+  }
+  else{
+    self.server = @"https://api.navigine.com";
+  }
+  self.navigineManager.server = self.server;
+}
+
+- (void)saveSereverToFile{
+  NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+  NSString *currentLevelKey = @"server";
+  [preferences setValue:self.server forKey:currentLevelKey];
+  //  Save to disk
+  BOOL didSave = [preferences synchronize];
+  if (!didSave){
+    DLog(@"ERROR with saving User Hash");
+  }
 }
 @end

@@ -12,7 +12,7 @@
  *  Struсture with vertex content
  */
 @interface Vertex : NSObject
-@property (nonatomic) int subLocation;
-@property (nonatomic) double x;
-@property (nonatomic) double y;
+@property (nonatomic, assign) int subLocation;
+@property (nonatomic, assign) double x;
+@property (nonatomic, assign) double y;
 @end

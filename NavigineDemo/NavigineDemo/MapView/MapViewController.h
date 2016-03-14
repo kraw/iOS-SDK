@@ -12,9 +12,10 @@
 #import "PlaceView.h"
 #import "CustomTabBarViewController.h"
 #import "MapHelper.h"
-
+#import "DebugHelper.h"
 #import "MapPin.h"
 #import "PressPin.h"
+#import "PositionOnMap.h"
 
 typedef enum {
   DistanceInMinutes = 0,
@@ -28,9 +29,15 @@ typedef enum {
   RouteTypeFromClick
 } RouteType;
 
+typedef enum{
+  ErrorViewTypeNone = 0,
+  ErrorViewTypeNavigation,
+  ErrorViewTypeNewRoute,
+  ErrorViewTypeNoGraph
+}ErrorViewType;
 
 
-@interface MapViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, MapHelperDelegate, NavigineManagerStepsDelegate>{
+@interface MapViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, MapHelperDelegate, NavigineManagerStepsDelegate, UIGestureRecognizerDelegate>{
 }
 
 @property (nonatomic, weak) NSObject <LoaderHelperDelegate> *loaderHelperDelegate;
@@ -45,6 +52,9 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *iOSPedometer;
 @property (weak, nonatomic) IBOutlet UILabel *naviginePedometer;
 @property (weak, nonatomic) IBOutlet UIWebView *contentView;
+@property (weak, nonatomic) IBOutlet UIImageView *rotateView;
+@property (weak, nonatomic) IBOutlet UIImageView *progressBar;
+
 
 - (IBAction)zoomInTouch:(id)sender;
 - (IBAction)zoomOutTouch:(id)sender;

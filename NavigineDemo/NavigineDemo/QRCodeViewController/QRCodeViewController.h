@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserHashHelper.h"
+#import "LoginHelper.h"
+#import "NavigineManager.h"
 #import <AVFoundation/AVFoundation.h>
 
 
-@interface QRCodeViewController: UIViewController<AVCaptureMetadataOutputObjectsDelegate> {
+@interface QRCodeViewController: UIViewController<AVCaptureMetadataOutputObjectsDelegate,LoginHelperDelegate> {
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *qrImage;

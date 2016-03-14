@@ -18,7 +18,7 @@
 #import "LoaderHelper.h"
 #import "QRCodeViewController.h"
 #import "SWTableViewCell.h"
-#import "NoLocationView.h"
+//#import "NoLocationView.h"
 #import "JGActionSheet.h"
 
 @interface LoaderView : UITableViewController <UITextFieldDelegate, JGActionSheetDelegate, LoaderHelperDelegate,UIActionSheetDelegate,SWTableViewCellDelegate>{

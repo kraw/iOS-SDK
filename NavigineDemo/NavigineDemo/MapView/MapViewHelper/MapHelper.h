@@ -21,6 +21,11 @@ struct PointOnMap {
 };
 typedef struct PointOnMap PointOnMap;
 
+typedef enum {
+  NavigationTypeRegular = 0,
+  NavigationTypeLog
+} NavigationType;
+
 
 @protocol MapHelperDelegate;
 @protocol MapHelperImagesDelegate;
@@ -37,6 +42,8 @@ typedef struct PointOnMap PointOnMap;
 @property (nonatomic, strong) UIWebView *contentView;
 @property (nonatomic, strong) NSArray *sublocId;
 @property (nonatomic, assign) NSInteger floor;
+
+@property (nonatomic, assign) NavigationType navigationType;
 
 + (MapHelper *)sharedInstance;
 - (void)setNewLocation: (NSNotification *)notification;

@@ -41,7 +41,6 @@
       
       self.btnVenue = [UIButton buttonWithType:UIButtonTypeCustom];
       [self.btnVenue setImage:[UIImage imageNamed:@"elmBubbleArrow"] forState:UIControlStateNormal];
-      [self.btnVenue setImage:[UIImage imageNamed:@"elmBubbleArrow"] forState:UIControlStateHighlighted];
       [self.btnVenue sizeToFit];
       [self.mapView addSubview:self.btnVenue];
       self.btnVenue.right = bg.right;
@@ -54,13 +53,14 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (void) resizeMapPinWithZoom: (CGFloat) zoom{
+  self.center = CGPointMake(self.originalCenter.x * zoom, self.originalCenter.y * zoom);
+  self.mapView.bottom = self.top - 9.0f;
+  self.mapView.centerX = self.centerX;
 }
-*/
+
+- (void) saveMapPinSize{
+  self.originalCenter = self.center;
+}
 
 @end

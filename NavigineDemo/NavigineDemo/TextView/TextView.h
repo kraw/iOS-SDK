@@ -32,4 +32,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *txtGPS;
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 
+@property (weak, nonatomic) IBOutlet UILabel *accLabel;
+@property (weak, nonatomic) IBOutlet UILabel *magnetLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gyroLabel;
+
+
 @end

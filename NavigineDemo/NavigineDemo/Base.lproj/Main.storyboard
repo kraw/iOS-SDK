@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="lua-dl-Q7L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="lua-dl-Q7L">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Bold.otf">
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
             <string>Circe-Bold</string>
             <string>Circe-Bold</string>
             <string>Circe-Bold</string>
@@ -76,20 +67,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="2" maximumZoomScale="6" id="VXt-2y-i7d">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="A5Y-eu-D2j">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <webView contentMode="scaleToFill" id="ae3-z1-tHT">
-                                        <rect key="frame" x="17" y="240" width="240" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="456"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </webView>
                                 </subviews>
                                 <animations/>
                                 <connections>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="tfY-Pv-7RH"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="INv-OY-3T5"/>
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JfZ-6r-ghR">
@@ -160,7 +151,7 @@
                                 <color key="textColor" red="0.33725490196078434" green="0.396078431372549" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigine" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ni8-Qx-XNV">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ni8-Qx-XNV">
                                 <rect key="frame" x="20" y="466" width="284" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
@@ -168,7 +159,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNG-tq-eNr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UNG-tq-eNr">
                                 <rect key="frame" x="20" y="482" width="284" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
@@ -176,9 +167,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="shO-0A-gTH">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Svr-NI-ZFG"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -186,11 +182,12 @@
                     <connections>
                         <outlet property="btnDownFloor" destination="KYb-i1-O9v" id="GXi-I1-uRV"/>
                         <outlet property="btnUpFloor" destination="Q8B-Ri-nmO" id="od8-HN-dj6"/>
-                        <outlet property="contentView" destination="ae3-z1-tHT" id="Ccn-nC-hK1"/>
+                        <outlet property="contentView" destination="ae3-z1-tHT" id="0qw-Ps-4cw"/>
                         <outlet property="iOSPedometer" destination="UNG-tq-eNr" id="HtP-PI-1lO"/>
                         <outlet property="naviginePedometer" destination="ni8-Qx-XNV" id="1JZ-mj-H6i"/>
+                        <outlet property="progressBar" destination="shO-0A-gTH" id="fjQ-4q-6Np"/>
                         <outlet property="rotateButton" destination="Gjd-2A-wwN" id="aYH-oX-ZAi"/>
-                        <outlet property="sv" destination="VXt-2y-i7d" id="fNb-AX-8Kp"/>
+                        <outlet property="sv" destination="A5Y-eu-D2j" id="4Su-Al-1tx"/>
                         <outlet property="txtFloor" destination="7hE-im-w5i" id="wfX-Gz-Dbd"/>
                         <outlet property="zoomInBtn" destination="JfZ-6r-ghR" id="wl5-tW-lRl"/>
                         <outlet property="zoomOutBtn" destination="EGG-VH-NXI" id="lug-t5-aFW"/>
@@ -201,10 +198,10 @@
             </objects>
             <point key="canvasLocation" x="-346" y="-99"/>
         </scene>
-        <!--Debug Mode View Controller-->
+        <!--Settings Mode View Controller-->
         <scene sceneID="G36-jt-Y20">
             <objects>
-                <tabBarController id="WgH-3x-g9Z" customClass="DebugModeViewController" sceneMemberID="viewController">
+                <tabBarController id="WgH-3x-g9Z" customClass="SettingsModeViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="okU-mp-jKt"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="DXw-Ci-bFT">
@@ -216,12 +213,12 @@
                     <connections>
                         <segue destination="4hn-nd-nVy" kind="relationship" relationship="viewControllers" id="XGm-NN-whW"/>
                         <segue destination="y5J-bp-Nzv" kind="relationship" relationship="viewControllers" id="6Qw-Mv-B4f"/>
-                        <segue destination="DKv-uY-cx3" kind="relationship" relationship="viewControllers" id="84e-lU-ctN"/>
+                        <segue destination="Tdz-UM-NwT" kind="relationship" relationship="viewControllers" id="i34-7d-K0H"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M3d-Lu-vM4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-986" y="1937"/>
+            <point key="canvasLocation" x="-346" y="614"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="pIG-GQ-Sue">
@@ -287,11 +284,12 @@
                     <navigationItem key="navigationItem" title="Root View Controller" id="Jah-W1-gsl"/>
                     <connections>
                         <segue destination="wwM-c4-eeQ" kind="push" identifier="playLog" id="2XF-Lc-FAO"/>
+                        <segue destination="vXZ-lx-hvc" kind="push" identifier="toMapSegue" id="Kc6-GO-y6b"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QsP-VB-S54" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-986" y="2657"/>
+            <point key="canvasLocation" x="-256" y="1499"/>
         </scene>
         <!--Code View Controller-->
         <scene sceneID="HVM-aX-j7L">
@@ -316,12 +314,12 @@
                                         <animations/>
                                         <color key="backgroundColor" red="0.26666666666666666" green="0.33725490196078434" blue="0.41960784313725491" alpha="1" colorSpace="deviceRGB"/>
                                         <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
-                                        <state key="normal" title="User hash">
+                                        <state key="normal" title="Login/Password">
                                             <color key="titleColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="eOG-Io-1db" kind="push" identifier="userhash" id="X2l-l5-98u"/>
+                                            <segue destination="eOG-Io-1db" kind="push" identifier="userhash" animates="NO" id="X2l-l5-98u"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fGz-sr-zlw">
@@ -338,7 +336,7 @@
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content="Scan you personal QR code or identify using your hash. ">
+                                            <fragment content="Scan you personal QR code or identify using your login. ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.70588235294117641" green="0.76078431372549016" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="18" name="HelveticaNeue-Bold"/>
@@ -367,10 +365,10 @@
             </objects>
             <point key="canvasLocation" x="-386" y="-1372"/>
         </scene>
-        <!--User Hash View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="wkt-uV-O5U">
             <objects>
-                <viewController id="eOG-Io-1db" customClass="UserHashViewController" sceneMemberID="viewController">
+                <viewController id="eOG-Io-1db" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XSn-F8-FoX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -379,7 +377,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0000-0000-0000-0000" textAlignment="center" minimumFontSize="17" id="Ju1-xY-GRQ">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="e-mail" textAlignment="center" minimumFontSize="17" id="Ju1-xY-GRQ">
                                         <rect key="frame" x="64" y="40" width="192" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
@@ -391,22 +389,8 @@
                                             <outlet property="delegate" destination="eOG-Io-1db" id="uDj-vJ-Fr6"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zv1-Gz-P72">
-                                        <rect key="frame" x="64" y="104" width="192" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.29019607843137252" green="0.67843137254901964" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnDonePressed:" destination="eOG-Io-1db" eventType="touchUpInside" id="d6k-3o-4Hh"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BGO-FZ-7RT">
-                                        <rect key="frame" x="64" y="168" width="192" height="44"/>
+                                        <rect key="frame" x="64" y="266" width="192" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.82745098039215681" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -419,7 +403,7 @@
                                             <action selector="btnCancelPressed:" destination="eOG-Io-1db" eventType="touchUpInside" id="tGa-pL-sx3"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This user hash is invalid" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9ha-m2-gJq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorrect e-mail or password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9ha-m2-gJq">
                                         <rect key="frame" x="64" y="8" width="192" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
@@ -427,6 +411,42 @@
                                         <color key="textColor" red="0.82745098039215681" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" textAlignment="center" minimumFontSize="17" id="KzN-ZV-puO">
+                                        <rect key="frame" x="64" y="106" width="192" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.2666666667" green="0.33725490200000002" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="eOG-Io-1db" id="gFL-Oy-le8"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WdV-Q2-91Y">
+                                        <rect key="frame" x="64" y="224" width="192" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
+                                        <state key="normal" title="Use as public user"/>
+                                        <connections>
+                                            <action selector="publicUserPressed:" destination="eOG-Io-1db" eventType="touchUpInside" id="qOu-2M-CCg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zv1-Gz-P72">
+                                        <rect key="frame" x="64" y="172" width="192" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.29019607843137252" green="0.67843137254901964" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnDonePressed:" destination="eOG-Io-1db" eventType="touchUpInside" id="d6k-3o-4Hh"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -440,12 +460,64 @@
                         <outlet property="btnCancel" destination="BGO-FZ-7RT" id="1k5-Qd-WzL"/>
                         <outlet property="btnDone" destination="Zv1-Gz-P72" id="cfQ-Pl-7IO"/>
                         <outlet property="invalidUserHash" destination="9ha-m2-gJq" id="93H-6T-X2m"/>
-                        <outlet property="txtFieldUserHash" destination="Ju1-xY-GRQ" id="YWp-cM-l0t"/>
+                        <outlet property="txtEmail" destination="Ju1-xY-GRQ" id="5zc-Zf-Iyn"/>
+                        <outlet property="txtPasswd" destination="KzN-ZV-puO" id="UkZ-VO-tLf"/>
+                        <segue destination="ttu-2x-Urr" kind="push" identifier="noMapSegue" id="tfN-6s-jcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cHh-3i-HuX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="10" y="-1372"/>
+        </scene>
+        <!--No Map View-->
+        <scene sceneID="B5A-DO-f1B">
+            <objects>
+                <viewController id="ttu-2x-Urr" customClass="NoMapView" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tBU-xj-cpi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Open http://client.navigine.com in your desktop browser" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NPM-hd-Ok4">
+                                <rect key="frame" x="0.0" y="156" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. Go to &quot;Locations&quot; menue item" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e3d-ga-aXr">
+                                <rect key="frame" x="0.0" y="196" width="320" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. Press AddLocation button" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jFf-PH-81B">
+                                <rect key="frame" x="0.0" y="224" width="320" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4. Add map of your location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="G8P-k0-J0U">
+                                <rect key="frame" x="0.0" y="254" width="320" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8CG-Ke-rUq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BtW-k5-7aA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="424" y="-1372"/>
         </scene>
         <!--Loader View-->
         <scene sceneID="AIU-AL-f8i">
@@ -594,6 +666,28 @@
                                 <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="far-4K-Sxe">
+                                <rect key="frame" x="20" y="342" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
+                                <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Rfg-ie-HqZ">
+                                <rect key="frame" x="20" y="384" width="280" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="version" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FtM-FJ-ogW">
+                                <rect key="frame" x="228" y="342" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
+                                <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -603,6 +697,7 @@
                         <outlet property="name" destination="RPR-8T-86A" id="0sI-EG-0tH"/>
                         <outlet property="size" destination="kmK-nK-xze" id="HTh-7y-0Ia"/>
                         <outlet property="sv" destination="Ohh-Zh-sOg" id="s0o-gz-xZP"/>
+                        <outlet property="version" destination="FtM-FJ-ogW" id="cRX-cb-1wt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SFG-XF-7Fs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -716,8 +811,8 @@
                         <segue destination="Sjh-aO-OVg" kind="relationship" relationship="viewControllers" id="TGU-7O-4me"/>
                         <segue destination="lNR-79-nfS" kind="relationship" relationship="viewControllers" id="5q8-gf-JTa"/>
                         <segue destination="UXx-Wm-CQY" kind="relationship" relationship="viewControllers" id="baT-25-DjA"/>
-                        <segue destination="b3X-zI-oYS" kind="relationship" relationship="viewControllers" id="u4Y-7J-wdA"/>
-                        <segue destination="LzT-UW-jS2" kind="relationship" relationship="viewControllers" id="zdN-JS-499"/>
+                        <segue destination="1aV-gC-XDJ" kind="relationship" relationship="viewControllers" id="7f4-k4-LP9"/>
+                        <segue destination="LzT-UW-jS2" kind="relationship" relationship="viewControllers" id="OSd-jG-RcE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uEr-72-ftM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -850,7 +945,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXb-2v-dCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-986" y="1224"/>
+            <point key="canvasLocation" x="-757" y="614"/>
         </scene>
         <!--Item-->
         <scene sceneID="7gj-hH-XaB">
@@ -911,7 +1006,7 @@
                                         <animations/>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server IP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="luw-bu-d5C">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="luw-bu-d5C">
                                         <rect key="frame" x="20" y="105" width="72" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
@@ -919,8 +1014,8 @@
                                         <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5.153.44.186" textAlignment="right" minimumFontSize="17" id="5EH-xL-7cf">
-                                        <rect key="frame" x="184" y="101" width="116" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://api.navigine.com" textAlignment="right" minimumFontSize="17" id="5EH-xL-7cf">
+                                        <rect key="frame" x="74" y="101" width="226" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
@@ -1036,7 +1131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vGz-9m-uVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1425" y="2657"/>
+            <point key="canvasLocation" x="-703" y="1499"/>
         </scene>
         <!--Item 2-->
         <scene sceneID="Fle-ml-j60">
@@ -1050,67 +1145,35 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gyroscope" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LZm-0a-cK4">
-                                        <rect key="frame" x="20" y="213" width="84" height="13"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
-                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accelerometer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LI5-Rq-0eW">
-                                        <rect key="frame" x="20" y="167" width="84" height="13"/>
+                                        <rect key="frame" x="20" y="142" width="134" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Magnetometer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ChV-3l-tko">
-                                        <rect key="frame" x="20" y="190" width="84" height="13"/>
+                                        <rect key="frame" x="20" y="165" width="134" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
-                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orientation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lmY-wg-eGu">
-                                        <rect key="frame" x="20" y="144" width="69" height="13"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensors:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xi3-gy-WeD">
-                                        <rect key="frame" x="20" y="121" width="69" height="13"/>
+                                        <rect key="frame" x="20" y="121" width="75" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
-                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPS:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9oJ-zP-lpM">
-                                        <rect key="frame" x="20" y="261" width="35" height="13"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
-                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XaC-gs-2zR">
-                                        <rect key="frame" x="54" y="261" width="250" height="13"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLE devices (0):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jdf-CV-LPX">
-                                        <rect key="frame" x="20" y="284" width="244" height="15"/>
+                                        <rect key="frame" x="20" y="240" width="244" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1118,80 +1181,96 @@
                                         <rect key="frame" x="20" y="27" width="98" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
                                         <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error code: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nwu-XN-iaT">
-                                        <rect key="frame" x="20" y="53" width="75" height="13"/>
+                                        <rect key="frame" x="20" y="53" width="113" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3IC-yo-jEb">
-                                        <rect key="frame" x="20" y="75" width="48" height="13"/>
+                                        <rect key="frame" x="20" y="75" width="69" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 Sublocation: -1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uVw-XU-WSD">
-                                        <rect key="frame" x="95" y="53" width="196" height="13"/>
+                                        <rect key="frame" x="123" y="53" width="189" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
                                         <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x:0 y:0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tgd-Mu-8O8">
-                                        <rect key="frame" x="68" y="75" width="236" height="13"/>
+                                        <rect key="frame" x="95" y="75" width="209" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="15"/>
-                                        <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OQ1-vZ-wXq">
-                                        <rect key="frame" x="141" y="143" width="163" height="13"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
                                         <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z7z-6P-ez9">
-                                        <rect key="frame" x="141" y="190" width="163" height="13"/>
+                                        <rect key="frame" x="162" y="165" width="150" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nwh-er-iK4">
-                                        <rect key="frame" x="141" y="213" width="163" height="13"/>
+                                        <rect key="frame" x="162" y="188" width="150" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qbq-hf-XHX">
-                                        <rect key="frame" x="141" y="167" width="163" height="13"/>
+                                        <rect key="frame" x="162" y="142" width="150" height="13"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wxf-Q7-n5P">
-                                        <rect key="frame" x="20" y="301" width="284" height="14"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01) 0000 0000 00000000-0000-0000-0000-0000000000 -00 0" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wxf-Q7-n5P">
+                                        <rect key="frame" x="20" y="263" width="300" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="8"/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="8"/>
                                         <color key="textColor" red="0.086274509803921567" green="0.1764705882352941" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPS:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9oJ-zP-lpM">
+                                        <rect key="frame" x="20" y="219" width="48" height="13"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="15"/>
+                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XaC-gs-2zR">
+                                        <rect key="frame" x="68" y="219" width="236" height="13"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="13"/>
+                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gyroscope" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LZm-0a-cK4">
+                                        <rect key="frame" x="20" y="188" width="134" height="13"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="12"/>
+                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -1206,14 +1285,17 @@
                         <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="Hw3-2I-eoG"/>
+                    <navigationItem key="navigationItem" id="cTz-O9-eA6"/>
                     <connections>
                         <outlet property="acc" destination="Qbq-hf-XHX" id="31r-E6-KXJ"/>
-                        <outlet property="attitude" destination="OQ1-vZ-wXq" id="54a-wN-Txp"/>
+                        <outlet property="accLabel" destination="LI5-Rq-0eW" id="GT6-sN-Esw"/>
                         <outlet property="bleCount" destination="jdf-CV-LPX" id="5zk-BS-LG0"/>
                         <outlet property="bleList" destination="Wxf-Q7-n5P" id="eLk-6a-9zl"/>
                         <outlet property="buildVersion" destination="aER-0g-rII" id="lps-Rq-bvY"/>
                         <outlet property="errCode" destination="uVw-XU-WSD" id="dWQ-Sj-E55"/>
+                        <outlet property="gyroLabel" destination="LZm-0a-cK4" id="gji-WE-SWa"/>
                         <outlet property="magn" destination="z7z-6P-ez9" id="UhR-WH-Y1l"/>
+                        <outlet property="magnetLabel" destination="ChV-3l-tko" id="dvU-K4-YSj"/>
                         <outlet property="om" destination="Nwh-er-iK4" id="fNZ-gz-zgk"/>
                         <outlet property="sv" destination="bDL-EN-GOd" id="waF-bk-Fu7"/>
                         <outlet property="txtGPS" destination="XaC-gs-2zR" id="Weg-lO-cKx"/>
@@ -1222,29 +1304,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEb-Vm-YPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-605" y="2657"/>
+            <point key="canvasLocation" x="-1273" y="1582"/>
         </scene>
         <!--Item-->
-        <scene sceneID="ugU-px-zJ1">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b3X-zI-oYS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="8ow-v6-dEa"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mr9-ju-Lbu">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Tdz-UM-NwT" kind="relationship" relationship="rootViewController" id="8mQ-it-1ZO"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="snn-qo-y6l" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-757" y="540"/>
-        </scene>
-        <!--Settings View Controller-->
         <scene sceneID="dlf-kS-AaN">
             <objects>
                 <viewController id="Tdz-UM-NwT" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -1317,7 +1379,7 @@
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manuals" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ygL-NU-frd">
-                                        <rect key="frame" x="20" y="266" width="199" height="12"/>
+                                        <rect key="frame" x="20" y="310" width="199" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="14"/>
@@ -1325,7 +1387,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="RlA-Vl-QMp">
-                                        <rect key="frame" x="20" y="300" width="280" height="1"/>
+                                        <rect key="frame" x="20" y="344" width="280" height="1"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -1337,13 +1399,13 @@
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dvW-Kv-jJO">
-                                        <rect key="frame" x="20" y="372" width="280" height="1"/>
+                                        <rect key="frame" x="20" y="416" width="280" height="1"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XC0-7W-L7L">
-                                        <rect key="frame" x="20" y="322" width="276" height="30"/>
+                                        <rect key="frame" x="20" y="366" width="276" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
@@ -1372,6 +1434,22 @@
                                         <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Displaying calibrate view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O48-AX-Jej">
+                                        <rect key="frame" x="20" y="249" width="199" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
+                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="c7k-ZY-j7w">
+                                        <rect key="frame" x="247" y="243" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="shouldDisplayCalibration:" destination="Tdz-UM-NwT" eventType="valueChanged" id="LXK-r0-U7z"/>
+                                        </connections>
+                                    </switch>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
@@ -1380,8 +1458,10 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="O7y-tH-R9b"/>
                     <navigationItem key="navigationItem" id="Nka-QX-8qr"/>
                     <connections>
+                        <outlet property="calibrateViewSwitcher" destination="c7k-ZY-j7w" id="cbW-s2-bBd"/>
                         <outlet property="pushSwitcher" destination="gmk-AV-TSg" id="bN5-aA-bbq"/>
                         <outlet property="sv" destination="oB9-ht-dbM" id="eT6-xP-KHp"/>
                         <outlet property="txtNavigationFrequency" destination="5Bq-ug-iwP" id="08N-s0-g4Y"/>
@@ -1390,7 +1470,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cD2-1Q-Gz1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-293" y="540"/>
+            <point key="canvasLocation" x="176" y="1499"/>
         </scene>
         <!--Manual View-->
         <scene sceneID="fHR-KA-tzU">
@@ -1417,7 +1497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTC-Y4-WCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="147" y="540"/>
+            <point key="canvasLocation" x="176" y="2200"/>
         </scene>
         <!--Play Log View-->
         <scene sceneID="bWe-pQ-Ro8">
@@ -1437,6 +1517,11 @@
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </webView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Ypp-wO-Sg5">
+                                        <rect key="frame" x="40" y="188" width="240" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                    </imageView>
                                 </subviews>
                                 <animations/>
                                 <connections>
@@ -1530,6 +1615,7 @@
                         <outlet property="contentView" destination="4di-cE-iqI" id="NcU-I4-91a"/>
                         <outlet property="progressBar" destination="td0-qx-Hf4" id="fDt-GV-LTU"/>
                         <outlet property="rotateButton" destination="e7F-jh-cPG" id="6lw-7P-Img"/>
+                        <outlet property="rotateView" destination="Ypp-wO-Sg5" id="ld0-Ci-2BY"/>
                         <outlet property="sv" destination="uGS-KH-QpW" id="dFv-p0-AdV"/>
                         <outlet property="txtFloor" destination="WOM-uy-K6V" id="YIe-v9-dci"/>
                         <outlet property="zoomInBtn" destination="4Ue-eR-gNo" id="vbs-Cq-HZK"/>
@@ -1538,7 +1624,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="45f-05-55C" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-986" y="3446"/>
+            <point key="canvasLocation" x="-256" y="2200"/>
         </scene>
         <!--Item-->
         <scene sceneID="0Wg-iq-HJ9">
@@ -1602,7 +1688,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P5g-g2-vCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-757" y="-2019"/>
+            <point key="canvasLocation" x="-1663" y="1582"/>
         </scene>
         <!--Off View-->
         <scene sceneID="qTD-3O-TEf">
@@ -1752,14 +1838,6 @@
                                         <animations/>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="deviceRGB"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ulU-bg-AzN">
-                                        <rect key="frame" x="15" y="424" width="231" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="17"/>
-                                        <color key="textColor" red="0.31764705882352939" green="0.3411764705882353" blue="0.36862745098039218" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="tBM-sd-9qc">
                                         <rect key="frame" x="15" y="464" width="290" height="1"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1801,6 +1879,14 @@
                                             <action selector="callPressed:" destination="eaG-FC-ayt" eventType="touchUpInside" id="Ars-Ks-blR"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ulU-bg-AzN">
+                                        <rect key="frame" x="15" y="424" width="231" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="17"/>
+                                        <color key="textColor" red="0.31764705882352939" green="0.3411764705882353" blue="0.36862745098039218" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <animations/>
                                 <connections>
@@ -1830,6 +1916,26 @@
             </objects>
             <point key="canvasLocation" x="105" y="-99"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="qok-4K-973">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1aV-gC-XDJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="XIo-Xu-CV2"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cjg-AC-KvB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="DKv-uY-cx3" kind="relationship" relationship="rootViewController" id="en1-pI-ixS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8tw-hq-2Gc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1273" y="913"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ElmBluetoothOg.png" width="320" height="250"/>
@@ -1850,6 +1956,7 @@
         <image name="elmSelectedmap.png" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NQv-9T-TI4"/>
+        <segue reference="X2l-l5-98u"/>
+        <segue reference="Kc6-GO-y6b"/>
     </inferredMetricsTieBreakers>
 </document>

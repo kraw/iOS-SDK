@@ -20,11 +20,15 @@
 
 - (void)viewDidLoad{
   [super viewDidLoad];
+  self.view.backgroundColor = kColorFromHex(0x162D47);
+  self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.translucent = NO;
   refreshTimer = nil;
+  self.title = @"DEBUG MODE";
   
   self.navigineManager = [NavigineManager sharedManager];
   self.navigineManager.dataDelegate = self;
+  [self addLeftButton];
   
   self.sv.contentSize = CGSizeMake(320, 520);
   
@@ -36,7 +40,12 @@
 }
 
 
-
+- (void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  self.view.backgroundColor = kColorFromHex(0x162D47);
+  self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
+  self.navigationController.navigationBar.translucent = NO;
+}
 
 - (void)addLeftButton {
   UIImage *buttonImage = [UIImage imageNamed:@"btnMenu"];
@@ -64,59 +73,80 @@
 
 - (void) startTimer{
   if (refreshTimer==nil) {
-    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(onTimerTV) userInfo:nil repeats:YES ];
+    refreshTimer = [NSTimer scheduledTimerWithTimeInterval: .1
+                                                    target: self
+                                                  selector: @selector(onTimerTV)
+                                                  userInfo: nil
+                                                   repeats: YES];
   }
 }
 
 
 
 -(void)onTimerTV{
-  self.acc.text  = [self.navigineManager getAccelerometer];
-  self.om.text   = [self.navigineManager getGyroscope];
-  self.magn.text = [self.navigineManager getMagnetometer];
-  self.attitude.text = [self.navigineManager getOrientation];
+  NSArray *accelerometer = [self.navigineManager arrayWithAccelerometerData];
+  NSArray *gyroscope = [self.navigineManager arrayWithGyroscopeData];
+  NSArray *magnetometer = [self.navigineManager arrayWithMagnetometerData];
+  self.acc.text  = accelerometer.lastObject;
+  self.om.text   = gyroscope.lastObject;
+  self.magn.text = magnetometer.lastObject;
+  self.accLabel.text = [NSString stringWithFormat:@"Accelerometer(%zd)",accelerometer.count];
+  self.magnetLabel.text = [NSString stringWithFormat:@"Magnetometer(%zd)",magnetometer.count];
+  self.gyroLabel.text = [NSString stringWithFormat:@"Gyroscope(%zd)",gyroscope.count];
+  
   self.txtResult.text = [NSString stringWithFormat:@"x: %3.3lf y: %3.3lf",[self.navigineManager getNavigationResults].X, [self.navigineManager getNavigationResults].Y];
   self.errCode.text = [NSString stringWithFormat:@"%zd Sublocation: %zd",[self.navigineManager getNavigationResults].ErrorCode, [self.navigineManager getNavigationResults].outSubLocation];
+  
 }
 
 - (void) didRangeBeacons:(NSArray *)beacons{
-  self.bleList.height = 10.f * beacons.count;
+  self.bleList.height = 8.f * beacons.count;
   self.bleCount.text = [NSString stringWithFormat:@"BLE devices (%zd):",beacons.count];
   self.bleList.text = @"";
   int i = 0;
-  NSArray *sortedArray = [beacons sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-    CLBeacon *first = (CLBeacon*)a;
-    CLBeacon *second = (CLBeacon*)b;
+  for(NSDictionary *b in beacons){
+    NSNumber *major = b[@"major"];
+    NSNumber *minor = b[@"minor"];
+    NSString *uuid = b[@"uuid"];
+    NSNumber *rssi = b[@"rssi"];
+    NSNumber *proximity = b[@"proximity"];
     
-    if (first.rssi < second.rssi) {
-      return NSOrderedAscending;
-    }
-    else if (first.rssi > second.rssi) {
-      return NSOrderedDescending;
-    }
-    // rssi is the same
-    return NSOrderedSame;
-  }];
-  
-  if ([sortedArray count] > 0) {
-    for (id obj in sortedArray){
-//      if(i>16){
-//        [self.bleList sizeToFit];
-//        return;
-//      }
-      CLBeacon *b;
-      b = obj;
-      
-      NSString *beaconProp=[NSString stringWithFormat:@"%05d  %05d  %19@ %zd\n",[[b major] intValue],[[b minor] intValue],[[b proximityUUID] UUIDString],[b rssi]];
-      NSString *tmp = [[self.bleList.text stringByAppendingFormat:@"%02d) ",i+1] stringByAppendingString:@" "];
-      self.bleList.text = [tmp stringByAppendingString:beaconProp];
-      i++;
-    }
-//    [self.bleList sizeToFit];
+    NSString *beaconProp=[NSString stringWithFormat:@"%05d  %05d  %19@ %03zd %zd\n",major.intValue,minor.intValue,uuid,rssi.longValue,proximity.longValue];
+    NSString *tmp = [[self.bleList.text stringByAppendingFormat:@"%02d)",i+1] stringByAppendingString:@" "];
+    self.bleList.text = [tmp stringByAppendingString:beaconProp];
+    i++;
   }
+
+//  int i = 0;
+//  NSArray *sortedArray = [beacons sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+//    CLBeacon *first = (CLBeacon*)a;
+//    CLBeacon *second = (CLBeacon*)b;
+//    
+//    if (first.rssi < second.rssi) {
+//      return NSOrderedAscending;
+//    }
+//    else if (first.rssi > second.rssi) {
+//      return NSOrderedDescending;
+//    }
+//    // rssi is the same
+//    return NSOrderedSame;
+//  }];
+//  
+//  if ([sortedArray count] > 0) {
+//    for (id obj in sortedArray){
+//      CLBeacon *b;
+//      b = obj;
+//      
+//      NSString *beaconProp=[NSString stringWithFormat:@"%05d  %05d  %19@ %zd\n",[[b major] intValue],[[b minor] intValue],[[b proximityUUID] UUIDString],[b rssi]];
+//      NSString *tmp = [[self.bleList.text stringByAppendingFormat:@"%02d) ",i+1] stringByAppendingString:@" "];
+//      self.bleList.text = [tmp stringByAppendingString:beaconProp];
+//      i++;
+//    }
+//  }
 }
 
--(void)getLattitude:(double)lattitude Longitude:(double)longitude{
-  self.txtGPS.text = [NSString stringWithFormat:@"lattitude: %3.3f longitude: %3.3f",lattitude,longitude];
+- (void) getLatitude:(double)latitude Longitude:(double)longitude{
+  self.txtGPS.text = [NSString stringWithFormat:@"lat: %3.3f long: %3.3f",latitude,longitude];
 }
+
 @end

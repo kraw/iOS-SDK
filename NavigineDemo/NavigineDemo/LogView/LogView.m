@@ -15,6 +15,7 @@
 }
 @property (nonatomic, strong) NavigineManager *navigineManager;
 @property (nonatomic, strong) DebugHelper *debugHelper;
+@property (nonatomic, strong) MapHelper *mapHelper;
 
 @end
 
@@ -33,6 +34,7 @@
   [super viewDidLoad];
   self.navigineManager = [NavigineManager sharedManager];
   self.debugHelper = [DebugHelper sharedInstance];
+  self.mapHelper = [MapHelper sharedInstance];
   filelist = [NSArray array];
   logFiles = [NSMutableArray array];
   filemgr = [NSFileManager defaultManager];
@@ -150,7 +152,8 @@
     [sheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
       switch (indexPath.section) {
         case 0:
-          [self performSegueWithIdentifier:@"playLog" sender:nil];
+          [self performSegueWithIdentifier:@"toMapSegue" sender:nil];
+//          [self performSegueWithIdentifier:@"playLog" sender:nil];
           [sheet dismissAnimated:NO];
           break;
         case 1:
@@ -162,6 +165,13 @@
     }];
     
     [sheet showInView:self.navigationController.view animated:YES];
+  }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+  if ([segue.identifier hasPrefix:@"toMapSegue"]) {
+    MapViewController *mvc = (MapViewController *)segue.destinationViewController;
+    self.mapHelper.navigationType = NavigationTypeLog;
   }
 }
 

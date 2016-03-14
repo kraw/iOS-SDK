@@ -20,7 +20,7 @@
 @property (assign) BOOL isRefreshAnimating;
 
 @property (nonatomic, strong) LoaderHelper *loaderHelper;
-@property (nonatomic, strong) UserHashHelper *userHashHelper;
+@property (nonatomic, strong) LoginHelper *userHashHelper;
 @property (nonatomic, strong) NavigineManager *navigineManager;
 @end
 
@@ -46,11 +46,12 @@
   [self addRightButton];
   self.navigineManager = [NavigineManager sharedManager];
   
+  
   //initialize loader helper
   self.loaderHelper = [LoaderHelper sharedInstance];
   self.loaderHelper.loaderDelegate = self;
   
-  self.userHashHelper = [UserHashHelper sharedInstance];
+  self.userHashHelper = [LoginHelper sharedInstance];
   CustomTabBarViewController *slide = (CustomTabBarViewController *)self.tabBarController;
   
   
@@ -70,6 +71,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
   [self.loaderHelper refreshLocationList];
+  self.title = self.userHashHelper.name.uppercaseString;
   [self.tableView reloadData];
   [super viewWillAppear:animated];
 }
@@ -245,6 +247,7 @@
   [sheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
     switch (indexPath.section) {
       case 0:
+        [self.loaderHelper stopNavigine];
         [self.loaderHelper deleteAllLocations];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed"
                                                             object:nil
@@ -283,22 +286,25 @@
   locationInfo.isDownloadingNow = NO;
   locationInfo.location.version = 0;
   locationInfo.isDownloadingNow = NO;
-  
-  switch (error) {
-    case -1:
-      if(error == -1)
-        [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
-      break;
-    case -2:
-      self.userHashHelper.userHashValid = NO;
-      [self.loaderHelper deleteAllLocations];
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed"
-                                                          object:nil
-                                                        userInfo:@{@"index": [NSIndexPath indexPathForItem:0 inSection:0]}];
-      return;
-    default:
-      break;
-  }
+  [locationInfo.circle removeFromSuperlayer];
+  locationInfo.loadingProcess = 0;
+  [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
+//  switch (error) {
+//    case -1:
+//      if(error == -1)
+//        [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
+//      break;
+//    case -2:
+//      self.userHashHelper.userHashValid = NO;
+//      [self.loaderHelper deleteAllLocations];
+//      
+//      [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed"
+//                                                          object:nil
+//                                                        userInfo:@{@"index": [NSIndexPath indexPathForItem:0 inSection:0]}];
+//      return;
+//    default:
+//      break;
+//  }
   [self.tableView beginUpdates];
   [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:locationInfo.indexPathForCell] withRowAnimation:UITableViewRowAnimationNone];
   [self.tableView endUpdates];
@@ -309,7 +315,7 @@
   locationInfo.isDownloaded = YES;
   locationInfo.isDownloadingNow = NO;
   NSError *error = nil;
-  [self.loaderHelper setLocation:locationInfo error:&error];
+  [self.loaderHelper selectLocation:locationInfo error:&error];
   if(error != nil){
     isLocationSet = NO;
     locationInfo.isValidArchive = NO;
@@ -354,7 +360,7 @@
 
 - (void)setLocation :(LocationInfo *)locationInfo{
   NSError *error = nil;
-  [self.loaderHelper setLocation:locationInfo error:&error];
+  [self.loaderHelper selectLocation:locationInfo error:&error];
   
   if(error != nil){
     isLocationSet = NO;
@@ -393,11 +399,11 @@
   else{
     currentLocation.isDownloadingNow = YES;
     currentLocation.loadingProcess = 1;
-    currentLocation.circle.path=[UIBezierPath bezierPathWithArcCenter:CGPointMake(18, 18)
-                                                            radius:16.5f
-                                                        startAngle:-M_PI_2
-                                                          endAngle:-M_PI_2
-                                                         clockwise:YES].CGPath;
+    currentLocation.circle.path=[UIBezierPath bezierPathWithArcCenter: CGPointMake(18, 18)
+                                                               radius: 16.5f
+                                                           startAngle: -M_PI_2
+                                                             endAngle: -M_PI_2
+                                                            clockwise: YES].CGPath;
     LocationTableViewCell *cell = (LocationTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"cell"
                                                                                                 forIndexPath:indexPath];
     [cell.btnDownloadMap.layer addSublayer:currentLocation.circle];
@@ -430,7 +436,6 @@
 }
 
 - (void)setupRefreshControl{
-  // TODO: Programmatically inserting a UIRefreshControl
   self.refreshControl = [[UIRefreshControl alloc] init];
   
   // Setup the loading view, which will hold the moving graphics
@@ -521,7 +526,7 @@
   [self.tableView reloadData];
 }
 
--(void)locationListUpdateError:(NSInteger)error{
+- (void)locationListUpdateError:(NSInteger)error{
   [self.refreshControl endRefreshing];
   [self.tableView reloadData];
   if(error == -1)

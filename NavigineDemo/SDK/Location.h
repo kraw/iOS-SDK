@@ -6,18 +6,60 @@
 //  Copyright (c) 2015 Navigine. All rights reserved.
 //
 
+#ifndef NavigineSDK_Location_h
+#define NavigineSDK_Location_h
+
+
+#endif
+
 #import "Sublocation.h"
 
-@interface Location :NSObject <NSCoding>
-@property (nonatomic)        NSInteger      id;
-@property (nonatomic,strong) NSString       *name;
-@property (nonatomic,strong) NSString       *archiveFile;
-@property (nonatomic)        NSInteger      version;
+@interface Location :NSObject<NSCoding>
+
+/**
+ *  Location id in personal account
+ */
+@property (nonatomic,assign) NSInteger      id;
+
+/**
+ *  Location name in personal account
+ */
+@property (nonatomic,copy)   NSString       *name;
+
+/**
+ *  Name of archive file
+ */
+@property (nonatomic,copy)   NSString       *archiveFile;
+
+/**
+ *  Archive version
+ */
+@property (nonatomic,assign) NSInteger      version;
+
+/**
+ *  Array with sublocations of your location
+ */
 @property (nonatomic,strong) NSMutableArray *subLocations;
 
--(id) initWithLocation :(Location *)location;
-- (Sublocation *)getSubLocationById: (NSInteger) id;
-- (Sublocation *)getSubLocationByIndex: (NSInteger) index;
+
+- (id) initWithLocation :(Location *)location;
+/**
+ *  Function is used for getting sublocation at id or nil error
+ *
+ *  @param id 
+ *
+ *  @return Sublocation object or nil
+ */
+- (Sublocation *)subLocationAtId: (NSInteger) id;
+
+/**
+ *  Function is used for getting sublocation at index or nil error
+ *
+ *  @param index the ordinal sublocation in admin panel
+ *
+ *  @return Sublocation object or nil
+ */
+- (Sublocation *)subLocationAtIndex: (NSInteger) index;
 
 
 @end

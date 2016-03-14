@@ -16,7 +16,7 @@
 @property(nonatomic,strong) NSMutableArray *loaderArray;
 
 @property (nonatomic, strong) NavigineManager *navigineManager;
-@property (nonatomic, strong) UserHashHelper *userHashHelper;
+@property (nonatomic, strong) LoginHelper *userHashHelper;
 @property (nonatomic, strong) NSTimer *loaderTimer;
 
 @end
@@ -42,7 +42,7 @@
     self.loaderArray = [NSMutableArray new];
     self.loaderTimer = nil;
     self.navigineManager = [NavigineManager sharedManager];
-    self.userHashHelper = [UserHashHelper sharedInstance];
+    self.userHashHelper = [LoginHelper sharedInstance];
     self.userHash = self.userHashHelper.userHash;
     self.loadedLocations = self.userHashHelper.loadedLocations;
     [self.navigineManager setUserHash:self.userHash];
@@ -171,6 +171,10 @@
   [self.navigineManager startNavigine];
 }
 
+- (void) stopNavigine{
+  [self.navigineManager stopNavigine];
+}
+
 - (void) startRangePushes{
   [self.navigineManager startRangePushes];
 }
@@ -192,9 +196,7 @@
   }
 }
 
-- (void)setLocation :(LocationInfo *)location error:(NSError *__autoreleasing *)error{
-  if([self.navigineManager.location.name isEqualToString:location.location.name])
-    return;
+- (void)selectLocation :(LocationInfo *)location error:(NSError *__autoreleasing *)error{
   
   [loadArchiveLock lock];
   [self.navigineManager stopNavigine];
@@ -248,6 +250,9 @@
   if(!*error){
     location.location.version = self.navigineManager.location.version;
     location.location = [[Location alloc] initWithLocation:self.navigineManager.location];
+  }
+  else{
+    self.navigineManager.location = nil;
   }
 }
 

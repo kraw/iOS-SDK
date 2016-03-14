@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtNavigationFrequency;
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 @property (weak, nonatomic) IBOutlet UISwitch *pushSwitcher;
+@property (weak, nonatomic) IBOutlet UISwitch *calibrateViewSwitcher;
+
 - (IBAction)pushSwitcherPressed:(id)sender;
 
 - (IBAction)usingDemoPressed:(id)sender;

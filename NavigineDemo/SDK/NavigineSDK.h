@@ -10,6 +10,7 @@
 #import "Vertex.h"
 #import "Venue.h"
 #import "Category.h"
+#import "Location.h"
 
 
 typedef NS_ENUM(NSInteger, NCBluetoothState) {
@@ -34,7 +35,9 @@ typedef struct _NavigationResults{
   int    outLocation;    // location id of your position
   int    outSubLocation; // sublocation id of your position
   double X;              // X coordinate of your position (m).
+  double kX;
   double Y;              // Y coordinate of your position (m)
+  double kY;
   double Yaw;            // yaw angle(radians)
   double R;              // Accuracy radius
   int    ErrorCode;      // Error code. If 0 - all is good.
@@ -50,19 +53,21 @@ typedef struct _NavigationResults{
   BOOL STRICT_MODE;
 }
 
+@property (nonatomic, strong) Location *location;
+
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
+
++ (NavigineCore *) defaultCore;
 
 /**
  *  Function is used to initialize NavigineCore for beacons with specific server
  *
  *  @param server server which SDK use
- *  @param ssl YES if ssl enable
  *
  *  @return object of super class
  */
-- (id) initWithServer :(NSString *)server
-                  ssl :(BOOL) ssl;
+- (id) initWithServer :(NSString *)server;
 
 /**
  *  Function is used for downloading location and start navigation
@@ -148,7 +153,7 @@ typedef struct _NavigationResults{
  *  @param error - error if archive invalid.
  */
 
-- (void) loadArchive: (NSString *)location error:(NSError * __autoreleasing *)error;
+- (void) loadArchive: (NSString *)location error:(NSError **)error;
 
 /**
  *  Function is used for making route from one position to other.
@@ -162,8 +167,13 @@ typedef struct _NavigationResults{
  *
  *  @return NSArray object – array with Vertex structures.
  */
-- (NSArray *) makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
 
+- (void) addTatget:(int)id :(double)x :(double)y;
+
+- (void) cancelTargets;
+
+- (NSArray *) routePaths;
+- (NSArray *) routeDistances;
 /**
  *  Function is used for cheking pushes from web site
  */
@@ -181,7 +191,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSInteger) locationId:(NSError * __autoreleasing *)error;
+- (NSInteger) locationId:(NSError **)error;
 
 /**
  *  Function is used for getting image from zip (SVG, PNG)
@@ -191,8 +201,8 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSData *) dataForSVGImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error;
-- (NSData *) dataForPNGImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error;
+- (NSData *) dataForSVGImageAtIndex:(NSInteger)index error:(NSError **)error;
+- (NSData *) dataForPNGImageAtIndex:(NSInteger)index error:(NSError **)error;
 
 /**
  *  Function is used for getting image from zip (SVG, PNG)
@@ -202,8 +212,8 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSData *) dataForSVGImageAtId:(NSInteger)id error:(NSError * __autoreleasing *)error;
-- (NSData *) dataForPNGImageAtId:(NSInteger)id error:(NSError * __autoreleasing *)error;
+- (NSData *) dataForSVGImageAtId:(NSInteger)id error:(NSError **)error;
+- (NSData *) dataForPNGImageAtId:(NSInteger)id error:(NSError **)error;
 
 /**
  *  Function is used for getting current location version
@@ -212,7 +222,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSInteger) currentVersion:(NSError * __autoreleasing *)error;
+- (NSInteger) currentVersion:(NSError **)error;
 /**
  *  Function is used for getting "index"->"id" sublocation dictionary
  *
@@ -220,7 +230,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (NSArray *) arrayWithSublocationsId: (NSError * __autoreleasing *)error;
+- (NSArray *) arrayWithSublocationsId: (NSError **)error;
 /**
  *  Function is used for getting width and height
  *
@@ -231,7 +241,7 @@ typedef struct _NavigationResults{
  *  @return error (0 if ok)
  */
 
-- (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error;
+- (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError **)error;
 
 /**
  *  Function is used for getting width and height of sublocation
@@ -242,7 +252,7 @@ typedef struct _NavigationResults{
  *
  *  @return error (0 if ok)
  */
-- (CGSize) sizeForImageAtId:(NSInteger)id error:(NSError * __autoreleasing *)error;
+- (CGSize) sizeForImageAtId:(NSInteger)id error:(NSError **)error;
 
 /**
  *  Function is used for converting local coordinates to GPS coordinates
@@ -255,6 +265,15 @@ typedef struct _NavigationResults{
  *  @param data      GPS coordinates
  */
 - (void) localToGps: (float) x :(float) y :(float) azimuth :(double) latitude :(double) longitude :(double*) data;
+
+/**
+ *  Function is used for sending data to server using POST sequests
+ */
+- (void) startSendingPostRequests:(NSError **)error;
+/**
+ * Function is used to stop sending data to server
+ */
+- (void) stopSendingPostRequests;
 
 @end
 
@@ -304,9 +323,10 @@ typedef struct _NavigationResults{
 
 
 - (void) didRangeBeacons:(NSArray *)beacons;
-- (void) getLattitude: (double)lattitude Longitude:(double)longitude;
+- (void) getLatitude: (double)latitude Longitude:(double)longitude;
 
--(void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
+- (void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
+- (void) yawCalculatedByIos: (double)yaw;
 @end
 
 @protocol NCBluetoothStateDelegate <NSObject>

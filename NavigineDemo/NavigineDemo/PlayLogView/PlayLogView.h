@@ -13,7 +13,8 @@
 #import "MapHelper.h"
 #import "DebugHelper.h"
 #import "PlayLogHelper.h"
-
+#import "PositionOnMap.h"
+#import "MapPin.h"
 #import "PressPin.h"
 
 typedef enum {
@@ -21,13 +22,11 @@ typedef enum {
   DistanceInMeters
 } DistanceType;
 
-
 typedef enum {
   RouteTypeNone = 0,
   RouteTypeFromIcon ,
   RouteTypeFromClick
 } RouteType;
-
 
 
 @interface PlayLogView : UIViewController <UIScrollViewDelegate, MapHelperDelegate, NavigineManagerStepsDelegate>{
@@ -44,6 +43,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *txtFloor;
 @property (weak, nonatomic) IBOutlet UIImageView *progressBar;
 @property (weak, nonatomic) IBOutlet UIWebView *contentView;
+@property (weak, nonatomic) IBOutlet UIImageView *rotateView;
+
 
 - (IBAction)zoomInTouch:(id)sender;
 - (IBAction)zoomOutTouch:(id)sender;

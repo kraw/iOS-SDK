@@ -18,8 +18,8 @@
   
   self.title = @"MANUAL";
   //URL Requst Object
-  NSURLRequest *requestObj = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://docs.navigine.com/ud_ios_demo.html"]];
-  //Load the request in the UIWebView.
+  NSURLRequest *requestObj = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://api.navigine.com/iosManual/docs-ios/index.html"]];
+//  Load the request in the UIWebView.
   [self.manual loadRequest:requestObj];
   
   [self addBackButton];

@@ -58,10 +58,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
   scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0.f);
-  NSInteger newindex = floor(self.sv.contentOffset.x/self.view.width + 0.5f);
+  NSInteger newindex = floor(self.sv.contentOffset.x / self.view.width + 0.5f);
     
   if(index != newindex){
     index = newindex;
+    if (index > self.location.subLocations.count - 1) return;
     Sublocation *sublocation = self.location.subLocations[index];
     self.name.text = sublocation.name;
     self.size.text = [NSString stringWithFormat:@"%.2lfx%.2lf",sublocation.width,sublocation.height];
@@ -69,7 +70,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-  NSInteger newindex = floor(self.sv.contentOffset.x/self.view.width + 0.5f);
+  NSInteger newindex = floor(self.sv.contentOffset.x / self.view.width + 0.5f);
   [self centerImageAtIndex:newindex];
 }
 
@@ -77,7 +78,7 @@
                   willDecelerate:(BOOL)decelerate
 {
   if (!decelerate) {
-    NSInteger newindex = floor(self.sv.contentOffset.x/self.view.width + 0.5f);
+    NSInteger newindex = floor(self.sv.contentOffset.x / self.view.width + 0.5f);
     [self centerImageAtIndex:newindex];
   }
 }
@@ -94,6 +95,7 @@
     view.hidden = NO;
   }
   Sublocation *sublocation = self.location.subLocations[0];
+  self.version.text = [NSString stringWithFormat:@"%zd", self.location.version];
   self.name.text = sublocation.name;
   self.size.text = [NSString stringWithFormat:@"%.2lfx%.2lf",sublocation.width,sublocation.height];
 }
