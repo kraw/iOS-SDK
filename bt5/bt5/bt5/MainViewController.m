@@ -223,7 +223,7 @@
         error = error ?: [beacon disconnect];
       }
       dispatch_async(dispatch_get_main_queue(), ^{
-        [consoleText appendFormat:@"All visible beacons are prepared!\n---------------\nСonfigured beacons:%zd\nLocked beacons:%zd\nBeacons with incorrect password:%zd\nNot discovered beacons:%zd\nNot connected beacons:%zd\nNot authorised beacons:%zd\nBeacons with incorrect major or minor:%zd",readyBeacons.count,lockedBeacons,beaconsWithIncorrectPassword,notDiscoverededBeacons,notConnectedBeacons, notAuthorisedBeacons,beaconsWithIncorrectMajorOrMinor];
+        [consoleText appendFormat:@"All visible beacons are prepared!\n---------------\nСonfigured beacons:%zd\nLocked beacons:%zd\nBeacons with incorrect password:%zd\nNot discovered beacons:%zd\nNot connected beacons:%zd\nNot authorised beacons:%zd\nBeacons with incorrect major or minor:%zd\n",readyBeacons.count,lockedBeacons,beaconsWithIncorrectPassword,notDiscoverededBeacons,notConnectedBeacons, notAuthorisedBeacons,beaconsWithIncorrectMajorOrMinor];
         self.txtConsole.text = consoleText;
         
       });

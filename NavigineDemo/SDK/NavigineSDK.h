@@ -327,6 +327,10 @@ typedef struct _NavigationResults{
 
 - (void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
 - (void) yawCalculatedByIos: (double)yaw;
+
+- (void) beaconFounded: (NSObject *)beacon error:(NSError **)error;
+- (void) measuringBeaconWithProcess: (NSInteger) process;
+
 @end
 
 @protocol NCBluetoothStateDelegate <NSObject>

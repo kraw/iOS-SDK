@@ -15,7 +15,8 @@
 @interface Categories : NSObject <NSCoding>
 
 @property (nonatomic, assign) NSInteger id;
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *nameEn;
+@property (nonatomic, strong) NSString *nameRu;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSMutableSet *venues;
 

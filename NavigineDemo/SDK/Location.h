@@ -41,6 +41,11 @@
  */
 @property (nonatomic,strong) NSMutableArray *subLocations;
 
+/**
+ *  Is local modified Archive
+ */
+@property (nonatomic,assign) BOOL modified;
+
 
 - (id) initWithLocation :(Location *)location;
 /**
