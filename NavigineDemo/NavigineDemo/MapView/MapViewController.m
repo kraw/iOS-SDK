@@ -16,8 +16,9 @@
   NSUInteger logsCount;
   BOOL enableFollow;
   BOOL isRoutingNow;
+  BOOL isRoutingToSuperVenue;
   int sublocationId;
-  NSInteger error4count;
+
   CGFloat zoomScale;
   
   MapPin *currentPin;//ввеньюс-кнопка, на который нажали
@@ -25,9 +26,6 @@
   
   //view that contains PressPin & MapPins than shouldn't zoom
   UIView *viewWithNoZoom;
-  
-  UIView *routeErrorView;
-  NSTimer *errorViewTimer;
   
   NSMutableArray *routeArray;
   CAShapeLayer   *routeLayer;
@@ -41,19 +39,18 @@
   PointOnMap routePoint;
   
   PositionOnMap *current;
-  
-  CGPoint originOffset;
+  PositionOnMap *current_ios;
   
   double yawByIos;
   double lineWith;
   NavigationResults res;
   BOOL centeredAroundCurrent;
   NSTimer *dynamicModeTimer;
-  ErrorViewType errorViewType;
   CGPoint translatedPoint;
 }
-@property (nonatomic) DistanceType distanceType;
-@property (nonatomic) RouteType routeType;
+@property (nonatomic, strong) ErrorView *errorView;
+@property (nonatomic, assign) DistanceType distanceType;
+@property (nonatomic, assign) RouteType routeType;
 
 @property (nonatomic, strong) NCImage *image;
 @property (nonatomic, strong) LoaderHelper *loaderHelper;
@@ -62,16 +59,19 @@
 @property (nonatomic, strong) DebugHelper *debugHelper;
 
 @property (nonatomic, strong) UIButton *leftButton;
+@property (nonatomic, strong) UIButton *rightButton;
 @end
 
 @implementation MapViewController
 
 - (void)viewDidLoad{
   [super viewDidLoad];
+
   // Do any additional setup after loading the view, typically from a nib.
   
   self.view.backgroundColor = kColorFromHex(0xEAEAEA);
   self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
+  self.navigationController.navigationBar.hidden = NO;
   self.navigationController.navigationBar.translucent = NO;
   
   self.sv.backgroundColor = kColorFromHex(0xEAEAEA);
@@ -81,6 +81,7 @@
   self.title = @"NAVIGATION MODE";
   
   [self addLeftButton];
+  [self addRightButton];
   processPath = [[UIBezierPath alloc] init];
   [processPath moveToPoint:CGPointMake(0, 11.f)];
   processLayer = [CAShapeLayer layer];
@@ -90,7 +91,8 @@
   processLayer.lineJoin        = kCALineJoinRound;
   processLayer.fillColor       = [[UIColor clearColor] CGColor];
   
-  [self addRouteErrorViewWithTitle:@"It is impossible to build a route.      You are out of range of navigation"];
+  _errorView = [[ErrorView alloc] init];
+  [self.view addSubview:_errorView];
   
   self.navigineManager = [NavigineManager sharedManager];
   self.navigineManager.stepsDelegate = self;
@@ -98,7 +100,7 @@
   self.debugHelper = [DebugHelper sharedInstance];
   
   logsCount = 0;
-  
+  centeredAroundCurrent = NO;
   viewWithNoZoom = [[UIView alloc] init];
   
   self.mapHelper = [MapHelper sharedInstance];
@@ -108,8 +110,10 @@
   self.rotateButton.hidden = NO;
   self.rotateButton.alpha = 1.f;
   self.rotateButton.layer.cornerRadius = self.rotateButton.height/2.f;
+  _rotateButton.origin = CGPointMake(260, self.view.height - 134.f);
   self.rotateButton.transform = CGAffineTransformMakeRotation(M_PI/4.);
-  
+  [_rotateButton setImage:[UIImage imageNamed:@"btnDynamicMap"] forState:UIControlStateNormal];
+
   self.zoomInBtn.layer.cornerRadius = self.zoomInBtn.height/2.f;
   self.zoomOutBtn.layer.cornerRadius = self.zoomOutBtn.height/2.f;
   
@@ -122,8 +126,7 @@
   
   enableFollow = NO;
   dynamicModeTimer = nil;
-  centeredAroundCurrent = NO;
-  error4count = 0;
+  isRoutingToSuperVenue = YES;
   zoomScale = 1.0f;
   pins = [[NSMutableArray alloc] init];
   
@@ -135,7 +138,14 @@
   current.hidden = YES;
   [self.contentView addSubview:current];
   
-  errorViewType = ErrorViewTypeNone;
+  current_ios = [[PositionOnMap alloc] init];
+  current_ios.backgroundColor = kRedColor;
+  
+  current_ios.hidden = YES;
+  [self.contentView addSubview:current_ios];
+  
+  _iOSPedometer.hidden = YES;
+  _naviginePedometer.hidden = YES;
   
   UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
   longPress.minimumPressDuration = 1;
@@ -148,6 +158,9 @@
   UITapGestureRecognizer *tapPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPress:)];
   tapPress.delaysTouchesBegan   = NO;
   [_sv addGestureRecognizer:tapPress];
+  UITapGestureRecognizer *tapOnErrorView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPress:)];
+  tapOnErrorView.delaysTouchesBegan   = NO;
+  [_errorView addGestureRecognizer:tapOnErrorView];
   
   UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
   [pinchRecognizer setDelegate:self];
@@ -155,6 +168,7 @@
   
   [self.progressBar.layer addSublayer:processLayer];
   self.automaticallyAdjustsScrollViewInsets = NO;
+  
 }
 
 -(void) rotation:(UIRotationGestureRecognizer *) sender{
@@ -243,7 +257,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
       CGFloat yPoint =  v.ky.doubleValue * mapWidthInHeight;
       
       CGPoint point = CGPointMake(xPoint, yPoint);
-      [self startRouteWithFinishPoint:point andRouteType:RouteTypeFromIcon];
+      [self startRouteWithFinishPoint:point andRouteType:RouteTypeFromClick];
     }
   }
   self.mapHelper.venueDelegate = nil;
@@ -280,31 +294,24 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
     processLayer.hidden = NO;
     processLayer.path            = [processPath CGPath];
   }
-  if((res.X == 0.0 && res.Y == 0.0) || res.ErrorCode != 0)  {
+
+  if(res.ErrorCode != 0)  {
+    if (res.ErrorCode == 4)
+      _errorView.type = ErrorViewTypeNavigation;
+    else
+      _errorView.type = ErrorViewTypeOther;
     
-    if(res.ErrorCode == 4 && error4count < 10) {
-      error4count++;
-    }
-    else {
-      current.hidden = YES;
-      //      arrow.hidden = YES;
-      routeLayer.hidden = YES;
-      return;
-    }
+    current.hidden = YES;
+    //      arrow.hidden = YES;
+    routeLayer.hidden = YES;
+    return;
   }
-  if(res.ErrorCode == 0){
-    if(errorViewType == ErrorViewTypeNavigation){
-      errorViewType = ErrorViewTypeNone;
-      [routeErrorView removeFromSuperview];
-      routeErrorView.hidden = YES;
-      routeErrorView = nil;
-      [errorViewTimer invalidate];
-      errorViewTimer = nil;
-    }
-    current.hidden = NO;
+  if(_errorView.type == ErrorViewTypeNavigation || _errorView.type == ErrorViewTypeOther){
+    [_errorView dismissView:nil];
   }
+  current.hidden = NO;
   
-  //  self.naviginePedometer.text = [NSString stringWithFormat:@"Navigine:%zd length:%.3lf",res.outStepCounter,res.outStepLength];
+  self.naviginePedometer.text = [NSString stringWithFormat:@"Navigine:%zd length:%.3lf",res.outStepCounter,res.outStepLength];
   
   CGFloat mapWidthInMeter = [self.navigineManager DEFAULT_WIDTH];
   CGFloat mapOriginalWidth = (CGFloat)self.contentView.bounds.size.width;
@@ -322,15 +329,24 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   CGFloat yPixInMeter = (CGFloat)mapOriginalWidth/mapWidthInMeter;
   CGRect pointFrame = CGRectMake(-xPixInMeter * res.R,-xPixInMeter * res.R, 2.0f * xPixInMeter * res.R, 2.0f * yPixInMeter * res.R);
   current.originalCenter = point;
+  current_ios.originalCenter = CGPointMake(point.x+40, point.y);
   [UIView animateWithDuration:1.0/10 animations:^{
     current.background.frame = pointFrame;
     current.transform= CGAffineTransformMakeRotation((CGFloat)res.Yaw);
     current.background.layer.cornerRadius = current.background.height/2.f;
     current.center = point;
+    current_ios.center = CGPointMake(point.x+40, point.y);
+    current_ios.transform = CGAffineTransformMakeRotation(yawByIos*M_PI/180);
   }];
   
+  //first appearence should be centered around point
   if (!res.ErrorCode && !centeredAroundCurrent){
     centeredAroundCurrent = YES;
+    NSUInteger floor = [self.mapHelper.sublocId indexOfObject:[NSNumber numberWithInteger:res.outSubLocation]];
+    self.btnUpFloor.alpha = 1.f;
+    self.btnDownFloor.alpha = 1.f;
+    self.mapHelper.floor = floor;
+    [self changeFloorTo:floor];
     [self zoomToPoint:point withScale:1. animated:NO];
   }
   current.hidden = NO;
@@ -377,11 +393,36 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   
   CGPoint rPoint = CGPointMake(routePoint.x, routePoint.y);
   if(!CGPointEqualToPoint(rPoint, CGPointZero)) {
-    isRoutingNow = YES;
+    [routeLayer removeFromSuperlayer];
+    routeLayer = nil;
+    [uipath removeAllPoints];
+    uipath = nil;
     NSArray *paths = [self.navigineManager routePaths];
-    if(paths.count){
-      [self drawRouteWithXml:/*[self.navigineManager makeRoute :res.outSubLocation :res.X :res.Y :routePoint.sublocationId :routePoint.x :routePoint.y]*/paths[0]];
+    NSArray *distances = [self.navigineManager routeDistances];
+    if (paths && paths.count && ((NSArray *)paths[0]).count){
+      if(_errorView.type == ErrorViewTypeNoGraph)
+        [_errorView dismissView:nil];
+      isRoutingNow = YES;
+      NSArray *path = paths[0];
+      NSNumber *distance = distances[0];
+      if (path.count) {
+        [self drawRouteWithPath: path
+                    andDistance: distance];
+      }
     }
+    else{
+      _errorView.type = ErrorViewTypeNoGraph;
+    }
+  }
+  else if (isRoutingToSuperVenue && _navigineManager.superVenue){
+    CGFloat mapWidthInMeter = [self.navigineManager DEFAULT_WIDTH];
+    CGFloat mapWidthInHeight = [self.navigineManager DEFAULT_HEIGHT];
+    
+    CGFloat xPoint =  _navigineManager.superVenue.kx.doubleValue * mapWidthInMeter;
+    CGFloat yPoint =  _navigineManager.superVenue.ky.doubleValue * mapWidthInHeight;
+    
+    CGPoint point = CGPointMake(xPoint, yPoint);
+    [self startRouteWithFinishPoint:point andRouteType:RouteTypeFromClick];
   }
   
 }
@@ -402,84 +443,45 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   return CGAffineTransformMake(fcos, fsin, -fsin, fcos, (fx - fx * fcos + fy * fsin), (fy - fx * fsin - fy * fcos));
 }
 
--(void)drawRouteWithXml:(NSArray *)str {
-  Vertex *vertex;// = [[Vertex alloc] init];
-  
-  routeArray = [[NSMutableArray alloc] init];
-  [routeArray removeAllObjects];
-  
-  for(int i = 0; i< [str count]; i++){
-    vertex = [str objectAtIndex:i];
-    if(sublocationId == vertex.subLocation){
-      CGPoint p = CGPointMake([vertex x], [vertex y]);
-      [routeArray addObject:[NSValue valueWithCGPoint:p]];
-    }
+-(void) drawRouteWithPath: (NSArray *)path
+              andDistance: (NSNumber *)distance {
+  // We check that we are close to the finish point of the route
+  if (distance.doubleValue <= 3.){
+    [self stopRoute];
   }
-  [self drawWayWithArray];
-}
-
--(void)drawWayWithArray {
-  if(routeArray.count == 0) return;
-  
-  [routeLayer removeFromSuperlayer];
-  routeLayer = nil;
-  
-  [uipath removeAllPoints];
-  uipath = nil;
-  
-  
-  uipath     = [[UIBezierPath alloc] init];
-  routeLayer = [CAShapeLayer layer];
-  
-  
-  float distance = 0;
-  CGPoint prevPoint = [[routeArray objectAtIndex:0] CGPointValue];
-  
-  for(int i = 0; i < routeArray.count; i++) {
+  else{
+    uipath     = [[UIBezierPath alloc] init];
+    routeLayer = [CAShapeLayer layer];
+    UIBezierPath *localPath = nil;
     
-    if(i == routeArray.count-1){
-      
-      CGPoint p = [[routeArray objectAtIndex:routeArray.count-1] CGPointValue];
-      
+    for (int i = 0; i < path.count; i++ ){
+      Vertex *vertex = path[i];
+      if(vertex.subLocation != sublocationId){
+        [uipath appendPath:localPath];
+        localPath = nil;
+        continue;
+      }
       CGFloat mapWidthInMeter = [self.navigineManager DEFAULT_WIDTH];
       CGFloat mapOriginalWidth = (CGFloat)self.contentView.bounds.size.width;
-      CGFloat poX = (CGFloat)p.x;
+      CGFloat poX = (CGFloat)vertex.x;
       
       
       CGFloat mapWidthInHeight = [self.navigineManager DEFAULT_HEIGHT];
       CGFloat mapOriginalHeight = (CGFloat)self.contentView.bounds.size.height;
-      CGFloat poY = (CGFloat)p.y;
+      CGFloat poY = (CGFloat)vertex.y;
       
       CGFloat xPoint =  (poX * mapOriginalWidth) / mapWidthInMeter;
       CGFloat yPoint =  mapOriginalHeight - poY * mapOriginalHeight / mapWidthInHeight;
       
-      CGPoint point = CGPointMake(xPoint, yPoint);
+      if(!localPath) {
+        localPath = [UIBezierPath bezierPath];
+        [uipath moveToPoint:CGPointMake(xPoint, yPoint)];
+      }
+      else {
+        [uipath addLineToPoint:CGPointMake(xPoint, yPoint)];
+      }
     }
-    
-    CGPoint p = [[routeArray objectAtIndex:i] CGPointValue];
-    
-    CGFloat mapWidthInMeter = [self.navigineManager DEFAULT_WIDTH];
-    CGFloat mapOriginalWidth = (CGFloat)self.contentView.bounds.size.width;
-    CGFloat poX = (CGFloat)p.x;
-    
-    
-    CGFloat mapWidthInHeight = [self.navigineManager DEFAULT_HEIGHT];
-    CGFloat mapOriginalHeight = (CGFloat)self.contentView.bounds.size.height;
-    CGFloat poY = (CGFloat)p.y;
-    
-    CGFloat xPoint =  (poX * mapOriginalWidth) / mapWidthInMeter;
-    CGFloat yPoint =  mapOriginalHeight - poY * mapOriginalHeight / mapWidthInHeight;
-    
-    if(i == 0) {
-      [uipath moveToPoint:CGPointMake(xPoint, yPoint)];
-    }
-    else {
-      [uipath addLineToPoint:CGPointMake(xPoint, yPoint)];
-    }
-    distance += sqrtf((p.x - prevPoint.x) * (p.x - prevPoint.x) + (p.y - prevPoint.y) * (p.y - prevPoint.y));
-    prevPoint = p;
   }
-  
   routeLayer.hidden = NO;
   routeLayer.path            = [uipath CGPath];
   routeLayer.strokeColor     = [kColorFromHex(0x4AADD4) CGColor];
@@ -489,11 +491,8 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   
   [self.contentView.layer addSublayer:routeLayer];
   [self.contentView bringSubviewToFront:current];
-  
-  if(distance <= 5 && distance >= 2) {
-    [self stopRoute];
-  }
 }
+
 
 - (void)addPinToMapWithVenue:(Venue *)v andImage:(UIImage *)image{
   CGFloat mapWidthInMeter = [self.navigineManager DEFAULT_WIDTH];
@@ -515,6 +514,7 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   btnPin.center  = point;
   [viewWithNoZoom addSubview:btnPin];
   btnPin.originalCenter = btnPin.center;
+  [btnPin resizeMapPinWithZoom:_sv.zoomScale];
   [pins addObject:btnPin];
 }
 
@@ -566,13 +566,13 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   }
 }
 
-- (IBAction)backRoutePressed:(id)sender {
-  [self.navigationController setNavigationBarHidden:NO animated:YES];
-  
-  _routeType = RouteTypeNone;
-  self.sv.origin = CGPointZero;
-  [self stopRoute];
-}
+//- (IBAction)backRoutePressed:(id)sender {
+//  [self.navigationController setNavigationBarHidden:NO animated:YES];
+//  
+//  _routeType = RouteTypeNone;
+//  self.sv.origin = CGPointZero;
+//  [self stopRoute];
+//}
 
 - (void)deselectPins {
   if(pin && !isRoutingNow){
@@ -590,48 +590,47 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 }
 
 - (void)tapPress:(UITapGestureRecognizer *)gesture {
-  if(gesture.view == routeErrorView){
-    [self stopRoute];
-    [self deselectPins];
-    pin = [[PressPin alloc] initWithFrame:CGRectZero];
-    [pin addTarget:self action:@selector(btnRoutePin:) forControlEvents:UIControlEventTouchUpInside];
-    [pin sizeToFit];
-    pin.center = CGPointMake(translatedPoint.x, 0);
-    
-    pin.bottom = translatedPoint.y;
-    pin.centerX = translatedPoint.x;
-    pin.hidden = NO;
-    [viewWithNoZoom addSubview:pin];
-    
-    [pin.btn addTarget:self action:@selector(btnRoute:) forControlEvents:UIControlEventTouchUpInside];
-    
-    pin.unnotationView.bottom   = pin.top - 10;
-    pin.unnotationView.centerX  = pin.centerX;
-    pin.originalBottom = pin.bottom;
-    pin.originalCenterX = pin.centerX;
-    pin.sublocationId = sublocationId;
-    [viewWithNoZoom addSubview:pin.unnotationView];
-    [pin resizePressPinWithZoom:self.sv.zoomScale];
+  if(gesture.view == _errorView){
+    if(_errorView.type == ErrorViewTypeNewRoute){
+      [self stopRoute];
+      [self deselectPins];
+      pin = [[PressPin alloc] initWithFrame:CGRectZero];
+      [pin addTarget:self action:@selector(btnRoutePin:) forControlEvents:UIControlEventTouchUpInside];
+      [pin sizeToFit];
+      pin.center = CGPointMake(translatedPoint.x, 0);
+      
+      pin.bottom = translatedPoint.y;
+      pin.centerX = translatedPoint.x;
+      pin.hidden = NO;
+      [viewWithNoZoom addSubview:pin];
+      
+      [pin.btn addTarget:self action:@selector(btnRoute:) forControlEvents:UIControlEventTouchUpInside];
+      
+      pin.unnotationView.bottom   = pin.top - 10;
+      pin.unnotationView.centerX  = pin.centerX;
+      pin.originalBottom = pin.bottom;
+      pin.originalCenterX = pin.centerX;
+      pin.sublocationId = sublocationId;
+      [viewWithNoZoom addSubview:pin.unnotationView];
+      [pin resizePressPinWithZoom:self.sv.zoomScale];
+    }
+    if(_errorView.type == ErrorViewTypeNoGraph){
+      [self stopRoute];
+      [self deselectPins];
+    }
+    [_errorView dismissView:nil];
   }
   else{
     [self deselectPins];
   }
 }
 
-- (void)startRouteWithFinishPoint:(CGPoint)point andRouteType:(RouteType)type {
-  if(![self.navigineManager isNavigineFine]) {
-    [self addRouteErrorViewWithTitle:@"It is impossible to build a route.      You are out of range of navigation"];
-    errorViewType = ErrorViewTypeNavigation;
-    routeErrorView.hidden = NO;
-    errorViewTimer = [NSTimer scheduledTimerWithTimeInterval:5.f
-                                     target:self
-                                   selector:@selector(dismissRouteErrorView:)
-                                   userInfo:nil
-                                    repeats:NO];
-    
-    if(pin && type == RouteTypeFromClick) {
-      [pin removeFromSuperview];
-      [pin.unnotationView removeFromSuperview];
+- (void)startRouteWithFinishPoint: (CGPoint)point
+                     andRouteType: (RouteType)type {
+  res = [self.navigineManager getNavigationResults];
+  if(res.ErrorCode != 0) {
+    if(isRoutingNow) {
+      [self stopRoute];
     }
     return;
   }
@@ -650,12 +649,6 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   [self.navigineManager addTatget:sublocationId :point.x :point.y];
 }
 
-- (void) dismissRouteErrorView :(NSTimer *)timer{
-  routeErrorView.hidden = YES;
-  [timer invalidate];
-  errorViewType = ErrorViewTypeNone;
-}
-
 - (void) dynamicModeTimerInvalidate :(NSTimer *)timer{
   [dynamicModeTimer invalidate];
   dynamicModeTimer = nil;
@@ -663,21 +656,17 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 }
 
 - (void)stopRoute {
-  if(pin && (_routeType != RouteTypeFromClick || _routeType == RouteTypeNone)) {
+  if(pin) {
     [pin removeFromSuperview];
     [pin.unnotationView removeFromSuperview];
+    pin = nil;
   }
-  if(errorViewType == ErrorViewTypeNewRoute){
-    errorViewType = ErrorViewTypeNone;
-    [routeErrorView removeFromSuperview];
-    routeErrorView.hidden = YES;
-    routeErrorView = nil;
-    [errorViewTimer invalidate];
-    errorViewTimer = nil;
- 
+  if(_errorView.type == ErrorViewTypeNewRoute){
+    [_errorView dismissView:nil];
   }
   
   isRoutingNow = NO;
+  isRoutingToSuperVenue = NO;
   routePoint.x = 0;
   routePoint.y = 0;
   routePoint.sublocationId = -1;
@@ -700,11 +689,11 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
       dynamicModeTimer = nil;
     }
     enableFollow = NO;
-    dynamicModeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                        target:self
-                                                      selector:@selector(dynamicModeTimerInvalidate:)
-                                                      userInfo:nil
-                                                       repeats:NO];
+    dynamicModeTimer = [NSTimer scheduledTimerWithTimeInterval: 5.0
+                                                        target: self
+                                                      selector: @selector(dynamicModeTimerInvalidate:)
+                                                      userInfo: nil
+                                                       repeats: NO];
   }
 }
 
@@ -714,11 +703,11 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
     [mapPin resizeMapPinWithZoom:scrollView.zoomScale];
   }
   [current resizePositionOnMapWithZoom:scrollView.zoomScale];
+  [current_ios resizePositionOnMapWithZoom:scrollView.zoomScale];
   if(enableFollow == YES){
     self.contentView.origin = CGPointMake(0.f, 0.f);
   }
   viewWithNoZoom.frame = self.contentView.frame;
-  //  originOffset = self.sv.contentOffset;
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
@@ -728,6 +717,7 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   }
   
   [current resizePositionOnMapWithZoom:scrollView.zoomScale];
+  [current_ios resizePositionOnMapWithZoom:scrollView.zoomScale];
   if(enableFollow == YES){
     self.contentView.origin = CGPointMake(0.f, 0.f);
     [self zoomRectForScrollView:scrollView withScale:scrollView.zoomScale withCenter:CGPointMake(0, 0)];
@@ -756,11 +746,11 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 
 - (void)addLeftButton {
   UIImage *buttonImage = [UIImage imageNamed:@"btnMenu"];
-  self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [self.leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-  self.leftButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width,   buttonImage.size.height);
-  UIBarButtonItem *aBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftButton];
-  [self.leftButton addTarget:self action:@selector(menuPressed:)  forControlEvents:UIControlEventTouchUpInside];
+  _leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+  _leftButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width,   buttonImage.size.height);
+  UIBarButtonItem *aBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_leftButton];
+  [_leftButton addTarget:self action:@selector(menuPressed:)  forControlEvents:UIControlEventTouchUpInside];
   
   UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                                                                   target:nil
@@ -768,7 +758,40 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   [negativeSpacer setWidth:-17];
   
   [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer,aBarButtonItem,nil] animated:YES];
+}
+
+- (void)addRightButton {
+  UIImage *buttonImage = [UIImage imageNamed:@"btnBootWhite"];
+  _rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [_rightButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+  _rightButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
+  UIBarButtonItem *aBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightButton];
+  [_rightButton addTarget:self action:@selector(bootPressed:) forControlEvents:UIControlEventTouchUpInside];
+  _rightButton.selected = NO;
   
+  UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+  [negativeSpacer setWidth:-17];
+  
+  [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:negativeSpacer,aBarButtonItem,nil] animated:YES];
+}
+
+-(void)bootPressed:(UIButton *)btn{
+    if(!_rightButton.selected){
+      if(pin){
+        [_rightButton setBackgroundImage:[UIImage imageNamed:@"btnBootGreen"] forState:UIControlStateNormal];
+        _rightButton.selected = YES;
+        double x = pin.centerX/_contentView.width * _navigineManager.DEFAULT_WIDTH;
+        double y = (1. - pin.bottom/_contentView.height) * _navigineManager.DEFAULT_HEIGHT;
+        [_navigineManager navigateEnablePdr:sublocationId :x :y];
+        [pin removeFromSuperview];
+        [pin.unnotationView removeFromSuperview];
+      }
+    }
+  else{
+    [_rightButton setBackgroundImage:[UIImage imageNamed:@"btnBootWhite"] forState:UIControlStateNormal];
+    _rightButton.selected = NO;
+    [_navigineManager navigateDisablePdr];
+  }
 }
 
 - (IBAction)zoomButton:(id)sender {
@@ -779,37 +802,6 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   } completion:^(BOOL finished) {
     
   }];
-}
-
--(void) addRouteErrorViewWithTitle: (NSString *)title{
-  [routeErrorView removeFromSuperview];
-  routeErrorView.hidden = YES;
-  routeErrorView = nil;
-  [errorViewTimer invalidate];
-  errorViewTimer = nil;
-  
-  routeErrorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 87)];
-  routeErrorView.backgroundColor = kColorFromHex(0xD36666);
-  routeErrorView.alpha = 0.9f;
-  
-  NSString *labelText = title;
-  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:labelText];
-  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-  paragraphStyle.lineSpacing = 9.f;
-  [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, 40)];
-  
-  UILabel *unavaliableRoute = [[UILabel alloc] initWithFrame:CGRectMake(33.f, 22.f, 253.f, 42.f)];
-  unavaliableRoute.attributedText = attributedString;
-  unavaliableRoute.textColor = kColorFromHex(0xFAFAFA);
-  unavaliableRoute.font  = [UIFont fontWithName:@"Circe-Bold" size:16.0f];
-  unavaliableRoute.textAlignment = NSTextAlignmentCenter;
-  unavaliableRoute.numberOfLines = 0;
-  [routeErrorView addSubview:unavaliableRoute];
-  UITapGestureRecognizer *tapPressOnErrorView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPress:)];
-  tapPressOnErrorView.delaysTouchesBegan   = NO;
-  [routeErrorView addGestureRecognizer:tapPressOnErrorView];
-  [self.view addSubview:routeErrorView];
-  routeErrorView.hidden = YES;
 }
 
 - (IBAction)zoomButtonOut:(id)sender {
@@ -947,21 +939,8 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   if (gesture.state == UIGestureRecognizerStateBegan) {
     translatedPoint = [(UIGestureRecognizer*)gesture locationInView:self.contentView];
     if(isRoutingNow){
-      [self addRouteErrorViewWithTitle:@"Unable to make route: you must cancel previous route first"];
-      errorViewType = ErrorViewTypeNewRoute;
-      routeErrorView.hidden = NO;
-      errorViewTimer = [NSTimer scheduledTimerWithTimeInterval:5.f
-                                                        target:self
-                                                      selector:@selector(dismissRouteErrorView:)
-                                                      userInfo:nil
-                                                       repeats:NO];
+      _errorView.type = ErrorViewTypeNewRoute;
       return;
-    }
-    
-    if(pin) {
-      [pin removeFromSuperview];
-      [pin.unnotationView removeFromSuperview];
-      pin = nil;
     }
     
     pin = [[PressPin alloc] initWithFrame:CGRectZero];
@@ -1015,21 +994,26 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 
 -(IBAction)btnCancelRoute:(id)sender{
   [self stopRoute];
-  if(pin){
-    [pin removeFromSuperview];
-    [pin.unnotationView removeFromSuperview];
-  }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
   [super viewWillDisappear:animated];
   self.mapHelper.navigationType = NavigationTypeRegular;
+  if(isRoutingNow)
+    [self stopRoute];
+
   [current removeFromSuperview];
+  [current_ios removeFromSuperview];
+  [routeLayer removeFromSuperlayer];
+  routeLayer = nil;
+  [uipath removeAllPoints];
+  uipath = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   self.mapHelper = [MapHelper sharedInstance];
+  [self changeFloorTo:self.mapHelper.floor];
   self.mapHelper.delegate = self;
   if (self.mapHelper.sublocId.count == 1){
     self.btnDownFloor.hidden = YES;
@@ -1037,10 +1021,15 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
     self.txtFloor.hidden = YES;
   }
   else{
-    self.btnDownFloor.hidden = NO;
-    self.btnUpFloor.hidden = NO;
-    self.txtFloor.hidden = NO;
-    self.btnDownFloor.alpha = 0.7f;
+    self.btnUpFloor.alpha = 1.f;
+    self.btnDownFloor.alpha = 1.f;
+    NSInteger floor = self.mapHelper.floor;
+    if(floor == 0)
+      self.btnUpFloor.alpha = 0.7f;
+    if(floor == self.mapHelper.sublocId.count - 1)
+      self.btnDownFloor.alpha = 0.7f;
+    self.mapHelper.floor = floor;
+    [self changeFloorTo:floor];
   }
   if(self.mapHelper.navigationType == NavigationTypeRegular){
     self.progressBar.hidden = YES;
@@ -1058,7 +1047,17 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   _sv.maximumZoomScale = 5.0f;
   _sv.zoomScale = 1.0f;
   zoomScale = 1.0f;
-  [self changeFloorTo:self.mapHelper.floor];
+  
+  if (_navigineManager.debugModeEnable){
+    _iOSPedometer.hidden = NO;
+    _naviginePedometer.hidden = NO;
+    current_ios.hidden = NO;
+  }
+  else{
+    _iOSPedometer.hidden = YES;
+    _naviginePedometer.hidden = YES;
+    current_ios.hidden = YES;
+  }
 }
 
 - (IBAction)menuPressed:(id)sender {
@@ -1089,45 +1088,42 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 }
 
 - (IBAction)upFloor:(id)sender {
-  self.btnDownFloor.alpha = 1.f;
-  
-  if(self.mapHelper.floor != self.mapHelper.sublocId.count - 1){
-    self.mapHelper.floor++;
-    [self changeFloorTo:self.mapHelper.floor];
-  }
-  
-  if(self.mapHelper.floor == self.mapHelper.sublocId.count - 1){
-    self.btnUpFloor.alpha = 0.7f;
-  }
-}
-
-- (IBAction)downFloor:(id)sender {
   if(self.mapHelper.floor == 0){
     return;
   }
   self.mapHelper.floor--;
-  self.btnUpFloor.alpha = 1.f;
+  self.btnDownFloor.alpha = 1.f;
   [self changeFloorTo:self.mapHelper.floor];
-  if(self.mapHelper.floor == 0){
-    self.btnDownFloor.alpha = 0.7f;
+}
+
+- (IBAction)downFloor:(id)sender {
+  self.btnUpFloor.alpha = 1.f;
+  if(self.mapHelper.floor != self.mapHelper.sublocId.count - 1){
+    self.mapHelper.floor++;
+    [self changeFloorTo:self.mapHelper.floor];
   }
 }
 
 - (void) changeFloorTo:(NSInteger)row{
-  if(self.mapHelper.floor == 0){
+  if(self.mapHelper.floor == self.mapHelper.sublocId.count - 1){
     self.btnDownFloor.alpha = 0.7f;
   }
+  else if(self.mapHelper.floor == 0){
+    self.btnUpFloor.alpha = 0.7f;
+  }
+//  _sv.frame = CGRectMake(0, 0, 320, 504);
+  _sv.zoomScale = 1.f;
   NSError *error = nil;
   sublocationId = [self.mapHelper.sublocId[row] intValue];
-  [_sv setZoomScale:1.00001 animated:YES];
   CGSize imageSize = [self.navigineManager sizeForImageAtIndex:self.mapHelper.floor error:&error];
   
   if(error){
     [UIAlertView showWithTitle:@"ERROR" message:@"Incorrect width and height" cancelButtonTitle:@"OK"];
   }
   [self.contentView removeFromSuperview];
-  self.contentView = self.mapHelper.webViewArray[row];
+  _contentView = self.mapHelper.webViewArray[row];
   viewWithNoZoom.frame = self.contentView.frame;
+  _sv.contentSize = _contentView.frame.size;
   
   for(UIImageView *p in pins) [p removeFromSuperview];
   if(pin){
@@ -1136,6 +1132,8 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   }
   
   [self.contentView addSubview:current];
+  [self.contentView addSubview:current_ios];
+  
   CGFloat minScale = 1.f;
 
   if ( self.contentView.frame.size.height / self.contentView.frame.size.width > self.sv.frame.size.height / self.sv.frame.size.width){
@@ -1147,13 +1145,18 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   
   _sv.minimumZoomScale = minScale;
   self.contentView.origin = CGPointZero;
+  viewWithNoZoom.origin = CGPointZero;
   self.sv.contentOffset = CGPointZero;
   
 
   for (Venue *v in [self.navigineManager venues]) {
     if(v.sublocationId == sublocationId){
       [self addPinToMapWithVenue:v  andImage:[UIImage imageNamed:@"elmVenueIcon"]];
-//      [self.navigineManager addTatget:sublocationId :v.kx.doubleValue * self.navigineManager.DEFAULT_WIDTH :v.ky.doubleValue* self.navigineManager.DEFAULT_HEIGHT];
+    }
+  }
+  if (_navigineManager.superVenue){
+    if(_navigineManager.superVenue.sublocationId == sublocationId){
+      [self addPinToMapWithVenue:_navigineManager.superVenue  andImage:[UIImage imageNamed:@"elmVenueIcon"]];
     }
   }
   if(pin.sublocationId == sublocationId){
@@ -1178,53 +1181,27 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   }
   
   self.txtFloor.text = [NSString stringWithFormat:@"%zd", self.mapHelper.floor];
-  [_sv setZoomScale:1.00001 animated:NO];
   zoomScale = _sv.zoomScale;
-  [self movePositionWithZoom:NO];
-//  [self centerScrollViewContents];
+//  [self movePositionWithZoom:NO];
 }
 
 - (IBAction)folowing:(id)sender {
   if (enableFollow){
     dynamicModeTimer = nil;
-    [_rotateButton setImage:[UIImage imageNamed:@"btnDynamicMap"] forState:UIControlStateNormal];
     self.rotateButton.transform = CGAffineTransformMakeRotation(M_PI/4.);
     enableFollow = NO;
     zoomScale = _sv.zoomScale;
-    [self.sv setZoomScale:zoomScale - 0.0001f];
   }
   else{
-    if(res.ErrorCode){
-      [self addRouteErrorViewWithTitle:@"I can't detect your position.              You are out of range of navigation"];
-      errorViewType = ErrorViewTypeNavigation;
-      routeErrorView.hidden = NO;
-      errorViewTimer = [NSTimer scheduledTimerWithTimeInterval:5.f
-                                                        target:self
-                                                      selector:@selector(dismissRouteErrorView:)
-                                                      userInfo:nil
-                                                       repeats:NO];
-    }
-    else{
-      if(errorViewType == ErrorViewTypeNavigation){
-        routeErrorView.hidden = YES;
-        routeErrorView = nil;
-      }
-      [_rotateButton setImage:[UIImage imageNamed:@"btnDynamicMap"] forState:UIControlStateNormal];
-      self.rotateButton.transform = CGAffineTransformMakeRotation(0.f);
-      enableFollow = YES;
-      zoomScale = _sv.zoomScale;
-      if (sublocationId != res.outSubLocation){
-        NSUInteger floor = [self.mapHelper.sublocId indexOfObject:[NSNumber numberWithInteger:res.outSubLocation]];
-        self.btnUpFloor.alpha = 1.f;
-        self.btnDownFloor.alpha = 1.f;
-        if(floor == 0)
-          self.btnDownFloor.alpha = 0.7f;
-        if(floor == self.mapHelper.sublocId.count - 1)
-          self.btnUpFloor.alpha = 0.7f;
-        self.mapHelper.floor = floor;
-        [self changeFloorTo:floor];
-      }
-      [self.sv setZoomScale:zoomScale + 0.0001f];
+    self.rotateButton.transform = CGAffineTransformMakeRotation(0.f);
+    enableFollow = YES;
+    zoomScale = _sv.zoomScale;
+    if (sublocationId != res.outSubLocation){
+      NSUInteger floor = [self.mapHelper.sublocId indexOfObject:[NSNumber numberWithInteger:res.outSubLocation]];
+      self.btnUpFloor.alpha = 1.f;
+      self.btnDownFloor.alpha = 1.f;
+      self.mapHelper.floor = floor;
+      [self changeFloorTo:floor];
     }
   }
 }
@@ -1238,12 +1215,13 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
     self.txtFloor.hidden = YES;
   }
   else{
-    self.btnDownFloor.alpha = 0.7f;
+    self.btnUpFloor.alpha = 0.7f;
   }
 }
 
 - (void) stopNavigation{
   current.hidden = YES;
+  current_ios.hidden = YES;
   enableFollow = NO;
 }
 
@@ -1254,24 +1232,12 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 #pragma mark - NavigineManagerStepsDelegate
 
 -(void) updateSteps:(NSNumber *)numberOfSteps with:(NSNumber *)distance{
-  //  NSString *text = [NSString stringWithFormat:@"iOS:%@ distance:%.2lf",numberOfSteps, [distance floatValue]];
-  //  self.iOSPedometer.text = text;
+    NSString *text = [NSString stringWithFormat:@"iOS:%@ distance:%.2lf",numberOfSteps, [distance floatValue]];
+    self.iOSPedometer.text = text;
 }
 
 - (void) yawCalculatedByIos:(double)yaw{
-  //  yawByIos = yaw;
-}
-
-#pragma mark UIWebViewDelegate methods
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-  return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-  NSString *jsCommand = [NSString stringWithFormat:@"document.body.style.zoom = %lf;",self.image.scale];
-  [webView stringByEvaluatingJavaScriptFromString:jsCommand];
-  //  [self.sv addSubview:contentView];
+    yawByIos = yaw;
 }
 
 @end

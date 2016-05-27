@@ -28,6 +28,7 @@
   
   self.navigineManager = [NavigineManager sharedManager];
   self.navigineManager.dataDelegate = self;
+  self.navigineManager.delegate = self;
   [self addLeftButton];
   
   self.sv.contentSize = CGSizeMake(320, 520);
@@ -104,45 +105,37 @@
   self.bleCount.text = [NSString stringWithFormat:@"BLE devices (%zd):",beacons.count];
   self.bleList.text = @"";
   int i = 0;
-  for(NSDictionary *b in beacons){
+  
+  NSArray *sortedArray = [beacons sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+    NSNumber *first = ((NSDictionary*)a)[@"rssi"];
+    NSNumber *second = ((NSDictionary*)b)[@"rssi"];
+    
+    if (first.intValue < second.intValue) {
+      return NSOrderedAscending;
+    }
+    else if (first.intValue > second.intValue) {
+      return NSOrderedDescending;
+    }
+    // rssi is the same
+    return NSOrderedSame;
+  }];
+  
+  for(NSDictionary *b in sortedArray){
     NSNumber *major = b[@"major"];
     NSNumber *minor = b[@"minor"];
     NSString *uuid = b[@"uuid"];
     NSNumber *rssi = b[@"rssi"];
     NSNumber *proximity = b[@"proximity"];
     
-    NSString *beaconProp=[NSString stringWithFormat:@"%05d  %05d  %19@ %03zd %zd\n",major.intValue,minor.intValue,uuid,rssi.longValue,proximity.longValue];
+    NSString *beaconProp=[NSString stringWithFormat:@"%03zd  %05d  %05d  %19@ %zd\n",rssi.longValue,major.intValue,minor.intValue,uuid,proximity.longValue];
     NSString *tmp = [[self.bleList.text stringByAppendingFormat:@"%02d)",i+1] stringByAppendingString:@" "];
     self.bleList.text = [tmp stringByAppendingString:beaconProp];
     i++;
   }
+}
 
-//  int i = 0;
-//  NSArray *sortedArray = [beacons sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-//    CLBeacon *first = (CLBeacon*)a;
-//    CLBeacon *second = (CLBeacon*)b;
-//    
-//    if (first.rssi < second.rssi) {
-//      return NSOrderedAscending;
-//    }
-//    else if (first.rssi > second.rssi) {
-//      return NSOrderedDescending;
-//    }
-//    // rssi is the same
-//    return NSOrderedSame;
-//  }];
-//  
-//  if ([sortedArray count] > 0) {
-//    for (id obj in sortedArray){
-//      CLBeacon *b;
-//      b = obj;
-//      
-//      NSString *beaconProp=[NSString stringWithFormat:@"%05d  %05d  %19@ %zd\n",[[b major] intValue],[[b minor] intValue],[[b proximityUUID] UUIDString],[b rssi]];
-//      NSString *tmp = [[self.bleList.text stringByAppendingFormat:@"%02d) ",i+1] stringByAppendingString:@" "];
-//      self.bleList.text = [tmp stringByAppendingString:beaconProp];
-//      i++;
-//    }
-//  }
+- (void) customBeaconsInfo: (NSString *) localName{
+  self.bleList.text = [NSString stringWithFormat:@"name:%@\n", localName];
 }
 
 - (void) getLatitude:(double)latitude Longitude:(double)longitude{

@@ -30,6 +30,7 @@
 - (void) startDownloadProcess: (NSString *)location :(BOOL)forced;
 - (void) saveLocations;
 - (void) deleteLocations;
+- (void) refreshLocationList;
 @end
 
 @protocol LoginHelperDelegate <NSObject>

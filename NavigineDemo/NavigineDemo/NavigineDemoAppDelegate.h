@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NavigineManager.h"
+#import "RavenClient.h"
 
+RavenClient *client;
 
 @interface NavigineDemoAppDelegate : UIResponder <UIApplicationDelegate>{
 }
 @property (strong, nonatomic) UIWindow *window;
+  @property (nonatomic, strong) NavigineManager *navigineManager;
 @end
 

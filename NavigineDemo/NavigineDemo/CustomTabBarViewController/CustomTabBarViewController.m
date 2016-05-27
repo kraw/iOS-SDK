@@ -64,48 +64,17 @@
   
   NSDictionary *index = notification.userInfo;
   NSIndexPath *path = index[@"index"];
-  
+
   if(!navigineManager.location){
-    if (path.row == 2 || path.row == 3){
-      path = [NSIndexPath indexPathForItem:5 inSection:0];
+    if (path.row == 2 || path.row == 3 || path.row == 4){
+      path = [NSIndexPath indexPathForItem:6 inSection:0];
     }
   }
-  
   [self setSelectedIndex:path.row];
   
+//
   [self.slidingPanelController closePanel];
   
 }
-
-- (void)setMapLoaderHelper:(id)delegate {
-  
-  //    UINavigationController *nav = (UINavigationController *)self.viewControllers[1];
-  //    MapViewController      *map = (MapViewController *)nav.viewControllers[0];
-  
-  
-  //
-//  [map setLoaderHelperDelegate:delegate];
-  //
-  //    [self setSelectedViewController:nav];
-  
-}
-
-- (void)setLocation {
-  UINavigationController *nav = (UINavigationController *)self.viewControllers[0];
-  [self setSelectedViewController:nav];
-}
-
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

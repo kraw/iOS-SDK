@@ -20,6 +20,7 @@
 @property (assign) BOOL isRefreshAnimating;
 
 @property (nonatomic, strong) LoaderHelper *loaderHelper;
+@property (nonatomic, strong) UploaderHelper *uploaderHelper;
 @property (nonatomic, strong) LoginHelper *userHashHelper;
 @property (nonatomic, strong) NavigineManager *navigineManager;
 @end
@@ -51,6 +52,9 @@
   self.loaderHelper = [LoaderHelper sharedInstance];
   self.loaderHelper.loaderDelegate = self;
   
+  //initialize uploader helper
+  self.uploaderHelper = [UploaderHelper sharedInstance];
+  
   self.userHashHelper = [LoginHelper sharedInstance];
   CustomTabBarViewController *slide = (CustomTabBarViewController *)self.tabBarController;
   
@@ -67,12 +71,26 @@
   
   [self setupRefreshControl];
   [self.tableView reloadData];
+  if (_navigineManager.loadFromURL){
+    _navigineManager.loadFromURL = NO;
+    NSIndexPath *index = [NSIndexPath indexPathForItem:2 inSection:0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed" object:nil userInfo:@{@"index": index}];
+  }
+  
+}
+
+- (void) viewDidAppear:(BOOL)animated{
+  
+  self.uploaderHelper.uploaderDelegate = self;
+  self.title = self.userHashHelper.name.uppercaseString;
+  [self.tableView reloadData];
+  [super viewDidAppear:animated];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-  [self.loaderHelper refreshLocationList];
-  self.title = self.userHashHelper.name.uppercaseString;
-  [self.tableView reloadData];
+  [self.userHashHelper refreshLocationList];
+  [_loaderHelper refreshLocationList];
+  loadedLocations = self.loaderHelper.loadedLocations;
   [super viewWillAppear:animated];
 }
 
@@ -136,10 +154,12 @@
   cell.selectionStyle = UITableViewCellSelectionStyleNone;
   cell.btnLocationInfo.hidden = YES;
   cell.selectedMap.hidden = YES;
+  cell.selectedMap.right = cell.btnDownloadMap.left - 12.f;
+  cell.selectedMap.top = cell.btnDownloadMap.top;
+  
   
   if(currentLocCell.isValidArchive == NO){
     cell.titleLabel.font  = [UIFont fontWithName:@"Circe-Bold" size:16.0f];
-    cell.titleLabel.textColor = kColorFromHex(0xD36666);
   
     cell.titleLabel.text = currentLocCell.location.name;
     cell.titleLabel.top = 10.f;
@@ -185,21 +205,31 @@
     cell.rightUtilityButtons = rightUtilityButtons;
     cell.delegate = self;
     cell.btnDownloadMap.right = cell.btnLocationInfo.right;
+    cell.selectedMap.hidden = NO;
+    cell.selectedMap.image = [UIImage imageNamed:@"elmUnselectedmap"];
   }
   else{
     cell.btnLocationInfo.hidden = YES;
     cell.btnDownloadMap.left = cell.btnLocationInfo.left;
   }
   
-  if(currentLocCell.serverVersion != currentLocCell.location.version){
+  if(currentLocCell.serverVersion > currentLocCell.location.version || currentLocCell.location.modified){
     cell.titleLabel.top = 10.f;
     cell.btnDownloadMap.hidden = NO;
     if(currentLocCell.isDownloaded){
       cell.btnDownloadMap.right = cell.btnLocationInfo.left - 12.f;
     }
     if(!currentLocCell.isDownloadingNow){
-      cell.serverVersion.text = [NSString stringWithFormat:@"Version avaliable: %zd",currentLocCell.serverVersion];
-      [cell.btnDownloadMap setImage:[UIImage imageNamed:@"btnDownloadMap"] forState:UIControlStateNormal];
+      if(currentLocCell.location.modified){
+        cell.serverVersion.text = [NSString stringWithFormat:@"Version is modified.Upload?"];
+        [cell.btnDownloadMap setImage:[UIImage imageNamed:@"btnUploadMap"] forState:UIControlStateNormal];
+        cell.btnDownloadMap.tintColor = kColorFromHex(0x43566c);
+      }
+      else{
+        cell.serverVersion.text = [NSString stringWithFormat:@"Version avaliable: %zd",currentLocCell.serverVersion];
+        [cell.btnDownloadMap setImage:[UIImage imageNamed:@"btnDownloadMap"] forState:UIControlStateNormal];
+        cell.btnDownloadMap.tintColor = kColorFromHex(0xAAAAAA);
+      }
     }
     else{
       cell.serverVersion.text = @"Downloading...";
@@ -209,6 +239,7 @@
   
   if(currentLocCell.isSet == YES){
     cell.selectedMap.hidden = NO;
+    cell.selectedMap.image = [UIImage imageNamed:@"elmSelectedmap"];
     cell.selectedMap.right = cell.btnDownloadMap.left - 12.f;
     cell.selectedMap.top = cell.btnDownloadMap.top;
   }
@@ -282,6 +313,14 @@
                                           clockwise:YES].CGPath;
 }
 
+- (void) changeUploadingValue:(LocationInfo *)locationInfo{
+  locationInfo.circle.path=[UIBezierPath bezierPathWithArcCenter:CGPointMake(18, 18)
+                                                          radius:16.5f
+                                                      startAngle:-M_PI_2
+                                                        endAngle:-M_PI_2 + 2*M_PI/100.*locationInfo.loadingProcess
+                                                       clockwise:YES].CGPath;
+}
+
 - (void)errorWhileDownloading:(NSInteger)error :(LocationInfo *)locationInfo{
   locationInfo.isDownloadingNow = NO;
   locationInfo.location.version = 0;
@@ -289,22 +328,20 @@
   [locationInfo.circle removeFromSuperlayer];
   locationInfo.loadingProcess = 0;
   [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
-//  switch (error) {
-//    case -1:
-//      if(error == -1)
-//        [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
-//      break;
-//    case -2:
-//      self.userHashHelper.userHashValid = NO;
-//      [self.loaderHelper deleteAllLocations];
-//      
-//      [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed"
-//                                                          object:nil
-//                                                        userInfo:@{@"index": [NSIndexPath indexPathForItem:0 inSection:0]}];
-//      return;
-//    default:
-//      break;
-//  }
+
+  [self.tableView beginUpdates];
+  [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:locationInfo.indexPathForCell] withRowAnimation:UITableViewRowAnimationNone];
+  [self.tableView endUpdates];
+}
+
+- (void) errorWhileUploading:(NSInteger)error :(LocationInfo *)locationInfo{
+  locationInfo.isDownloadingNow = NO;
+  locationInfo.location.version = 0;
+  locationInfo.isDownloadingNow = NO;
+  [locationInfo.circle removeFromSuperlayer];
+  locationInfo.loadingProcess = 0;
+  [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
+  
   [self.tableView beginUpdates];
   [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:locationInfo.indexPathForCell] withRowAnimation:UITableViewRowAnimationNone];
   [self.tableView endUpdates];
@@ -316,6 +353,28 @@
   locationInfo.isDownloadingNow = NO;
   NSError *error = nil;
   [self.loaderHelper selectLocation:locationInfo error:&error];
+  [self.uploaderHelper selectLocation:locationInfo error:&error];
+  if(error != nil){
+    isLocationSet = NO;
+    locationInfo.isValidArchive = NO;
+    locationInfo.isSet = NO;
+  }
+  else{
+    isLocationSet = YES;
+    locationInfo.isValidArchive = YES;
+    [self showStatusBarMessage:@"    Downloading is complete" withColor:kColorFromHex(0x14263b) hideAfter:5];
+  }
+  locationInfo.serverVersion = locationInfo.location.version;
+  [self.tableView reloadData];
+}
+
+-(void) successfullUploading:(LocationInfo *)locationInfo{
+  [locationInfo.circle removeFromSuperlayer];
+  locationInfo.isDownloaded = YES;
+  locationInfo.isDownloadingNow = NO;
+  NSError *error = nil;
+  [self.loaderHelper selectLocation:locationInfo error:&error];
+  [self.uploaderHelper selectLocation:locationInfo error:&error];
   if(error != nil){
     isLocationSet = NO;
     locationInfo.isValidArchive = NO;
@@ -360,8 +419,9 @@
 
 - (void)setLocation :(LocationInfo *)locationInfo{
   NSError *error = nil;
+  self.navigineManager.modified = NO;
   [self.loaderHelper selectLocation:locationInfo error:&error];
-  
+  [self.uploaderHelper selectLocation:locationInfo error:&error];
   if(error != nil){
     isLocationSet = NO;
     locationInfo.isValidArchive = NO;
@@ -407,7 +467,12 @@
     LocationTableViewCell *cell = (LocationTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"cell"
                                                                                                 forIndexPath:indexPath];
     [cell.btnDownloadMap.layer addSublayer:currentLocation.circle];
-    [self.loaderHelper startDownloadProcess:currentLocation :YES];
+    if(currentLocation.location.modified){
+      [self.uploaderHelper startUploadProcess:currentLocation];
+    }
+    else{
+      [self.loaderHelper startDownloadProcess:currentLocation :YES];
+    }
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView endUpdates];
@@ -531,6 +596,11 @@
   [self.tableView reloadData];
   if(error == -1)
     [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+  [super viewDidDisappear:animated];
+  self.uploaderHelper.uploaderDelegate = nil;
 }
 
 //- (UIImage *)convertViewToImage {

@@ -16,12 +16,13 @@
 #import "DetailLoaderView.h"
 #import "LocationInfo.h"
 #import "LoaderHelper.h"
+#import "UploaderHelper.h"
 #import "QRCodeViewController.h"
 #import "SWTableViewCell.h"
 //#import "NoLocationView.h"
 #import "JGActionSheet.h"
 
-@interface LoaderView : UITableViewController <UITextFieldDelegate, JGActionSheetDelegate, LoaderHelperDelegate,UIActionSheetDelegate,SWTableViewCellDelegate>{
+@interface LoaderView : UITableViewController <UITextFieldDelegate, JGActionSheetDelegate, LoaderHelperDelegate, UploaderHelperDelegate,UIActionSheetDelegate,SWTableViewCellDelegate>{
 }
 
 - (void)setLocation :(LocationInfo *)locationForSet;

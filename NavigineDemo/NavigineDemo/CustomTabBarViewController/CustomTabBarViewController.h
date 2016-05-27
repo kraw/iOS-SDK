@@ -10,8 +10,4 @@
 #import "NavigineManager.h"
 
 @interface CustomTabBarViewController : UITabBarController
-
-- (void)setMapLoaderHelper:(id)delegate;
-- (void)setLocation;
-
 @end

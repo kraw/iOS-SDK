@@ -13,7 +13,7 @@
 #import "NavigineSDK.h"
 #import "LoaderView.h"
 
-@interface TextView: UIViewController <NavigineManagerDelegate>{
+@interface TextView: UIViewController <NavigineManagerDelegate, NavigineCoreDelegate>{
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *errCode;

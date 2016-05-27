@@ -1223,7 +1223,8 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint1(CGFloat angle, CGPoint p
 }
 
 - (void)startRouteWithFinishPoint:(CGPoint)point andRouteType:(RouteType)type {
-  if(![self.navigineManager isNavigineFine]) {
+  res = [self.navigineManager getNavigationResults];
+  if(res.ErrorCode != 0) {
     [self addRouteErrorViewWithTitle:@"It is impossible to build a route.      You are out of range of navigation"];
     routeErrorView.hidden = NO;
     [NSTimer scheduledTimerWithTimeInterval:5.f

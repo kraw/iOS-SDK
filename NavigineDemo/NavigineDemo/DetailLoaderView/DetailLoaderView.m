@@ -75,8 +75,7 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-                  willDecelerate:(BOOL)decelerate
-{
+                  willDecelerate:(BOOL)decelerate{
   if (!decelerate) {
     NSInteger newindex = floor(self.sv.contentOffset.x / self.view.width + 0.5f);
     [self centerImageAtIndex:newindex];
@@ -95,7 +94,10 @@
     view.hidden = NO;
   }
   Sublocation *sublocation = self.location.subLocations[0];
-  self.version.text = [NSString stringWithFormat:@"%zd", self.location.version];
+  NSString *modified = @"";
+  if (self.location.modified)
+    modified = @"+";
+  self.version.text = [NSString stringWithFormat:@"%zd%@", self.location.version,modified];
   self.name.text = sublocation.name;
   self.size.text = [NSString stringWithFormat:@"%.2lfx%.2lf",sublocation.width,sublocation.height];
 }

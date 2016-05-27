@@ -41,7 +41,6 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
     self.name = @"";
     [self getUserHashFromFile];
     manager = [[AFHTTPRequestOperationManager alloc] init];
-    //manager.securityPolicy.allowInvalidCertificates = YES;
     manager.responseSerializer = [AFJSONResponseSerializer new];
     NSData *locationData = [[NSUserDefaults standardUserDefaults] dataForKey:kTitleLocationInfo];
     if (locationData) {
@@ -104,14 +103,17 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
         NSLog(@"error in title element %@",[error localizedDescription]);
       }
       newLocation.serverVersion = [[TBXML textForElement:versionElement] integerValue];
-      NSInteger version;
+      NSString *version;
       NSString *pathToDir = [paths[0] stringByAppendingPathComponent:newLocation.location.name];
       NSString *pathToZip = [[pathToDir stringByAppendingPathComponent:newLocation.location.name] stringByAppendingString:@".zip"];
       
       if ([[NSFileManager defaultManager] fileExistsAtPath: pathToZip ]){
         version = [self.navigineManager currentVersionAt:pathToZip error:&error];
         if(!error)
-          newLocation.location.version = version;
+//          NSString *s = [version substringFromIndex:version.length-2];
+          if([[version substringFromIndex:version.length - 1] isEqualToString:@"+"])
+            newLocation.location.modified = YES;
+          newLocation.location.version = [version integerValue];
       }
       [localLocations addObject:newLocation];
       itemElement = itemElement->nextSibling;
@@ -122,6 +124,7 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
     BOOL flag = NO;
     for(LocationInfo *loadedLocation in self.loadedLocations){
       if([loadedLocation.location.name isEqualToString:localLocation.location.name]){
+        loadedLocation.location.modified = localLocation.location.modified;
         loadedLocation.serverVersion = localLocation.serverVersion;
         flag = YES;
         break;
@@ -231,6 +234,11 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
   if(self.delegate && [self.delegate respondsToSelector:@selector(changeDownloadingLocationListValue:)]){
     [self.delegate changeDownloadingLocationListValue:loadProcess.intValue];
   }
+}
+
+- (void) refreshLocationList{
+  [self parseLocationList];
+  self.userHashValid = YES;
 }
 
 - (BOOL) checkInternetConnection{

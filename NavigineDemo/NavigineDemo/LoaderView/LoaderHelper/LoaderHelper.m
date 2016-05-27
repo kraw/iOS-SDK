@@ -14,7 +14,6 @@
   NSLock *loadArchiveLock;
 }
 @property(nonatomic,strong) NSMutableArray *loaderArray;
-
 @property (nonatomic, strong) NavigineManager *navigineManager;
 @property (nonatomic, strong) LoginHelper *userHashHelper;
 @property (nonatomic, strong) NSTimer *loaderTimer;
@@ -76,7 +75,6 @@
     [loaderLock lock];
     [self.loaderArray addObject:loader];
     [loaderLock unlock];
-//    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     if(self.loaderTimer == nil){
       self.loaderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/10
                                        target:self
@@ -84,25 +82,6 @@
                                      userInfo:nil
                                       repeats:YES];
     }
-//      loadProcess = 0;
-//      while (loadProcess < 100) {
-//        loadProcess = [self.navigineManager checkLocationLoader];
-//        if(loadProcess == 255){
-//          [self.navigineManager stopLocationLoader];
-//          [self performSelectorOnMainThread:@selector(errorWhileDownloading :) withObject:location waitUntilDone:YES];
-//          break;
-//        }
-//        
-//        location.loadingProcess = loadProcess;
-//        [self performSelectorOnMainThread:@selector(changeDownloadingValue:) withObject:location waitUntilDone:YES];
-//        
-//        if(loadProcess == 100){
-//          [self.navigineManager stopLocationLoader];
-//          [self performSelectorOnMainThread:@selector(successfullDownloading :) withObject:location waitUntilDone:YES];
-//          break;
-//        }
-//      }
-//    });
   }
 }
 
@@ -122,7 +101,7 @@
   [loaderLock lock];
   for (Loader *loader in self.loaderArray) {
     NSInteger loadProcess = [self.navigineManager checkLocationLoader: loader.loaderId];
-    if(loadProcess == 255){
+    if(loadProcess < 0){
       [self.navigineManager stopLocationLoader: loader.loaderId];
       [self errorWhileDownloading:loader.location];
       [self.loaderArray removeObject:loader];
@@ -216,7 +195,9 @@
   [self startNavigine];
   [self startRangePushes];
   [self startRangeVenues];
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"setLocation" object:nil userInfo:@{@"locationName":location.location.name}];
+  [[NSNotificationCenter defaultCenter] postNotificationName: @"setLocation"
+                                                      object: nil
+                                                    userInfo: @{@"locationName":location.location.name}];
 }
 
 -(void) deleteLocation :(NSString *)location{
@@ -270,6 +251,12 @@
 
 - (void) refreshLocationList{
   self.loadedLocations = self.userHashHelper.loadedLocations;
+  for(LocationInfo *tmpLocation in self.loadedLocations){
+    if(tmpLocation.isSet){
+//      tmpLocation.location = [[Location alloc] initWithLocation:self.navigineManager.location];
+      break;
+    }
+  }
 }
 
 - (void)reloadLocationList{

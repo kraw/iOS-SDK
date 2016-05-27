@@ -161,49 +161,6 @@
     NSLog(@"%@",[error localizedDescription]);
 }
 
-- (void)startDataSending{
-  [self.navigineManager setServer:[self.ipAddress.text UTF8String] andPort:SERVER_DEFAULT_OUTPUT_PORT];
-  [self.navigineManager setConnectionStatus:CONNECTION_STATUS_CONNECTED];
-  [self.navigineManager launchNavigineSocketThreads :[self.ipAddress.text UTF8String]: SERVER_DEFAULT_OUTPUT_PORT];
-}
-
-- (void)stopDataSending{
-  [self.navigineManager setConnectionStatus:CONNECTION_STATUS_DISCONNECTED];
-  [refreshTimer invalidate];
-  refreshTimer = nil;
-}
-
-- (void) startTimer{
-  if (refreshTimer==nil) {
-    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:[self.frequency.text integerValue]
-                                                    target:self
-                                                  selector:@selector(timerTick:)
-                                                  userInfo:nil
-                                                   repeats:YES];
-  }
-}
-
-- (void)timerTick: (NSTimer *)timer{
-//  int iConnectionStatusWriteSocket = [self.navigineManager getConnectionStatusWriteSocket];
-//  if (iConnectionStatusWriteSocket == CONNECTION_STATUS_DISCONNECTED)
-////    self.connectionStatusLabel.text = @"Disconnected";
-//  if (iConnectionStatusWriteSocket == CONNECTION_STATUS_CONNECTING)
-////    self.connectionStatusLabel.text = @"Connecting..";
-//  if (iConnectionStatusWriteSocket == CONNECTION_STATUS_CONNECTED)
-////    self.connectionStatusLabel.text = @"Connected";
-//  
-//  int iConnectionStatusReadSocket = [self.navigineManager getConnectionStatusReadSocket];
-//  
-//  if (iConnectionStatusReadSocket == CONNECTION_STATUS_DISCONNECTED)
-//    self.connectionStatusReadSocketLabel.text = @"Disconnected";
-//  if (iConnectionStatusReadSocket == CONNECTION_STATUS_CONNECTING)
-//    self.connectionStatusReadSocketLabel.text = @"Connecting..";
-//  if (iConnectionStatusReadSocket == CONNECTION_STATUS_CONNECTED)
-//    self.connectionStatusReadSocketLabel.text = @"Connected";
-//  
-  [self.navigineManager sendPacket];
-  
-}
 
 - (void)textFieldDidChange:(UITextField *)textField{
   if(textField.text.length == 0){

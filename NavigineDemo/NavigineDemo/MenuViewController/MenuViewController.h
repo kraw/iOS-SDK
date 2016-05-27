@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NavigineManager.h"
 
-@interface MenuViewController : UIViewController {
-    NSMutableArray *menuArray;
-}
+@interface MenuViewController : UIViewController
+@property (nonatomic, strong) NSMutableArray *menuArray;
 
 @property (weak, nonatomic) IBOutlet UITableView *tv;
 

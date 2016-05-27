@@ -16,6 +16,7 @@
 #import "MapPin.h"
 #import "PressPin.h"
 #import "PositionOnMap.h"
+#import "ErrorView.h"
 
 typedef enum {
   DistanceInMinutes = 0,
@@ -25,19 +26,11 @@ typedef enum {
 
 typedef enum {
   RouteTypeNone = 0,
-  RouteTypeFromIcon ,
   RouteTypeFromClick
 } RouteType;
 
-typedef enum{
-  ErrorViewTypeNone = 0,
-  ErrorViewTypeNavigation,
-  ErrorViewTypeNewRoute,
-  ErrorViewTypeNoGraph
-}ErrorViewType;
 
-
-@interface MapViewController : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, MapHelperDelegate, NavigineManagerStepsDelegate, UIGestureRecognizerDelegate>{
+@interface MapViewController : UIViewController <UIScrollViewDelegate, MapHelperDelegate, NavigineManagerStepsDelegate, UIGestureRecognizerDelegate>{
 }
 
 @property (nonatomic, weak) NSObject <LoaderHelperDelegate> *loaderHelperDelegate;

@@ -16,7 +16,7 @@
 @property (nonatomic) BOOL isDownloaded;
 @property (nonatomic) BOOL isDownloadingNow;
 @property (nonatomic) BOOL isValidArchive;
-@property (nonatomic) NSInteger serverVersion;
+@property (nonatomic, assign) NSInteger serverVersion;
 @property (nonatomic) NSInteger loadingProcess;
 @property (nonatomic, strong) NSIndexPath *indexPathForCell;
 @property (nonatomic, strong) CAShapeLayer *circle;

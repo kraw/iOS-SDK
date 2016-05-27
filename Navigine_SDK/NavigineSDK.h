@@ -290,6 +290,8 @@ typedef struct _NavigationResults{
  */
 - (void) navigationResultsInBackground :(NavigationResults)navigationResults;
 
+- (void) customBeaconsInfo: (NSString *) localName;
+
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.
  *
@@ -320,6 +322,20 @@ typedef struct _NavigationResults{
  *  @param categories NSArray object – array with Categories structures.
  */
 - (void) didRangeVenues :(NSArray *)venues :(NSArray *)categories;
+
+/**
+ * Tells the delegate if point enter the zone
+ *
+ * @param id zone id
+ */
+- (void) didEnterZoneWithId:(NSInteger) id;
+
+/**
+ * Tells the delegate if point came out of the zone
+ *
+ * @param id zone id
+ */
+- (void) didExitZoneWithId:(NSInteger) id;
 
 
 - (void) didRangeBeacons:(NSArray *)beacons;

@@ -140,10 +140,16 @@
     self.debugHelper.navigateLogfileTitle = logfile.logName;
     NSString *title = [NSString stringWithFormat:@"Play %@",logfile.logName];
     NSArray *playTitles = [NSArray arrayWithObject:title];
-    JGActionSheetSection *playSection = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:playTitles buttonStyle:JGActionSheetButtonStyleBlue];
+    JGActionSheetSection *playSection = [JGActionSheetSection sectionWithTitle: nil
+                                                                       message: nil
+                                                                  buttonTitles: playTitles
+                                                                   buttonStyle: JGActionSheetButtonStyleBlue];
     
     NSArray *cancelTitles = [NSArray arrayWithObject:@"Cancel"];
-    JGActionSheetSection *cancelSection = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:cancelTitles buttonStyle:JGActionSheetButtonStyleCancel];
+    JGActionSheetSection *cancelSection = [JGActionSheetSection sectionWithTitle: nil
+                                                                         message: nil
+                                                                    buttonTitles: cancelTitles
+                                                                     buttonStyle: JGActionSheetButtonStyleCancel];
     NSArray *sections = @[playSection,cancelSection];
     JGActionSheet *sheet = [[JGActionSheet alloc] initWithSections:sections];
     
@@ -153,7 +159,6 @@
       switch (indexPath.section) {
         case 0:
           [self performSegueWithIdentifier:@"toMapSegue" sender:nil];
-//          [self performSegueWithIdentifier:@"playLog" sender:nil];
           [sheet dismissAnimated:NO];
           break;
         case 1:

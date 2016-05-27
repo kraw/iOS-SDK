@@ -10,14 +10,12 @@
 
 @interface MapHelper(){
   NSTimer      *timerNavigation;
-  NSTimer      *startTimer;
-  NSMutableArray *viewScale;
 }
 
 
 @property (nonatomic, strong) LoaderHelper     *loaderHelper;
 @property (nonatomic, strong) NavigineManager  *navigineManager;
-@property (nonatomic, strong) CBCentralManager *bluetoothManager;
+//@property (nonatomic, strong) CBCentralManager *bluetoothManager;
 
 @end
 
@@ -44,7 +42,6 @@
     self.sublocId = [NSArray new];
     self.floor = 0;
     self.navigationType = NavigationTypeRegular;
-    viewScale = [NSMutableArray new];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setNewLocation:)
                                                  name:@"setLocation"
@@ -114,9 +111,8 @@
     currentView.delegate = self;
     currentView.bounds = CGRectMake(0, 0, s.width, s.height);
     
-//    NSString *html = [NSString stringWithFormat:@"document.body.style.backgroundImage='url(%@)';", [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
-
-    NSString *html = [NSString stringWithFormat:@"<img src='data:%@;base64,%@' />",mimeType, [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
+    NSString *html = [NSString stringWithFormat:@" <img src='data:%@;base64,%@' style=\"width:%.2fpx;height:%.2fpx\";/>",
+                      mimeType, [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength],s.width, s.height];
     [currentView loadHTMLString:html baseURL:nil];
     [currentView setOpaque:NO];
     
@@ -125,7 +121,6 @@
     [currentView.scrollView setPagingEnabled:NO];
     [currentView.scrollView setUserInteractionEnabled:NO];
     
-    [viewScale addObject:[NSNumber numberWithFloat:scale]];
     [self.webViewArray addObject:currentView];
     
     NCImage *image = [[NCImage alloc] initWithData:imageData
@@ -139,7 +134,6 @@
 
 - (void)setNewLocation: (NSNotification *)notification{
   self.floor = 0;
-  [viewScale removeAllObjects];
   [self.webViewArray removeAllObjects];
   [self.images removeAllObjects];
   [self getMapFromZip];
@@ -148,7 +142,7 @@
 
 - (void)start{
   if(timerNavigation == nil) {
-    timerNavigation = [NSTimer scheduledTimerWithTimeInterval:1.0/10
+    timerNavigation = [NSTimer scheduledTimerWithTimeInterval:.1
                                                        target:self
                                                      selector:@selector(changeCoordinates:)
                                                      userInfo:nil
@@ -167,11 +161,8 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
   NSUInteger index = [self.webViewArray indexOfObject:webView];
-  NSNumber *scale = viewScale[index];
-  if(scale){
-    NSString *jsCommand = [NSString stringWithFormat:@"document.body.style.zoom = %@;",scale];
-    [webView stringByEvaluatingJavaScriptFromString:jsCommand];
-  }
+  NSString *padding = @"document.body.style.margin='0';document.body.style.padding = '0'";
+  [webView stringByEvaluatingJavaScriptFromString:padding];
   if(self.imagesDelegate && [self.imagesDelegate respondsToSelector:@selector(finishLoadWithImage:atIndex:)]){
     [self.imagesDelegate finishLoadWithImage:[self.images objectAtIndex:index] atIndex:index];
   }

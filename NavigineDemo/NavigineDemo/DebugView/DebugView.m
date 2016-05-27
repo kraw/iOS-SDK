@@ -99,28 +99,6 @@ DebugView *sharedConsole = nil;
   [super viewDidAppear:animated];
 }
 
-- (void)onTimerCV: (NSTimer *)timer{
-  int iConnectionStatusWriteSocket = [self.navigineManager getConnectionStatusWriteSocket];
-  if (iConnectionStatusWriteSocket == CONNECTION_STATUS_DISCONNECTED)
-    self.connectionStatusLabel.text = @"Disconnected";
-  if (iConnectionStatusWriteSocket == CONNECTION_STATUS_CONNECTING)
-    self.connectionStatusLabel.text = @"Connecting..";
-  if (iConnectionStatusWriteSocket == CONNECTION_STATUS_CONNECTED)
-    self.connectionStatusLabel.text = @"Connected";
-  
-  int iConnectionStatusReadSocket = [self.navigineManager getConnectionStatusReadSocket];
-  
-  if (iConnectionStatusReadSocket == CONNECTION_STATUS_DISCONNECTED)
-    self.connectionStatusReadSocketLabel.text = @"Disconnected";
-  if (iConnectionStatusReadSocket == CONNECTION_STATUS_CONNECTING)
-    self.connectionStatusReadSocketLabel.text = @"Connecting..";
-  if (iConnectionStatusReadSocket == CONNECTION_STATUS_CONNECTED)
-    self.connectionStatusReadSocketLabel.text = @"Connected";
-  
-  [self.navigineManager sendPacket];
-  
-}
-
 - (IBAction)navigateByLog:(id)sender {
   if([self.loadLogFile.text isEqualToString:@""]){
     [UIAlertView showWithTitle:@"Empty Logfile name" message:nil cancelButtonTitle:@"OK"];
@@ -151,16 +129,6 @@ DebugView *sharedConsole = nil;
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
   [textField resignFirstResponder];
   return YES;
-}
-
-
-- (IBAction)startStopSwitchPressed:(id)sender{
-  if (self.swStartStop.on){
-    [self startTimer];
-    [self startDataSending];
-  }
-  else
-    [self stopDataSending];
 }
 
 - (IBAction)deleteLogs:(id)sender {
@@ -200,17 +168,6 @@ DebugView *sharedConsole = nil;
   }
 }
 
-
-- (void)stopDataSending{
-  [self.navigineManager setConnectionStatus:CONNECTION_STATUS_DISCONNECTED];
-}
-
-- (void)startDataSending{
-  [self.navigineManager setServer:[self.serverTF.text UTF8String] andPort:SERVER_DEFAULT_OUTPUT_PORT];
-  [self.navigineManager setConnectionStatus:CONNECTION_STATUS_CONNECTED];
-  [self.navigineManager launchNavigineSocketThreads :[self.serverTF.text UTF8String]: SERVER_DEFAULT_OUTPUT_PORT];
-}
-
 - (void)addLeftButton {
   UIImage *buttonImage = [UIImage imageNamed:@"btnMenu"];
   UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -239,19 +196,5 @@ DebugView *sharedConsole = nil;
 -(IBAction)textFieldReturn:(id)sender{
   [sender resignFirstResponder];
 }
-
-
-- (void) startTimer{
-  if (refreshTimer==nil) {
-    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                                    target:self
-                                                  selector:@selector(onTimerCV:)
-                                                  userInfo:nil
-                                                   repeats:YES];
-  }
-  
-}
-
-
 
 @end

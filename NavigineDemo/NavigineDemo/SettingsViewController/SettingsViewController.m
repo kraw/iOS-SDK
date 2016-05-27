@@ -2,14 +2,15 @@
 //  ConsoleView.m
 //  Navigine
 //
-//  Created by Администратор on 18.01.14.
+//  Created by Pavel Tychinin on 18.01.14.
 //  Copyright (c) 2014 Navigine. All rights reserved.
 //
 
 #import "SettingsViewController.h"
 
 @interface SettingsViewController (){
-
+  NSTimer *enableDebugModeTimer;
+  NSInteger counter;
 }
 @property (nonatomic, strong) NavigineManager *navigineManager;
 @end
@@ -22,19 +23,26 @@
   self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.translucent = NO;
   
-//  self.title = @"SETTINGS";
-  self.navigineManager = [NavigineManager sharedManager];
-  self.pushSwitcher.onTintColor = kColorFromHex(0x4AADD4);
-  self.pushSwitcher.tintColor = kColorFromHex(0xBDBDBD);
-  self.calibrateViewSwitcher.onTintColor = kColorFromHex(0x4AADD4);
-  self.calibrateViewSwitcher.tintColor = kColorFromHex(0xBDBDBD);
-//  [self addLeftButton];
+  counter = 0;
+  enableDebugModeTimer = nil;
+  _navigineManager = [NavigineManager sharedManager];
   
-//  self.sv.contentSize = CGSizeMake(320, 457);
-  self.sv.contentSize = CGSizeMake(320, 471);
-  self.sv.backgroundColor = kColorFromHex(0xEAEAEA);
-  self.txtNavigationFrequency.delegate = self;
-  self.txtScanTimeOut.delegate = self;
+  _pushSwitcher.onTintColor = kColorFromHex(0x4AADD4);
+  _pushSwitcher.tintColor = kColorFromHex(0xBDBDBD);
+  
+  _calibrateViewSwitcher.onTintColor = kColorFromHex(0x4AADD4);
+  _calibrateViewSwitcher.tintColor = kColorFromHex(0xBDBDBD);
+  
+  _fastScanSwitcher.onTintColor = kColorFromHex(0x4AADD4);
+  _fastScanSwitcher.tintColor = kColorFromHex(0xBDBDBD);
+  
+  _regularScanSwitcher.onTintColor = kColorFromHex(0x4AADD4);
+  _regularScanSwitcher.tintColor = kColorFromHex(0xBDBDBD);
+  
+  _sv.contentSize = self.view.frame.size;
+  _sv.backgroundColor = kColorFromHex(0xEAEAEA);
+  _txtNavigationFrequency.delegate = self;
+  _txtScanTimeOut.delegate = self;
   
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                  initWithTarget:self
@@ -51,6 +59,20 @@
   self.view.backgroundColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.translucent = NO;
+  if(_navigineManager.debugModeEnable){
+    _regularScanSwitcher.hidden = NO;
+    _regularScanTitle.hidden = NO;
+    
+    _fastScanSwitcher.hidden = NO;
+    _fastScanTitle.hidden = NO;
+  }
+  else{
+    _regularScanSwitcher.hidden = YES;
+    _regularScanTitle.hidden = YES;
+    
+    _fastScanSwitcher.hidden = YES;
+    _fastScanTitle.hidden = YES;
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -68,8 +90,8 @@
 }
 
 - (void)dismissKeyboard :(UITapGestureRecognizer *)gesture {
-  [self.txtNavigationFrequency resignFirstResponder];
-  [self.txtScanTimeOut resignFirstResponder];
+  [_txtNavigationFrequency resignFirstResponder];
+  [_txtScanTimeOut resignFirstResponder];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -78,12 +100,55 @@
 
 - (IBAction)shouldDisplayCalibration:(id)sender {
   UISwitch *sw = (UISwitch *)sender;
-  [self.navigineManager shouldDisplayCalibration:sw.on];
+  [_navigineManager shouldDisplayCalibration:sw.on];
+  counter++;
+  if (counter == 4){
+    _navigineManager.debugModeEnable = _navigineManager.debugModeEnable ? NO : YES;
+    if(_navigineManager.debugModeEnable){
+      _regularScanSwitcher.hidden = NO;
+      _regularScanTitle.hidden = NO;
+      
+      _fastScanSwitcher.hidden = NO;
+      _fastScanTitle.hidden = NO;
+    }
+    else{
+      _regularScanSwitcher.hidden = YES;
+      _regularScanTitle.hidden = YES;
+      
+      _fastScanSwitcher.hidden = YES;
+      _fastScanTitle.hidden = YES;
+    }
+    [self invalidate:enableDebugModeTimer];
+  }
+  if (!enableDebugModeTimer){
+    enableDebugModeTimer = [NSTimer scheduledTimerWithTimeInterval:10
+                                             target:self
+                                           selector:@selector(invalidate:)
+                                           userInfo:nil
+                                            repeats:NO];
+  }
 }
 
 
+
+
+
+-(void)invalidate:(NSTimer *)timer{
+  [enableDebugModeTimer invalidate];
+  enableDebugModeTimer = nil;
+  counter = 0;
+}
+
+- (IBAction)fastScanSwitcherPressed:(id)sender {
+  [_navigineManager fastScanEnabled:_fastScanSwitcher.on];
+}
+
+- (IBAction)regularScanSwitcherPressed:(id)sender {
+  [_navigineManager regularScanEnabled:_regularScanSwitcher.on];
+}
+
 - (IBAction)pushSwitcherPressed:(id)sender {
-  [self.navigineManager changePushNotificationAvialiability];
+  [_navigineManager changePushNotificationAvialiability];
 }
 
 - (IBAction)usingDemoPressed:(id)sender {

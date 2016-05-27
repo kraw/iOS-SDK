@@ -37,10 +37,10 @@
   self.navigineManager = [NavigineManager sharedManager];
   BOOL su = self.navigineManager.su;
   
-  if(su)
-    menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings",@"Debug mode", nil];
+  if(!_navigineManager.debugModeEnable)
+    _menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings", nil];
   else
-    menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings", nil];
+    _menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings",@"Debug mode",@"Measuring mode", nil];
   
   [_tv selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -51,6 +51,17 @@
                                            selector:@selector(navigationModePressed:)
                                                name:@"navigationModePressed"
                                              object:nil];
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+  if (_navigineManager.debugModeEnable){
+    _menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings",@"Debug mode",@"Measuring mode", nil];
+    [_tv reloadData];
+  }
+  else{
+    _menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings", nil];
+    [_tv reloadData];
+  }
 }
 
 - (void)didReceiveMemoryWarning{
@@ -72,8 +83,10 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed" object:nil userInfo:@{@"index": index}];
 }
 
+#pragma mark - UITableViewDelegate methods
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return menuArray.count;
+  return _menuArray.count;
 }
 
 // Customize the appearance of table view cells.
@@ -86,7 +99,7 @@
   cell.titleLabel.textColor = kColorFromHex(0xb4c2cc);
   cell.titleLabel.highlightedTextColor = kColorFromHex(0xfafafa);
   
-  cell.titleLabel.text = menuArray[indexPath.row];
+  cell.titleLabel.text = _menuArray[indexPath.row];
   
   UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
   myBackView.backgroundColor = [UIColor clearColor];
@@ -94,11 +107,9 @@
   return cell;
 }
 
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   NSIndexPath *index = [NSIndexPath indexPathForItem:indexPath.row + 1 inSection:0];
-  if (indexPath.row > 4) {
+  if (indexPath.row > 5) {
     return;
   }
   [[NSNotificationCenter defaultCenter] postNotificationName:@"menuItemPressed" object:nil userInfo:@{@"index": index}];

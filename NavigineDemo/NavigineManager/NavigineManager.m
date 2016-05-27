@@ -18,6 +18,10 @@ UILocalNotification* localNotification;
 - (NSArray *) _arrayWithGyroscopeData;
 - (NSArray *) _arrayWithMagnetometerData;
 
+- (int)_startLocationUploader :(NSString *)userHash :(NSString*)location :(BOOL) forced;
+- (int)_checkLocationUploader :(int)loaderId;
+- (void)_stopLocationUploader :(int) loaderId;
+
 /**
  *  This methods used to send WScanMessage to server.
  *  Now we don't use this function
@@ -37,8 +41,8 @@ UILocalNotification* localNotification;
  *
  *  @return current version or 0 if error
  */
-- (NSInteger) _currentVersionAt:(NSString *)path
-                          error:(NSError * __autoreleasing *)error;
+- (NSString *) _currentVersionAt: (NSString *)path
+                           error: (NSError * __autoreleasing *)error;
 - (void) _setUserHash :(NSString *)userHash;
 
 /**
@@ -47,6 +51,13 @@ UILocalNotification* localNotification;
  *  @return full path to log file
  */
 - (NSString *) _startSaveLogToFile;
+
+/**
+ *  Function is used to add check point to log file
+ *
+ *  @param checkPoint name of check point
+ */
+- (void) _addCheckPointToLogFile: (NSString *)checkPoint;
 
 // Function is used to stop save data to log file
 - (void) _stopSaveLogToFile;
@@ -98,6 +109,22 @@ UILocalNotification* localNotification;
  *  Displaying calibration view
  */
 - (void)_shouldDisplayCalibration: (BOOL)displaying;
+
+/**
+ *  Return beacons which added on map
+ */
+- (NSArray *)_beaconsList;
+
+- (void) _startMeasureNearestBeacon:(NCBeacon *)beacon;
+- (void) _stopMeasureNearestBeacon;
+- (void) _removeMeasuredBeacon:(NCBeacon *)beacon;
+- (void) _saveBeaconsXML;
+
+/**
+ *  Functions is used for debug PDR
+ */
+- (void) _navigateEnablePdr: (int)subLocId :(double)x :(double)y;
+- (void) _navigateDisablePdr;
 @end
 
 @implementation NavigineManager
@@ -135,12 +162,16 @@ static NSString *_userHash = nil;
 //                 NSLog(@"FAIL: %@",error);
 //               }
 //             }];
+    self.loadFromURL = NO;
+    _debugModeEnable = NO;
     self.superUsers = @[@"532FF36A-A009-4F22-8FC0-7CAF6514835F",  //iPhone 6 plus
-                        @"EFEB9593-C1BE-464B-98A8-C15D2E8C2E5E"]; //iPhone 5
+                        @"EFEB9593-C1BE-464B-98A8-C15D2E8C2E5E",  //iPhone 5
+                        @"6E2BB5B4-0691-41B2-B1CF-301C2C0F7A2A"]; //iPhone 4s
+//    NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     self.su = [self.superUsers indexOfObject:[[[UIDevice currentDevice] identifierForVendor] UUIDString]] == NSNotFound ? NO : YES;
     super.delegate = self;
     super.btStateDelegate = self;
-    locationId = 0;
+    self.beacons = [NSArray array];
     pushEnable = NO;
     
     localNotification = [[UILocalNotification alloc] init];
@@ -148,16 +179,21 @@ static NSString *_userHash = nil;
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
       [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains
+//    (NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    
+//    //make a file name to write the data to using the documents directory:
+//    NSString *fileName = [NSString stringWithFormat:@"%@/textfile.txt",
+//                          documentsDirectory];
+//
+//    [@"----START-----\n" writeToFile:fileName
+//                    atomically:NO
+//                      encoding:NSStringEncodingConversionAllowLossy
+//                         error:nil];
   }
   return self;
 }//init
-
-- (BOOL)isNavigineFine {
-  if([self getNavigationResults].ErrorCode != 0 && !DEBUG_MODE) {
-    return NO;
-  }
-  return YES;
-}
 
 //- (void *)routePaths{
 //  NSArray *paths = [self routePaths];
@@ -206,14 +242,19 @@ static NSString *_userHash = nil;
   return [super startLocationLoader :userID :location :YES];
 }
 
-//modify in nex release!!!!!
-- (NSInteger) currentVersion:(NSError * __autoreleasing *)error{
-  NSInteger currentVersion = [super currentVersion:error];
-  if(*error){
-    return -1;
-  }
-  self.currentVersion = currentVersion;
-  return currentVersion;
+- (int) startLocationUploader :(NSString *)userHash :(NSString*)location{
+  return [self _startLocationUploader:userHash :location :YES];
+}
+
+- (int) startLocationLoader :(NSString *)userID :(NSString *)location :(BOOL)forced{
+  return [super startLocationLoader:userID :location :forced];
+}
+
+- (int) checkLocationUploader :(int)id{
+  return [self _checkLocationUploader:id];
+}
+- (void) stopLocationUploader :(int)id{
+  return [self _stopLocationUploader:id];
 }
 
 - (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError * __autoreleasing *)error{
@@ -234,11 +275,6 @@ static NSString *_userHash = nil;
   return imageSize;
 }
 
-// Equally, we don't want to generate multiple copies of the singleton.
-- (id)copyWithZone:(NSZone *)zone {
-  return self;
-}
-
 -(void) setUserHash: (NSString *)userHash{
   if(_userHash != userHash){
     _userHash = userHash;
@@ -249,6 +285,7 @@ static NSString *_userHash = nil;
 
 - (void) loadArchive:(NSString *)location error:(NSError *__autoreleasing *)error{
   [super loadArchive:location error:error];
+  self.beacons = [NSArray arrayWithArray:[self _beaconsList]];
 }
 
 - (void) changePushNotificationAvialiability{
@@ -289,8 +326,58 @@ static NSString *_userHash = nil;
 
 - (void) navigationResultsInBackground :(NavigationResults) navigationResults{
   NavigationResults backGroundNavResults = navigationResults;
-  localNotification.alertBody = [NSString stringWithFormat:@"x=%lf y=%lf error = %zd",backGroundNavResults.X,backGroundNavResults.Y, backGroundNavResults.ErrorCode];
-  //[[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+
+  NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+
+  localNotification.alertBody = [NSString stringWithFormat:@"x=%lf y=%lf error = %zd time=%@\n",
+                                 backGroundNavResults.X,backGroundNavResults.Y, backGroundNavResults.ErrorCode,[dateFormatter stringFromDate:[NSDate date]]];
+//  [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//  [self getDataFrom:@"https://api.navigine.com/actions?format=json&locationId=1280&userHash=628B-9792-0789-C136"];
+}
+
+- (void) getDataFrom:(NSString *)url{
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+  [request setHTTPMethod:@"GET"];
+  [request setURL:[NSURL URLWithString:url]];
+  
+  NSError *error = [[NSError alloc] init];
+  NSHTTPURLResponse *responseCode = nil;
+  
+  NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+  
+  if([responseCode statusCode] != 200){
+    NSLog(@"Error getting %@, HTTP status code %i", url, [responseCode statusCode]);
+    return;
+  }
+  [self writeToTextFile:[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]];
+}
+
+//temporary method. Remove in next release
+-(void) writeToTextFile: (const NSString*)content{
+  //get the documents directory:
+  NSArray *paths = NSSearchPathForDirectoriesInDomains
+  (NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentsDirectory = [paths objectAtIndex:0];
+  
+  //make a file name to write the data to using the documents directory:
+  NSString *fileName = [NSString stringWithFormat:@"%@/textfile.txt",
+                        documentsDirectory];
+//  NSMutableString *contentOfFile = [NSMutableString stringWithContentsOfFile: fileName
+//                                                                    encoding: NSUTF8StringEncoding
+//                                                                       error: nil];
+//
+//  //save content to the documents directory
+//  [contentOfFile appendString:content];
+  [content writeToFile:fileName
+                  atomically:NO
+                    encoding:NSStringEncodingConversionAllowLossy
+                       error:nil];
+
+}
+
+- (void) setDebugModeEnable:(BOOL)debugModeEnable{
+  _debugModeEnable = debugModeEnable;
 }
 
 - (void) updateSteps:(NSNumber *)numberOfSteps with:(NSNumber *)distance{
@@ -301,6 +388,25 @@ static NSString *_userHash = nil;
 - (void) yawCalculatedByIos:(double)yaw{
   if (self.stepsDelegate && [self.stepsDelegate respondsToSelector:@selector(yawCalculatedByIos:)])
     [self.stepsDelegate yawCalculatedByIos:yaw];
+}
+
+- (void) beaconFounded:(NCBeacon *)ncBeacon error:(NSError**)error{
+  self.beacons = [NSArray arrayWithArray:[self _beaconsList]];
+  if (self.beaconMeasureDelegate && [self.beaconMeasureDelegate respondsToSelector:@selector(beaconFounded: error:)])
+    [self.beaconMeasureDelegate beaconFounded:ncBeacon error:error];
+}
+
+- (void) measuringBeaconWithProcess:(NSInteger)process{
+  if (self.beaconMeasureDelegate && [self.beaconMeasureDelegate respondsToSelector:@selector(measuringBeaconWithProcess: )])
+    [self.beaconMeasureDelegate measuringBeaconWithProcess:process];
+}
+
+- (void) didEnterZoneWithId:(NSInteger)id{
+  return;
+}
+
+- (void) didExitZoneWithId:(NSInteger)id{
+  return;
 }
 
 #pragma mark - NCBluetoothStateDelegate methods
@@ -351,36 +457,16 @@ static NSString *_userHash = nil;
   return [self _arrayWithMagnetometerData];
 }
 
-- (int) getConnectionStatusWriteSocket{
-  return [self _getConnectionStatusWriteSocket];
-}
-
-- (int) getConnectionStatusReadSocket{
-  return [self _getConnectionStatusReadSocket];
-}
-
-- (void) setServer :(const char*)serverIP andPort :(int)writePort{
-  return [self _setServer:serverIP andPort:writePort];
-}
-
-- (int) setConnectionStatus :(int)i{
-  return [self _setConnectionStatus:i];
-}
-
-- (void) launchNavigineSocketThreads :(const char*) serverIP :(int)serverWritePort{
-  return [self _launchNavigineSocketThreads:serverIP :serverWritePort];
-}
-
-- (int) sendPacket{
-  return [self _sendPacket];
-}
-
-- (NSInteger) currentVersionAt:(NSString *)path error:(NSError * __autoreleasing *)error{
+- (NSString *) currentVersionAt:(NSString *)path error:(NSError * __autoreleasing *)error{
   return [self _currentVersionAt:path error:error];
 }
 
 - (NSString *) startSaveLogToFile{
   return [self _startSaveLogToFile];
+}
+
+- (void) addCheckPointToLogFile: (NSString *)checkPoint{
+  return [self _addCheckPointToLogFile:checkPoint];
 }
 
 - (void) stopSaveLogToFile{
@@ -425,8 +511,32 @@ static NSString *_userHash = nil;
   [self _changeBaseServerTo:server];
 }
 
-- (void)_shouldDisplayCalibration: (BOOL)displaying{
-  [self shouldDisplayCalibration:displaying];
+- (void) shouldDisplayCalibration: (BOOL)displaying{
+  [self _shouldDisplayCalibration:displaying];
+}
+
+- (void) startMeasureNearestBeacon:(NCBeacon *)beacon{
+  [self _startMeasureNearestBeacon:beacon];
+}
+
+- (void) stopMeasureNearestBeacon{
+  [self _stopMeasureNearestBeacon];
+}
+
+- (void) removeMeasuredBeacon:(NCBeacon *)beacon{
+  return [self _removeMeasuredBeacon:beacon];
+}
+
+- (void) saveBeaconsXML{
+  return [self _saveBeaconsXML];
+}
+
+- (void) navigateEnablePdr: (int)subLocId :(double)x :(double)y{
+  return [self _navigateEnablePdr:subLocId :x :y];
+}
+
+- (void) navigateDisablePdr{
+  return [self _navigateDisablePdr];
 }
 
 - (void)saveSereverToFile{
