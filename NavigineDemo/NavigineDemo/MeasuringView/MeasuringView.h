@@ -17,6 +17,7 @@
 #import "Beacon.h"
 #import "ErrorView.h"
 #import "PolyLineLayout.h"
+#import "MeasurePoint.h"
 
 
 @interface MeasuringView : UIViewController <UIScrollViewDelegate, UIWebViewDelegate, MapHelperDelegate, UIGestureRecognizerDelegate,UIAlertViewDelegate,NavigineManagerMeasureBeaconDelegate,UploaderHelperDelegate, CustomIOSAlertViewDelegate, UITextFieldDelegate,NavigineManagerDelegate>

@@ -115,17 +115,19 @@
 }
 
 - (void)addLeftButton {
-  
   UIImage *buttonImage = [UIImage imageNamed:@"btnMenu"];
   UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+  [leftButton setBackgroundImage:buttonImage
+                        forState:UIControlStateNormal];
   leftButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width,   buttonImage.size.height);
   UIBarButtonItem *aBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-  [leftButton addTarget:self action:@selector(menuPressed:)  forControlEvents:UIControlEventTouchUpInside];
-  
-  UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+  [leftButton addTarget:self
+                 action:@selector(menuPressed:)
+       forControlEvents:UIControlEventTouchUpInside];
+  UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                                  target:nil
+                                                                                  action:nil];
   [negativeSpacer setWidth:-17];
-  
   [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer,aBarButtonItem,nil] animated:YES];
 }
 

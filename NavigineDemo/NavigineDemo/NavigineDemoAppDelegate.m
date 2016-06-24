@@ -7,39 +7,37 @@
 //
 #include "NavigineDemoAppDelegate.h"
 
-
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "MapViewController.h"
 #import "SlideViewController.h"
 #import "CustomTabBarViewController.h"
 #import "MenuViewController.h"
-//#import <YandexMobileMetrica/YandexMobileMetrica.h>
-
-
 
 @implementation NavigineDemoAppDelegate
 
-//+ (void)initialize
-//{
-//  if ([self class] == [NavigineDemoAppDelegate class]) {
-//    /* Replace API_KEY with your unique API key. Please, read official documentation how to obtain one:
-//     https://tech.yandex.com/metrica-mobile-sdk/doc/mobile-sdk-dg/tasks/ios-quickstart-docpage/
-//     */
-//    [YMMYandexMetrica activateWithApiKey:@"e625c51f-0892-4bf4-853b-166ab3d95cf8"];
-//    //manual log setting for whole library
-//    //[YMMYandexMetrica setLoggingEnabled:YES];
-//  }
-//}
++ (void)initialize
+{
+  if ([self class] == [NavigineDemoAppDelegate class]) {
+    /* Replace API_KEY with your unique API key. Please, read official documentation how to obtain one:
+     https://tech.yandex.com/metrica-mobile-sdk/doc/mobile-sdk-dg/tasks/ios-quickstart-docpage/
+     */
+    [YMMYandexMetrica activateWithApiKey:@"7f985a6f-4158-4633-987d-7bb0c8f2b82b"];
+    //manual log setting for whole library
+    [YMMYandexMetrica setLoggingEnabled:YES];
+  }
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   client = [RavenClient clientWithDSN:@"http://647192ffc27b4613a78f2dca2d77044d:9b5526d57b9849538509aa5104413675@sentry.navigine.com/9"];
-  
   [RavenClient setSharedClient:client];
   // Bind default exception handler
   [client setupExceptionHandler];
+  
+  _navigineManager = [NavigineManager sharedManager];
+  [_navigineManager loadSettings];
   
   NSURL *url = (NSURL *)[launchOptions valueForKey:UIApplicationLaunchOptionsURLKey];
   if(url){
@@ -53,7 +51,6 @@
       if([elts count] < 2) continue;
       [params setObject:[elts lastObject] forKey:[elts firstObject]];
     }
-    _navigineManager = [NavigineManager sharedManager];
     [_navigineManager stopNavigine];
     NSString *location = [params objectForKey:@"location"];
     NSString *userHash = [params objectForKey:@"userHash"];
@@ -183,8 +180,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-  
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+  [_navigineManager saveSettings];
 }
 
 //-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{

@@ -2,8 +2,8 @@
 //  NaviganeManager.h
 //  Navitech
 //
-//  Created by Valentine on 17.04.14.
-//  Copyright (c) 2014 Valentine. All rights reserved.
+//  Created by Pavel Tychinin on 17.04.14.
+//  Copyright (c) 2014 Pavel Tychinin. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -24,10 +24,15 @@
 @protocol NavigineManagerMeasureBeaconDelegate;
 
 
-@interface NavigineManager : NavigineCore <NavigineCoreDelegate, NCBluetoothStateDelegate>{
-    BOOL pushEnable;
-}
+@interface NavigineManager : NavigineCore <NavigineCoreDelegate, NCBluetoothStateDelegate>
+
+@property (nonatomic, assign) BOOL pushEnable;
+
 @property (nonatomic, assign) BOOL debugModeEnable;
+@property (nonatomic, assign) BOOL mainArrowHidden;
+@property (nonatomic, assign) BOOL secondArrowHidden;
+@property (nonatomic, assign) BOOL stepCounterHidden;
+
 @property (nonatomic, assign) BOOL loadFromURL;
 @property (nonatomic, strong) Venue *superVenue;
 @property (nonatomic, strong) NSArray *superUsers;
@@ -83,7 +88,7 @@
 - (void) stopMQueue;
 - (void) changeBaseServerTo:(NSString *) server;
 - (void) shouldDisplayCalibration: (BOOL)displaying;
-- (void) changePushNotificationAvialiability;
+//- (void) changePushNotificationAvialiability;
 
 - (void) startMeasureNearestBeacon:(NCBeacon *)beacon;
 - (void) stopMeasureNearestBeacon;
@@ -92,6 +97,9 @@
 
 - (void) navigateEnablePdr :(int)subLocId :(double)x :(double)y;
 - (void) navigateDisablePdr;
+
+- (void)saveSettings;
+- (void)loadSettings;
 @end
 
 @protocol NavigineManagerDelegate <NSObject>

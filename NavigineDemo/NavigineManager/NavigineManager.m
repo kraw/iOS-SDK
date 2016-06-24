@@ -10,8 +10,6 @@
 
 #define kSTRICT_MODE false
 
-UILocalNotification* localNotification;
-
 @interface NavigineManager(Protected)
 
 - (NSArray *) _arrayWithAccelerometerData;
@@ -147,7 +145,7 @@ static NSString *_userHash = nil;
 
 // We can still have a regular init method, that will get called the first time the Singleton is used.
 - (id)init{
-  [self getServerFromFile];
+  [self getServerFromSettings];
   if (self = [super initWithServer:self.server]) {
 //    [self downloadContent:@"081d-7236-5625-7c6q"
 //                 location:@"SVO Airport"
@@ -164,47 +162,22 @@ static NSString *_userHash = nil;
 //             }];
     self.loadFromURL = NO;
     _debugModeEnable = NO;
+    _mainArrowHidden = YES;
+    _stepCounterHidden = YES;
+    _secondArrowHidden = YES;
     self.superUsers = @[@"532FF36A-A009-4F22-8FC0-7CAF6514835F",  //iPhone 6 plus
                         @"EFEB9593-C1BE-464B-98A8-C15D2E8C2E5E",  //iPhone 5
                         @"6E2BB5B4-0691-41B2-B1CF-301C2C0F7A2A"]; //iPhone 4s
-//    NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    self.su = [self.superUsers indexOfObject:[[[UIDevice currentDevice] identifierForVendor] UUIDString]] == NSNotFound ? NO : YES;
+    NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    _su = [self.superUsers indexOfObject:[[[UIDevice currentDevice] identifierForVendor] UUIDString]] == NSNotFound ? NO : YES;
     super.delegate = self;
     super.btStateDelegate = self;
     self.beacons = [NSArray array];
-    pushEnable = NO;
-    
-    localNotification = [[UILocalNotification alloc] init];
-    localNotification.userInfo = nil;
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
-      [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains
-//    (NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    
-//    //make a file name to write the data to using the documents directory:
-//    NSString *fileName = [NSString stringWithFormat:@"%@/textfile.txt",
-//                          documentsDirectory];
-//
-//    [@"----START-----\n" writeToFile:fileName
-//                    atomically:NO
-//                      encoding:NSStringEncodingConversionAllowLossy
-//                         error:nil];
+    _pushEnable = NO;
+    [self loadSettings];
   }
   return self;
-}//init
-
-//- (void *)routePaths{
-//  NSArray *paths = [self routePaths];
-//  for (int i = 0; i < paths.count; i++){
-//    int id = i;
-//    NSArray * path = paths[i];
-//    for (int j = 0; path.count; i++){
-//      Vertex *vertex = path[i];
-//    }
-//  }
-//}
+}
 
 - (void)sendPushWithText:(NSString *)string andUserInfo:(NSDictionary *)userInfo {
   UIApplicationState state = [[UIApplication sharedApplication] applicationState];
@@ -253,6 +226,7 @@ static NSString *_userHash = nil;
 - (int) checkLocationUploader :(int)id{
   return [self _checkLocationUploader:id];
 }
+
 - (void) stopLocationUploader :(int)id{
   return [self _stopLocationUploader:id];
 }
@@ -288,16 +262,10 @@ static NSString *_userHash = nil;
   self.beacons = [NSArray arrayWithArray:[self _beaconsList]];
 }
 
-- (void) changePushNotificationAvialiability{
-  if(pushEnable) pushEnable = NO;
-  else pushEnable = YES;
-}
-
 #pragma mark - NavigineCoreDelegate methods
 
-
-- (void)didRangePushWithTitle:(NSString *)title content:(NSString *)content image:(NSString *)image{
-  if(!pushEnable) return;
+- (void)didRangePushWithTitle:(NSString *)title content:(NSString *)content image:(NSString *)image id:(NSInteger)id{
+  if(!_pushEnable) return;
   UIStoryboard *st = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
   PopTextViewController *ptvc =  [st instantiateViewControllerWithIdentifier:@"ptview"];
   ptvc.pushTitle = title;
@@ -308,6 +276,8 @@ static NSString *_userHash = nil;
   UIViewController *vc = [[UIApplication sharedApplication] keyWindow].rootViewController;
   [vc presentViewController:nav animated:YES completion:nil];
   [self sendPushWithText:title andUserInfo:nil];
+  [YMMYandexMetrica reportEvent:@"Push has been sent"
+                      onFailure:nil];
 }
 
 - (void) didRangeVenues:(NSArray *)venues :(NSArray *)categories{
@@ -325,59 +295,6 @@ static NSString *_userHash = nil;
 }
 
 - (void) navigationResultsInBackground :(NavigationResults) navigationResults{
-  NavigationResults backGroundNavResults = navigationResults;
-
-  NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
-  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-
-  localNotification.alertBody = [NSString stringWithFormat:@"x=%lf y=%lf error = %zd time=%@\n",
-                                 backGroundNavResults.X,backGroundNavResults.Y, backGroundNavResults.ErrorCode,[dateFormatter stringFromDate:[NSDate date]]];
-//  [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-//  [self getDataFrom:@"https://api.navigine.com/actions?format=json&locationId=1280&userHash=628B-9792-0789-C136"];
-}
-
-- (void) getDataFrom:(NSString *)url{
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-  [request setHTTPMethod:@"GET"];
-  [request setURL:[NSURL URLWithString:url]];
-  
-  NSError *error = [[NSError alloc] init];
-  NSHTTPURLResponse *responseCode = nil;
-  
-  NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-  
-  if([responseCode statusCode] != 200){
-    NSLog(@"Error getting %@, HTTP status code %i", url, [responseCode statusCode]);
-    return;
-  }
-  [self writeToTextFile:[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]];
-}
-
-//temporary method. Remove in next release
--(void) writeToTextFile: (const NSString*)content{
-  //get the documents directory:
-  NSArray *paths = NSSearchPathForDirectoriesInDomains
-  (NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *documentsDirectory = [paths objectAtIndex:0];
-  
-  //make a file name to write the data to using the documents directory:
-  NSString *fileName = [NSString stringWithFormat:@"%@/textfile.txt",
-                        documentsDirectory];
-//  NSMutableString *contentOfFile = [NSMutableString stringWithContentsOfFile: fileName
-//                                                                    encoding: NSUTF8StringEncoding
-//                                                                       error: nil];
-//
-//  //save content to the documents directory
-//  [contentOfFile appendString:content];
-  [content writeToFile:fileName
-                  atomically:NO
-                    encoding:NSStringEncodingConversionAllowLossy
-                       error:nil];
-
-}
-
-- (void) setDebugModeEnable:(BOOL)debugModeEnable{
-  _debugModeEnable = debugModeEnable;
 }
 
 - (void) updateSteps:(NSNumber *)numberOfSteps with:(NSNumber *)distance{
@@ -440,7 +357,6 @@ static NSString *_userHash = nil;
         [vc dismissViewControllerAnimated: YES completion:nil];
     }
   }
-  //[[NSNotificationCenter defaultCenter] postNotificationName:@"bluethoothChange" object:nil userInfo:@{@"state":[NSNumber numberWithInt:state]}];
 }
 
 #pragma mark - hidden methods of NavigineCore
@@ -507,7 +423,7 @@ static NSString *_userHash = nil;
 
 - (void)changeBaseServerTo:(NSString *) server{
   self.server = server;
-  [self saveSereverToFile];
+//  [self saveSereverToFile];
   [self _changeBaseServerTo:server];
 }
 
@@ -539,18 +455,66 @@ static NSString *_userHash = nil;
   return [self _navigateDisablePdr];
 }
 
-- (void)saveSereverToFile{
+#pragma mark - save & load settings from NSUserDefaults
+
+- (void)saveSettings{
   NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-  NSString *currentLevelKey = @"server";
-  [preferences setValue:self.server forKey:currentLevelKey];
+  NSString *isPushEnable = @"isPushEnable";
+  NSString *isDebugModeEnable = @"isDebugModeEnable";
+  NSString *isMainArrowHidden = @"isMainArrowHidden";
+  NSString *isSecondArrowHidden = @"isSecondArrowHidden";
+  NSString *isStepCounterHidden = @"stepCounterHidden";
+  NSString *server = @"server";
+  [preferences setValue:[NSNumber numberWithBool:_pushEnable] forKey:isPushEnable];
+  [preferences setValue:[NSNumber numberWithBool:_debugModeEnable] forKey:isDebugModeEnable];
+  [preferences setValue:[NSNumber numberWithBool:_mainArrowHidden] forKey:isMainArrowHidden];
+  [preferences setValue:[NSNumber numberWithBool:_secondArrowHidden] forKey:isSecondArrowHidden];
+  [preferences setValue:[NSNumber numberWithBool:_stepCounterHidden] forKey:isStepCounterHidden];
+  [preferences setValue:_server forKey:server];
   //  Save to disk
   BOOL didSave = [preferences synchronize];
   if (!didSave){
-    DLog(@"ERROR with saving User Hash");
+    DLog(@"ERROR while saving Application settings");
   }
 }
 
-- (void) getServerFromFile{
+- (void)loadSettings{
+  NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+  NSString *isPushEnable = @"isPushEnable";
+  NSString *isDebugModeEnable = @"isDebugModeEnable";
+  NSString *isMainArrowHidden = @"isMainArrowHidden";
+  NSString *isSecondArrowHidden = @"isSecondArrowHidden";
+  NSString *isStepCounterHidden = @"stepCounterHidden";
+  NSString *server = @"server";
+  if ([preferences objectForKey:isPushEnable]){
+    NSNumber *enable = [preferences objectForKey:isPushEnable];
+    _pushEnable = enable.boolValue;
+  }
+  if ([preferences objectForKey:isDebugModeEnable]){
+    NSNumber *enable = [preferences objectForKey:isDebugModeEnable];
+    _debugModeEnable = enable.boolValue;
+  }
+  if ([preferences objectForKey:isMainArrowHidden]){
+    NSNumber *enable = [preferences objectForKey:isMainArrowHidden];
+    _mainArrowHidden = enable.boolValue;
+  }
+  if ([preferences objectForKey:isSecondArrowHidden]){
+    NSNumber *enable = [preferences objectForKey:isSecondArrowHidden];
+    _secondArrowHidden = enable.boolValue;
+  }
+  if ([preferences objectForKey:isStepCounterHidden]){
+    NSNumber *enable = [preferences objectForKey:isStepCounterHidden];
+    _stepCounterHidden = enable.boolValue;
+  }
+  if ([preferences objectForKey:server]){
+    _server = [preferences objectForKey:server];
+  }
+  else{
+    _server = @"https://api.navigine.com";
+  }
+}
+
+- (void) getServerFromSettings{
   NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
   NSString *currentLevelKey = @"server";
   NSString *server = [NSString string];

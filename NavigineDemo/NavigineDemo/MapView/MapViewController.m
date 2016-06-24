@@ -566,14 +566,6 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   }
 }
 
-//- (IBAction)backRoutePressed:(id)sender {
-//  [self.navigationController setNavigationBarHidden:NO animated:YES];
-//  
-//  _routeType = RouteTypeNone;
-//  self.sv.origin = CGPointZero;
-//  [self stopRoute];
-//}
-
 - (void)deselectPins {
   if(pin && !isRoutingNow){
     [pin removeFromSuperview];
@@ -1048,16 +1040,28 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
   _sv.zoomScale = 1.0f;
   zoomScale = 1.0f;
   
-  if (_navigineManager.debugModeEnable){
+  if(!_navigineManager.stepCounterHidden){
     _iOSPedometer.hidden = NO;
     _naviginePedometer.hidden = NO;
-    current_ios.hidden = NO;
   }
   else{
     _iOSPedometer.hidden = YES;
     _naviginePedometer.hidden = YES;
-    current_ios.hidden = YES;
   }
+  
+  if(!_navigineManager.secondArrowHidden){
+    current_ios.hidden = NO;
+    current_ios.arrowHidden = NO;
+  }
+  else{
+    current_ios.hidden = YES;
+    current_ios.arrowHidden = YES;
+  }
+  
+  if(!_navigineManager.mainArrowHidden)
+    current.arrowHidden = NO;
+  else
+    current.arrowHidden = YES;
 }
 
 - (IBAction)menuPressed:(id)sender {
@@ -1187,6 +1191,7 @@ CGAffineTransform CGAffineTransformMakeRotationAtPoint(CGFloat angle, CGPoint pt
 
 - (IBAction)folowing:(id)sender {
   if (enableFollow){
+    [dynamicModeTimer invalidate];
     dynamicModeTimer = nil;
     self.rotateButton.transform = CGAffineTransformMakeRotation(M_PI/4.);
     enableFollow = NO;

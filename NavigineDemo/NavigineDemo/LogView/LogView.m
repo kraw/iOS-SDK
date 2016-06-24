@@ -52,15 +52,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   self.navigationItem.title = self.navigineManager.location.name;
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *path = [paths[0] stringByAppendingPathComponent:self.navigineManager.location.name];
-  filelist = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-  for(NSString *fileName in filelist){
-    if([fileName hasSuffix:@".log"]){
-      LogFile *logfile = [[LogFile alloc] initWithString:fileName];
-      [logFiles addObject:logfile];
-    }
-  }
+  [self refreshLogsList];
   [self.tableView reloadData];
   [super viewWillAppear:animated];
 }
@@ -88,6 +80,19 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)refreshLogsList{
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *path = [paths[0] stringByAppendingPathComponent:self.navigineManager.location.name];
+  filelist = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+  [logFiles removeAllObjects];
+  for(NSString *fileName in filelist){
+    if([fileName hasSuffix:@".log"]){
+      LogFile *logfile = [[LogFile alloc] initWithString:fileName andPath:path];
+      [logFiles addObject:logfile];
+    }
+  }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -102,15 +107,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
   static NSString *CellIdentifier = @"logCell";
-  
-  LogViewCell *cell = (LogViewCell *)[tableView dequeueReusableCellWithIdentifier: CellIdentifier
-                                                                    forIndexPath :indexPath];
-  
+  LogViewCell *cell = (LogViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier
+                                                                     forIndexPath:indexPath];
   LogFile *logfile = logFiles[indexPath.row];
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *path = [[paths[0] stringByAppendingPathComponent:self.navigineManager.location.name] stringByAppendingPathComponent:filelist[indexPath.row]];
-  NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
-  cell.logfile.text = [logfile.logName stringByAppendingFormat:@"-%zd",indexPath.row + 1];
+  cell.logfile.text = logfile.logName;
   cell.logfile.font  = [UIFont fontWithName:@"Circe-Bold" size:16.0f];
   cell.logfile.textColor = kColorFromHex(0x162D47);
   
@@ -118,7 +118,7 @@
   cell.fileDate.font  = [UIFont fontWithName:@"Circe-Bold" size:13.f];
   cell.fileDate.textColor = kColorFromHex(0x939393);
   
-  cell.fileSize.text = [NSString stringWithFormat:@"%.1fkB",[[fileAttributes objectForKey:NSFileSize] longLongValue]/1024.];
+  cell.fileSize.text = [NSString stringWithFormat:@"%.1fkB",[logfile.logSize longLongValue]/1024.];
   cell.fileSize.font  = [UIFont fontWithName:@"Circe-Bold" size:17.f];
   cell.fileSize.textColor = kColorFromHex(0xAFAFAF);
   
@@ -144,7 +144,6 @@
                                                                        message: nil
                                                                   buttonTitles: playTitles
                                                                    buttonStyle: JGActionSheetButtonStyleBlue];
-    
     NSArray *cancelTitles = [NSArray arrayWithObject:@"Cancel"];
     JGActionSheetSection *cancelSection = [JGActionSheetSection sectionWithTitle: nil
                                                                          message: nil
@@ -152,9 +151,7 @@
                                                                      buttonStyle: JGActionSheetButtonStyleCancel];
     NSArray *sections = @[playSection,cancelSection];
     JGActionSheet *sheet = [[JGActionSheet alloc] initWithSections:sections];
-    
     sheet.delegate = self;
-    
     [sheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *indexPath) {
       switch (indexPath.section) {
         case 0:
@@ -168,9 +165,22 @@
           break;
       }
     }];
-    
     [sheet showInView:self.navigationController.view animated:YES];
   }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+  NSIndexPath *indexPath = [self.tableView indexPathForCell:(LogViewCell *)cell];
+  LogFile *logfile = logFiles[indexPath.row];
+  NSError *error = nil;
+  [self.navigineManager removeLog: logfile.logName
+                            error: &error];
+  if(error){
+    DLog(@"Can't remove log: %@ error:%@",logfile.logName,error);
+  }
+  [self refreshLogsList];
+  [cell hideUtilityButtonsAnimated:YES];
+  [self.tableView reloadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -178,19 +188,6 @@
     MapViewController *mvc = (MapViewController *)segue.destinationViewController;
     self.mapHelper.navigationType = NavigationTypeLog;
   }
-}
-
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
-  LogFile *logfile = logFiles[index];
-  NSError *error = nil;
-  [self.navigineManager removeLog: [logfile logFileToString]
-                            error: &error];
-  if(error){
-    DLog(@"Can't remove log: %@ error:%@",[logfile logFileToString],errorß);
-  }
-  [logFiles removeObject:logfile];
-  [cell hideUtilityButtonsAnimated:YES];
-  [self.tableView reloadData];
 }
 
 @end

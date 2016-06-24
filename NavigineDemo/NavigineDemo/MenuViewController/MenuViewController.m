@@ -35,7 +35,6 @@
   
   self.view.backgroundColor = kColorFromHex(0x14263B);
   self.navigineManager = [NavigineManager sharedManager];
-  BOOL su = self.navigineManager.su;
   
   if(!_navigineManager.debugModeEnable)
     _menuArray = [[NSMutableArray alloc] initWithObjects:@"Location management",@"Navigation mode",@"Settings", nil];

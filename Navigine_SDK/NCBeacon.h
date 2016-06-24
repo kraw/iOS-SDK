@@ -2,7 +2,7 @@
 //  NCBeacon.h
 //  NavigineSDK
 //
-//  Created by Администратор on 01/03/16.
+//  Created by Pavel Tychinin on 01/03/16.
 //  Copyright © 2016 Navigine. All rights reserved.
 //
 

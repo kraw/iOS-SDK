@@ -25,7 +25,7 @@
     self.background.layer.cornerRadius = self.background.height / 2.f;
     self.background.alpha = 0.4;
     
-    self.arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"elmUserCerlceArrow"]];
+    self.arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"elmUserCerlceArrow_fill"]];
     self.arrow.center = CGPointZero;
     self.originalFrame = self.arrow.frame;
     [self sizeToFit];
@@ -42,8 +42,11 @@
   self.arrow.center = CGPointZero;
 }
 
-- (void) savePositionOnMapSize{
-  
+- (void) setArrowHidden:(BOOL)arrowHidden{
+  if (arrowHidden)
+    self.arrow.image = [UIImage imageNamed:@"elmUserCerlceArrow_fill"];
+  else
+    self.arrow.image = [UIImage imageNamed:@"elmUserCerlceArrow"];
 }
 
 @end

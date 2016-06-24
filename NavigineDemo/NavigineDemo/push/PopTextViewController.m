@@ -29,8 +29,8 @@
 {
   [super viewDidLoad];
   // Do any additional setup after loading the view.
-  
-  self.titleLabel.text = self.pushTitle;
+  NSString *titleAfterReplace = [[_pushTitle stringByReplacingOccurrencesOfString: @"</hl>" withString:@""] stringByReplacingOccurrencesOfString: @"<hl>" withString:@""];
+  self.titleLabel.text = titleAfterReplace;
   self.textLabel.text  = self.pushContent;
   refreshControl = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
   [self.image addSubview:refreshControl];
@@ -57,11 +57,12 @@
   
   self.titleLabel.font = [UIFont fontWithName:@"Circe-Bold" size:17.0f];
   self.titleLabel.textColor = kColorFromHex(0xFAFAFA);
+  
   self.titleLabel.text = self.titleLabel.text.uppercaseString;
   
   self.textLabel.font = [UIFont fontWithName:@"Circe-Bold" size:13.0f];
   self.textLabel.textColor = kColorFromHex(0xFAFAFA);
-  [self.textLabel sizeToFit];
+//  [self.textLabel sizeToFit];
   self.textLabel.textAlignment = NSTextAlignmentCenter;
   
   self.textLabel.centerX = self.view.centerX;

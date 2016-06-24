@@ -15,6 +15,7 @@
   int sublocationId;
   NSString *locationName;
   CGFloat zoomScale;
+  CGFloat lineWith;
   
   NSMutableArray *beacons;
   
@@ -103,6 +104,7 @@
   self.btnUpFloor.hidden = NO;
 
   zoomScale = 1.0f;
+  lineWith = 2.0f;
   beacons = [[NSMutableArray alloc] init];
   locationName = @"";
   measureBeaconTitle = [NSString string];
@@ -122,11 +124,12 @@
   
   [self.sv addSubview:self.contentView];
   
-  UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc]
-                                               initWithTarget:self action:@selector(handlePanGesture:)];
+  UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(handlePanGesture:)];
   [self.sv addGestureRecognizer:gestureRecognizer];
   
-  UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
+  UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(scale:)];
   [pinchRecognizer setDelegate:self];
   [_sv addGestureRecognizer:pinchRecognizer];
   
@@ -159,38 +162,15 @@
                         forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_polyLineLayout];
   
-  UILabel *startPointLabel = [[UILabel alloc] init];
-  startPointLabel.text = @"start";
-  startPointLabel.font = [UIFont fontWithName:@"Cicle-Regular" size:12];
-  startPointLabel.textColor = kWhiteColor;
-  [startPointLabel sizeToFit];
-  
-  startPointTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, startPointLabel.width + 10, startPointLabel.height)];
-  startPointTitle.backgroundColor = kColorFromHex(0x4AADD4);
-  [startPointTitle addSubview:startPointLabel];
-  startPointLabel.centerX = startPointTitle.width/2.;
-  startPointLabel.centerY = startPointTitle.height/2.;
-  startPointTitle.layer.cornerRadius = startPointLabel.height/2.;
-  
-  UILabel *finishPointLabel = [[UILabel alloc] init];
-  finishPointLabel.text = @"finish";
-  finishPointLabel.font = [UIFont fontWithName:@"Cicle-Regular" size:12];
-  finishPointLabel.textColor = kWhiteColor;
-  [finishPointLabel sizeToFit];
-  
-  finishPointTitle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, finishPointLabel.width + 10, finishPointLabel.height)];
-  finishPointTitle.backgroundColor = kColorFromHex(0x4AADD4);
-  [finishPointTitle addSubview:finishPointLabel];
-  finishPointLabel.centerX = finishPointTitle.width/2.;
-  finishPointLabel.centerY = finishPointTitle.height/2.;
-  finishPointTitle.layer.cornerRadius = finishPointTitle.height/2.;
   isDrawingPath = NO;
   isPositionChangedFromLastAdding = NO;
   measuringCheckPointNumber = 0;
   timeFromStartMeasurement = 0;
   logFileName = NULL;
   self.sv.scrollEnabled = NO;
-  
+  _sv.minimumZoomScale = 0.5f;
+  _sv.maximumZoomScale = 5.0f;
+  zoomScale = 1.0f;
   self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
@@ -208,6 +188,7 @@
   CGFloat newOriginY = firstCenter.y * _sv.zoomScale - _sv.bounds.size.height/2.;
   _sv.bounds = CGRectMake(newOriginX, newOriginY, _sv.bounds.size.width, _sv.bounds.size.height);
   zoomScale = _sv.zoomScale;
+  lineWith = 2.f / _sv.zoomScale;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
@@ -233,28 +214,31 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   
   self.sv.bounds = bounds;
   [gestureRecognizer setTranslation:CGPointZero inView:self.sv];
-  
+  lineWith = 2.f / _sv.zoomScale;
   if(isDrawingPath){
     isPositionChangedFromLastAdding = YES;
     [currentLayer removeFromSuperlayer];
     currentLayer = nil;
-    //
+    
     [currentPath removeAllPoints];
     currentLayer = [[CAShapeLayer alloc] init];
     
     CGPoint firstCenter = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x)/_sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y)/_sv.zoomScale);
     UIImageView *lastPoint = [points lastObject];
-    [currentPath moveToPoint:CGPointMake(lastPoint.centerX, lastPoint.centerY)];
+    [currentPath moveToPoint:CGPointMake(lastPoint.centerX / _sv.zoomScale, lastPoint.centerY / _sv.zoomScale)];
     [currentPath addLineToPoint:CGPointMake(firstCenter.x, firstCenter.y)];
     
     currentLayer.hidden = NO;
     currentLayer.path            = [currentPath CGPath];
     currentLayer.strokeColor     = [kColorFromHex(0x4AADD4) CGColor];
-    currentLayer.lineWidth       = 2.;
+    currentLayer.lineWidth       = lineWith;
     currentLayer.lineJoin        = kCALineJoinRound;
     currentLayer.fillColor       = [[UIColor clearColor] CGColor];
     
     [_contentView.layer addSublayer:currentLayer];
+    
+    for (CAShapeLayer *line in lines)
+      line.lineWidth = lineWith;
   }
 }
 
@@ -270,7 +254,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
 }
 
 - (CGRect)zoomRectForScrollView:(UIScrollView *)scrollView withScale:(float)scale withCenter:(CGPoint)center {
-  
   CGRect zoomRect;
   
   // The zoom rect is in the content view's coordinates.
@@ -288,17 +271,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   return zoomRect;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  self.sv.pinchGestureRecognizer.enabled = NO;
-  self.uploaderHelper.uploaderDelegate = self;
-}
-
-- (void)didReceiveMemoryWarning{
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
   return self.contentView;
 }
@@ -310,13 +282,24 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   for (Beacon* onebeacon in beacons){
     [onebeacon resizeBeaconWithZoom:scrollView.zoomScale];
   }
+  for(MeasurePoint *point in points){
+    [point resizeMeasurePointWithZoom:scrollView.zoomScale];
+  }
+  for (CAShapeLayer *line in lines){
+    line.lineWidth = 2.f / scrollView.zoomScale;
+  }
   viewWithNoZoom.frame = self.contentView.frame;
 }
-
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
   for (Beacon* onebeacon in beacons){
     [onebeacon resizeBeaconWithZoom:scrollView.zoomScale];
+  }
+  for(MeasurePoint *point in points){
+    [point resizeMeasurePointWithZoom:scrollView.zoomScale];
+  }
+  for (CAShapeLayer *line in lines){
+    line.lineWidth = 2.f / scrollView.zoomScale;
   }
   viewWithNoZoom.frame = self.contentView.frame;
 }
@@ -405,7 +388,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   
 }
 
-
 - (void)centerScrollViewContents {
   CGSize boundsSize = _sv.bounds.size;
   CGRect contentsFrame = self.contentView.frame;
@@ -424,7 +406,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   self.contentView.frame = contentsFrame;
   viewWithNoZoom.frame = self.contentView.frame;
 }
-- (IBAction)beaconClicked :(id)sender{
+
+-(void)beaconClicked :(id)sender{
   beacon = (Beacon *)sender;
   CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
   
@@ -471,8 +454,17 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
                                                     userInfo: @{@"locationName":locationName}];
 }
 
+- (void) viewDidAppear:(BOOL)animated{
+  [super viewDidAppear:animated];
+  _sv.pinchGestureRecognizer.enabled = NO;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  _sv.pinchGestureRecognizer.enabled = NO;
+  _uploaderHelper.uploaderDelegate = self;
+  _navigineManager.dataDelegate = self;
+  
   locationName = _navigineManager.location.name;
   _mapHelper = [MapHelper sharedInstance];
   _mapHelper.delegate = self;
@@ -488,11 +480,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
     _btnUpFloor.alpha = 1.f;
     _txtFloor.hidden = NO;
   }
-  UIImage *buttonImage = [UIImage imageNamed:@"btnMenu"];
-  [_leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-  _sv.maximumZoomScale = 5.0f;
-  _sv.zoomScale = 1.0f;
-  zoomScale = 1.0f;
   [self changeFloorTo:_mapHelper.floor];
 }
 
@@ -531,20 +518,20 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   }
   else{
     [btn setSelected:YES];
-    UIImageView *startPoint = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-    startPoint.layer.cornerRadius = 5;
-    startPoint.backgroundColor = kColorFromHex(0x4AADD4);
-    startPoint.center = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x)/_sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y)/_sv.zoomScale);
+    MeasurePoint *startPoint = [[MeasurePoint alloc] initWithState:MeasurePointStart];
+    startPoint.center = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x) / _sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y) / _sv.zoomScale);
+    startPoint.originalCenter = startPoint.center;
+    [startPoint resizeMeasurePointWithZoom:_sv.zoomScale];
     [points addObject:startPoint];
     
     currentPath = [[UIBezierPath alloc] init];
     currentLayer = [[CAShapeLayer alloc] init];
     
     [currentPath moveToPoint:CGPointMake(startPoint.centerX, startPoint.centerY)];
-    [_contentView addSubview:startPoint];
+    [viewWithNoZoom addSubview:startPoint];
     startPointTitle.right = startPoint.left;
     startPointTitle.bottom = startPoint.bottom;
-    [_contentView addSubview:startPointTitle];
+    [viewWithNoZoom addSubview:startPointTitle];
     
     _polyLineLayout.hidden = NO;
     isDrawingPath = YES;
@@ -635,21 +622,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
     }
   }
 }
-
-//- (IBAction)showDecibels:(id)sender{
-//  if (_showDecibelsButton.isSelected){
-//    [_showDecibelsButton setSelected:NO];
-//    for(Beacon *beaconButton in beacons){
-//      beaconButton.textImage.hidden = YES;
-//    }
-//  }
-//  else{
-//    [_showDecibelsButton setSelected:YES];
-//    for(Beacon *beaconButton in beacons){
-//      beaconButton.textImage.hidden = NO;
-//    }
-//  }
-//}
 
 - (IBAction)zoomInTouch:(id)sender {
   CGPoint origin = _sv.bounds.origin ;
@@ -967,7 +939,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   return demoView;
 }
 
--(void)showStatusBarMessage:(NSString *)message withColor:(UIColor *)color hideAfter:(NSTimeInterval)delay{
+- (void)showStatusBarMessage:(NSString *)message withColor:(UIColor *)color hideAfter:(NSTimeInterval)delay{
   __block UIWindow *statusWindow = [[UIWindow alloc] initWithFrame:[UIApplication sharedApplication].statusBarFrame];
   statusWindow.windowLevel = UIWindowLevelStatusBar + 1;
   UILabel *label = [[UILabel alloc] initWithFrame:statusWindow.bounds];
@@ -995,44 +967,44 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   }];
 }
 
-- (void) addPointButtonClicked:(UIButton *)button{
+- (void)addPointButtonClicked:(UIButton *)button{
   if(isPositionChangedFromLastAdding){
     [lines addObject:currentLayer];
-    UIImageView *startPoint = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-    startPoint.layer.cornerRadius = 5;
-    startPoint.backgroundColor = kColorFromHex(0x4AADD4);
-    startPoint.center = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x)/_sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y)/_sv.zoomScale);
-    [points addObject:startPoint];
+    MeasurePoint *point = [[MeasurePoint alloc] init];
+    point.center = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x)/_sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y)/_sv.zoomScale);
+    point.originalCenter = point.center;
+    [point resizeMeasurePointWithZoom:_sv.zoomScale];
+    [points addObject:point];
     
     currentPath = [[UIBezierPath alloc] init];
     currentLayer = [[CAShapeLayer alloc] init];
     
-    [currentPath moveToPoint:CGPointMake(startPoint.centerX, startPoint.centerY)];
-    [_contentView addSubview:startPoint];
+    [currentPath moveToPoint:CGPointMake(point.centerX, point.centerY)];
+    [viewWithNoZoom addSubview:point];
     isPositionChangedFromLastAdding = NO;
   }
 }
 
-- (void) finishButtonClicked: (UIButton *)button{
-  UIImageView *startPoint = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-  startPoint.layer.cornerRadius = 5;
-  startPoint.backgroundColor = kColorFromHex(0x4AADD4);
-  startPoint.center = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x)/_sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y)/_sv.zoomScale);
+- (void)finishButtonClicked:(UIButton *)button{
+  MeasurePoint *finishPoint = [[MeasurePoint alloc] initWithState:MeasurePointFinish];
+  finishPoint.center = CGPointMake((self.sv.bounds.size.width/2. + self.sv.bounds.origin.x)/_sv.zoomScale,(self.sv.bounds.size.height/2. + self.sv.bounds.origin.y)/_sv.zoomScale);
+  finishPoint.originalCenter = finishPoint.center;
+  [finishPoint resizeMeasurePointWithZoom:_sv.zoomScale];
   [lines addObject:currentLayer];
   
   currentPath = [[UIBezierPath alloc] init];
   currentLayer = [[CAShapeLayer alloc] init];
   
   if(isPositionChangedFromLastAdding){
-    [currentPath moveToPoint:CGPointMake(startPoint.centerX, startPoint.centerY)];
-    [_contentView addSubview:startPoint];
-    [points addObject:startPoint];
+    [currentPath moveToPoint:CGPointMake(finishPoint.centerX, finishPoint.centerY)];
+    [viewWithNoZoom addSubview:finishPoint];
+    [points addObject:finishPoint];
     isPositionChangedFromLastAdding = NO;
   }
   
-  finishPointTitle.right = startPoint.left;
-  finishPointTitle.bottom = startPoint.bottom;
-  [_contentView addSubview:finishPointTitle];
+  finishPointTitle.right = finishPoint.left;
+  finishPointTitle.bottom = finishPoint.bottom;
+  [viewWithNoZoom addSubview:finishPointTitle];
   
   isDrawingPath = NO;
   _polyLineLayout.addPointButton.hidden = YES;
@@ -1077,8 +1049,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   
   startPointTitle.backgroundColor = kColorFromHex(0x00A000);
   measuringCheckPointNumber = 0;
-  UIImageView *point = points[measuringCheckPointNumber];
-  point.backgroundColor = kColorFromHex(0x00A000);
+  MeasurePoint *point = points[measuringCheckPointNumber];
+  [point changeColorTo:kColorFromHex(0x00A000)];
+  
   logFileName = [_navigineManager startSaveLogToFile];
   
   CGPoint pointInMeters = CGPointMake(point.centerX * _navigineManager.DEFAULT_WIDTH/_contentView.width, point.centerY * _navigineManager.DEFAULT_HEIGHT/_contentView.height);
@@ -1092,14 +1065,13 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   
 }
 
-
 - (void) checkPointButtonClicked: (UIButton *)button{
   CAShapeLayer *line = lines[measuringCheckPointNumber];
   line.strokeColor     = [kColorFromHex(0x00A000) CGColor];
   
   measuringCheckPointNumber++;
-  UIImageView *point = points[measuringCheckPointNumber];
-  point.backgroundColor = kColorFromHex(0x00A000);
+  MeasurePoint *point = points[measuringCheckPointNumber];
+  [point changeColorTo:kColorFromHex(0x00A000)];
   
   CGPoint localPoint = CGPointMake(point.centerX/_contentView.width, point.centerY/_contentView.height);
   NSString *checkPoint = [NSString stringWithFormat:@"%zd:%zd:%2.2f:%2.2f",measuringCheckPointNumber,sublocationId,localPoint.x,localPoint.y];

@@ -16,14 +16,27 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 @property (weak, nonatomic) IBOutlet UISwitch *pushSwitcher;
 @property (weak, nonatomic) IBOutlet UISwitch *calibrateViewSwitcher;
-@property (weak, nonatomic) IBOutlet UISwitch *regularScanSwitcher;
-@property (weak, nonatomic) IBOutlet UILabel *regularScanTitle;
-@property (weak, nonatomic) IBOutlet UISwitch *fastScanSwitcher;
-@property (weak, nonatomic) IBOutlet UILabel *fastScanTitle;
+
+// If debug mode enabled
+@property (strong, nonatomic) UISwitch *mainArrowSwitcher;
+@property (strong, nonatomic) UILabel *mainArrowTitle;
+
+@property (strong, nonatomic) UISwitch *secondArrowSwitcher;
+@property (strong, nonatomic) UILabel *secondArrowTitle;
+
+@property (strong, nonatomic) UISwitch *stepCounterSwitcher;
+@property (strong, nonatomic) UILabel *stepCounterTitle;
+
+@property (strong, nonatomic) UIButton *reinitializeClientButton;
+
+@property (strong, nonatomic) UISwitch *regularScanSwitcher;
+@property (strong, nonatomic) UILabel *regularScanTitle;
+
+@property (strong, nonatomic) UISwitch *fastScanSwitcher;
+@property (strong, nonatomic) UILabel *fastScanTitle;
 
 - (IBAction) pushSwitcherPressed:(id)sender;
 - (IBAction) usingDemoPressed:(id)sender;
 - (IBAction) shouldDisplayCalibration:(id)sender;
-- (IBAction) regularScanSwitcherPressed:(id)sender;
-- (IBAction) fastScanSwitcherPressed:(id)sender;
+
 @end

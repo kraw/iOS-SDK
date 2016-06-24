@@ -52,8 +52,6 @@
             <string>Circe-Bold</string>
             <string>Circe-Bold</string>
             <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
-            <string>Circe-Bold</string>
         </mutableArray>
         <mutableArray key="Extrabold.otf">
             <string>Circe-ExtraBold</string>
@@ -242,7 +240,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0g1-85-1W0">
-                                            <rect key="frame" x="20" y="10" width="145" height="21"/>
+                                            <rect key="frame" x="20" y="10" width="176" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -670,8 +668,8 @@
                                         <color key="textColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" textAlignment="center" id="JGz-VM-JyR">
-                                        <rect key="frame" x="20" y="276" width="280" height="232"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" editable="NO" textAlignment="center" id="JGz-VM-JyR">
+                                        <rect key="frame" x="20" y="276" width="280" height="212"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="deviceRGB"/>
@@ -1327,34 +1325,6 @@
                                             <action selector="shouldDisplayCalibration:" destination="Tdz-UM-NwT" eventType="valueChanged" id="LXK-r0-U7z"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Regular scan enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UzU-A7-5Ux">
-                                        <rect key="frame" x="20" y="441" width="199" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
-                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fast scan enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LWN-iW-YZb">
-                                        <rect key="frame" x="20" y="481" width="199" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Circe-Bold" family="Circe" pointSize="16"/>
-                                        <color key="textColor" red="0.086274509799999996" green="0.1764705882" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="j8w-4y-ZJC">
-                                        <rect key="frame" x="244" y="435" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="regularScanSwitcherPressed:" destination="Tdz-UM-NwT" eventType="valueChanged" id="2oO-BQ-1Y4"/>
-                                        </connections>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="8Jt-W9-VsH">
-                                        <rect key="frame" x="244" y="475" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="fastScanSwitcherPressed:" destination="Tdz-UM-NwT" eventType="valueChanged" id="Uoj-pW-qgJ"/>
-                                        </connections>
-                                    </switch>
                                 </subviews>
                                 <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
@@ -1365,11 +1335,7 @@
                     <navigationItem key="navigationItem" id="Nka-QX-8qr"/>
                     <connections>
                         <outlet property="calibrateViewSwitcher" destination="c7k-ZY-j7w" id="cbW-s2-bBd"/>
-                        <outlet property="fastScanSwitcher" destination="8Jt-W9-VsH" id="vpJ-dX-dpf"/>
-                        <outlet property="fastScanTitle" destination="LWN-iW-YZb" id="jN1-NZ-nlP"/>
                         <outlet property="pushSwitcher" destination="gmk-AV-TSg" id="bN5-aA-bbq"/>
-                        <outlet property="regularScanSwitcher" destination="j8w-4y-ZJC" id="rQL-g6-lm2"/>
-                        <outlet property="regularScanTitle" destination="UzU-A7-5Ux" id="4H2-0R-V1a"/>
                         <outlet property="sv" destination="oB9-ht-dbM" id="eT6-xP-KHp"/>
                         <outlet property="txtNavigationFrequency" destination="5Bq-ug-iwP" id="08N-s0-g4Y"/>
                         <outlet property="txtScanTimeOut" destination="EUS-ft-ZGA" id="fyb-EY-9RI"/>
@@ -1811,7 +1777,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="jgK-9z-PDe">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" id="jgK-9z-PDe">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>

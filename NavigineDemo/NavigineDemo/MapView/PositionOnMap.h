@@ -19,6 +19,8 @@
 @property (nonatomic, strong) UIImageView *arrow;
 @property (nonatomic, strong) UIImageView *background;
 
+@property (nonatomic, assign) BOOL arrowHidden;
+
 - (void) resizePositionOnMapWithZoom: (CGFloat) zoom;
 
 @end

@@ -28,7 +28,7 @@
   
   self.navigineManager = [NavigineManager sharedManager];
   self.navigineManager.dataDelegate = self;
-  self.navigineManager.delegate = self;
+//  self.navigineManager.delegate = self;
   [self addLeftButton];
   
   self.sv.contentSize = CGSizeMake(320, 520);
@@ -46,6 +46,7 @@
   self.view.backgroundColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.barTintColor = kColorFromHex(0x162D47);
   self.navigationController.navigationBar.translucent = NO;
+  _navigineManager.dataDelegate = self;
 }
 
 - (void)addLeftButton {
@@ -111,10 +112,10 @@
     NSNumber *second = ((NSDictionary*)b)[@"rssi"];
     
     if (first.intValue < second.intValue) {
-      return NSOrderedAscending;
+      return NSOrderedDescending;
     }
     else if (first.intValue > second.intValue) {
-      return NSOrderedDescending;
+      return NSOrderedAscending;
     }
     // rssi is the same
     return NSOrderedSame;
@@ -132,10 +133,6 @@
     self.bleList.text = [tmp stringByAppendingString:beaconProp];
     i++;
   }
-}
-
-- (void) customBeaconsInfo: (NSString *) localName{
-  self.bleList.text = [NSString stringWithFormat:@"name:%@\n", localName];
 }
 
 - (void) getLatitude:(double)latitude Longitude:(double)longitude{

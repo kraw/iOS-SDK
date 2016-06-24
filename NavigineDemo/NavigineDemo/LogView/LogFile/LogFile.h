@@ -11,7 +11,7 @@
 @interface LogFile : NSObject
 @property (nonatomic, strong) NSString *logName;
 @property (nonatomic, strong) NSString *logDate;
+@property (nonatomic, strong) NSString *logSize;
 
-- (id) initWithString: (NSString *)logFile;
-- (NSString *)logFileToString;
+- (id) initWithString:(NSString *)logFile andPath:(NSString *)path;
 @end
