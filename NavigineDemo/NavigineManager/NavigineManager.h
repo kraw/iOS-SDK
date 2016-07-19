@@ -36,7 +36,7 @@
 @property (nonatomic, assign) BOOL loadFromURL;
 @property (nonatomic, strong) Venue *superVenue;
 @property (nonatomic, strong) NSArray *superUsers;
-@property (nonatomic, strong) NSArray *beacons;
+//@property (nonatomic, strong) NSArray *beacons;
 @property (nonatomic, assign) BOOL su;
 @property (nonatomic, strong) NSString *server;
 @property (nonatomic, assign) BOOL modified;

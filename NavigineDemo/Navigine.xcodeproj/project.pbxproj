@@ -26,18 +26,6 @@
 		C31B9EFA1CE4896D00601220 /* PolyLineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C31B9EF91CE4896D00601220 /* PolyLineLayout.m */; };
 		C32617B61CA52BA7009CA947 /* ErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32617B51CA52BA7009CA947 /* ErrorView.m */; };
 		C32622531BD1018F00631BF8 /* ManualView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32622521BD1018F00631BF8 /* ManualView.m */; };
-		C3286F6A1D1BD26E0057F85A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F691D1BD26E0057F85A /* SystemConfiguration.framework */; };
-		C3286F6C1D1BD28E0057F85A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F6B1D1BD28E0057F85A /* CoreTelephony.framework */; };
-		C3286F6E1D1BD2A00057F85A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F6D1D1BD2A00057F85A /* CoreGraphics.framework */; };
-		C3286F701D1BD2A80057F85A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F6F1D1BD2A80057F85A /* AdSupport.framework */; };
-		C3286F721D1BD2D50057F85A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F711D1BD2D50057F85A /* libsqlite3.tbd */; };
-		C3286F741D1BD2E10057F85A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F731D1BD2E10057F85A /* Security.framework */; };
-		C3286F761D1BD2EE0057F85A /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F751D1BD2EE0057F85A /* libc++.tbd */; };
-		C3286F781D1BD2F70057F85A /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F771D1BD2F70057F85A /* SafariServices.framework */; };
-		C3286F8D1D1BFBC20057F85A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3286F861D1BFBC20057F85A /* Info.plist */; };
-		C3286F8E1D1BFBC20057F85A /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3286F891D1BFBC20057F85A /* RavenClient.m */; };
-		C3286F8F1D1BFBC20057F85A /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = C3286F8C1D1BFBC20057F85A /* RavenConfig.m */; };
-		C3286F911D1BFC280057F85A /* YandexMobileMetrica.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3286F901D1BFC280057F85A /* YandexMobileMetrica.framework */; };
 		C34B94411BF1FD2300A03504 /* elmMapUserDirectionRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C34B943F1BF1FD2300A03504 /* elmMapUserDirectionRed@2x.png */; };
 		C34B94421BF1FD2300A03504 /* elmMapUserDirectionRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C34B94401BF1FD2300A03504 /* elmMapUserDirectionRed@3x.png */; };
 		C37C36AC1BDE1631008BC2B4 /* UICopyableWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = C37C36AB1BDE1631008BC2B4 /* UICopyableWebView.m */; };
@@ -250,6 +238,9 @@
 		C3F698791CAD4E830028C82D /* btnShowLabelsActive@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3F698751CAD4E830028C82D /* btnShowLabelsActive@3x.png */; };
 		C3F698841CAE69B30028C82D /* target@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3F698821CAE69B30028C82D /* target@2x.png */; };
 		C3F698851CAE69B30028C82D /* target@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3F698831CAE69B30028C82D /* target@3x.png */; };
+		C3F9AD021CA03F170015B112 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3F9ACFB1CA03F170015B112 /* Info.plist */; };
+		C3F9AD031CA03F170015B112 /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F9ACFE1CA03F170015B112 /* RavenClient.m */; };
+		C3F9AD041CA03F170015B112 /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F9AD011CA03F170015B112 /* RavenConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -277,22 +268,6 @@
 		C32617B51CA52BA7009CA947 /* ErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorView.m; sourceTree = "<group>"; };
 		C32622511BD1018F00631BF8 /* ManualView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualView.h; sourceTree = "<group>"; };
 		C32622521BD1018F00631BF8 /* ManualView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualView.m; sourceTree = "<group>"; };
-		C3286F691D1BD26E0057F85A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		C3286F6B1D1BD28E0057F85A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		C3286F6D1D1BD2A00057F85A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		C3286F6F1D1BD2A80057F85A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		C3286F711D1BD2D50057F85A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		C3286F731D1BD2E10057F85A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		C3286F751D1BD2EE0057F85A /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		C3286F771D1BD2F70057F85A /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		C3286F861D1BFBC20057F85A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C3286F871D1BFBC20057F85A /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
-		C3286F881D1BFBC20057F85A /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
-		C3286F891D1BFBC20057F85A /* RavenClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenClient.m; sourceTree = "<group>"; };
-		C3286F8A1D1BFBC20057F85A /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
-		C3286F8B1D1BFBC20057F85A /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
-		C3286F8C1D1BFBC20057F85A /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
-		C3286F901D1BFC280057F85A /* YandexMobileMetrica.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = YandexMobileMetrica.framework; sourceTree = "<group>"; };
 		C34B943F1BF1FD2300A03504 /* elmMapUserDirectionRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elmMapUserDirectionRed@2x.png"; sourceTree = "<group>"; };
 		C34B94401BF1FD2300A03504 /* elmMapUserDirectionRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elmMapUserDirectionRed@3x.png"; sourceTree = "<group>"; };
 		C37C36AA1BDE1631008BC2B4 /* UICopyableWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICopyableWebView.h; sourceTree = "<group>"; };
@@ -734,6 +709,13 @@
 		C3F698751CAD4E830028C82D /* btnShowLabelsActive@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btnShowLabelsActive@3x.png"; sourceTree = "<group>"; };
 		C3F698821CAE69B30028C82D /* target@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "target@2x.png"; sourceTree = "<group>"; };
 		C3F698831CAE69B30028C82D /* target@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "target@3x.png"; sourceTree = "<group>"; };
+		C3F9ACFB1CA03F170015B112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3F9ACFC1CA03F170015B112 /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
+		C3F9ACFD1CA03F170015B112 /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
+		C3F9ACFE1CA03F170015B112 /* RavenClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenClient.m; sourceTree = "<group>"; };
+		C3F9ACFF1CA03F170015B112 /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
+		C3F9AD001CA03F170015B112 /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
+		C3F9AD011CA03F170015B112 /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -741,22 +723,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3286F781D1BD2F70057F85A /* SafariServices.framework in Frameworks */,
-				C3286F761D1BD2EE0057F85A /* libc++.tbd in Frameworks */,
-				C3286F741D1BD2E10057F85A /* Security.framework in Frameworks */,
-				C3286F721D1BD2D50057F85A /* libsqlite3.tbd in Frameworks */,
-				C3286F701D1BD2A80057F85A /* AdSupport.framework in Frameworks */,
-				C3286F6E1D1BD2A00057F85A /* CoreGraphics.framework in Frameworks */,
-				C3286F6C1D1BD28E0057F85A /* CoreTelephony.framework in Frameworks */,
-				C3F0D1581BC2CAC000738EEF /* UIKit.framework in Frameworks */,
-				C3286F6A1D1BD26E0057F85A /* SystemConfiguration.framework in Frameworks */,
 				C3F0D1621BC2CAF000738EEF /* MobileCoreServices.framework in Frameworks */,
 				C3F0D1601BC2CAE600738EEF /* Foundation.framework in Frameworks */,
 				C3F0D15E1BC2CADA00738EEF /* CoreMotion.framework in Frameworks */,
 				C3F0D15C1BC2CAD300738EEF /* CoreBluetooth.framework in Frameworks */,
 				C3F0D15A1BC2CACD00738EEF /* CoreLocation.framework in Frameworks */,
+				C3F0D1581BC2CAC000738EEF /* UIKit.framework in Frameworks */,
 				C3F0D1561BC2CAB500738EEF /* libc++.dylib in Frameworks */,
-				C3286F911D1BFC280057F85A /* YandexMobileMetrica.framework in Frameworks */,
 				C3F0D1541BC2CAA800738EEF /* libz.dylib in Frameworks */,
 				C3A650EB1BBBDABF00129AA2 /* Fabric.framework in Frameworks */,
 				C3A650EA1BBBDABF00129AA2 /* Crashlytics.framework in Frameworks */,
@@ -812,21 +785,6 @@
 			);
 			name = ManualView;
 			path = NavigineDemo/ManualView;
-			sourceTree = SOURCE_ROOT;
-		};
-		C3286F851D1BFBC20057F85A /* Raven */ = {
-			isa = PBXGroup;
-			children = (
-				C3286F861D1BFBC20057F85A /* Info.plist */,
-				C3286F871D1BFBC20057F85A /* Raven.h */,
-				C3286F881D1BFBC20057F85A /* RavenClient.h */,
-				C3286F891D1BFBC20057F85A /* RavenClient.m */,
-				C3286F8A1D1BFBC20057F85A /* RavenClient_Private.h */,
-				C3286F8B1D1BFBC20057F85A /* RavenConfig.h */,
-				C3286F8C1D1BFBC20057F85A /* RavenConfig.m */,
-			);
-			name = Raven;
-			path = NavigineDemo/Raven;
 			sourceTree = SOURCE_ROOT;
 		};
 		C37C36A91BDE1614008BC2B4 /* UICopyableWebView */ = {
@@ -1700,15 +1658,6 @@
 		C3D1D6A419745EC300C99AF6 = {
 			isa = PBXGroup;
 			children = (
-				C3286F901D1BFC280057F85A /* YandexMobileMetrica.framework */,
-				C3286F771D1BD2F70057F85A /* SafariServices.framework */,
-				C3286F751D1BD2EE0057F85A /* libc++.tbd */,
-				C3286F731D1BD2E10057F85A /* Security.framework */,
-				C3286F711D1BD2D50057F85A /* libsqlite3.tbd */,
-				C3286F6F1D1BD2A80057F85A /* AdSupport.framework */,
-				C3286F6D1D1BD2A00057F85A /* CoreGraphics.framework */,
-				C3286F6B1D1BD28E0057F85A /* CoreTelephony.framework */,
-				C3286F691D1BD26E0057F85A /* SystemConfiguration.framework */,
 				C3F0D1611BC2CAF000738EEF /* MobileCoreServices.framework */,
 				C3F0D15F1BC2CAE600738EEF /* Foundation.framework */,
 				C3F0D15D1BC2CADA00738EEF /* CoreMotion.framework */,
@@ -1739,7 +1688,7 @@
 		C3F0D0931BC258E300738EEF /* Navigine */ = {
 			isa = PBXGroup;
 			children = (
-				C3286F851D1BFBC20057F85A /* Raven */,
+				C3F9ACFA1CA03F170015B112 /* Raven */,
 				C3889EDE1BCB8D5A002F0B4A /* Base.lproj */,
 				C3889EE11BCB8D5A002F0B4A /* BTOffView */,
 				C3889EE41BCB8D5A002F0B4A /* Cells */,
@@ -1805,6 +1754,21 @@
 			);
 			path = SDK;
 			sourceTree = "<group>";
+		};
+		C3F9ACFA1CA03F170015B112 /* Raven */ = {
+			isa = PBXGroup;
+			children = (
+				C3F9ACFB1CA03F170015B112 /* Info.plist */,
+				C3F9ACFC1CA03F170015B112 /* Raven.h */,
+				C3F9ACFD1CA03F170015B112 /* RavenClient.h */,
+				C3F9ACFE1CA03F170015B112 /* RavenClient.m */,
+				C3F9ACFF1CA03F170015B112 /* RavenClient_Private.h */,
+				C3F9AD001CA03F170015B112 /* RavenConfig.h */,
+				C3F9AD011CA03F170015B112 /* RavenConfig.m */,
+			);
+			name = Raven;
+			path = NavigineDemo/Raven;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -1872,6 +1836,7 @@
 			files = (
 				C3C670851BFF21F30099D918 /* elmUserCerlceArrow@2x.png in Resources */,
 				C388A0C51BCB8D5A002F0B4A /* elmArrowPull@2x.png in Resources */,
+				C3F9AD021CA03F170015B112 /* Info.plist in Resources */,
 				C388A0C61BCB8D5A002F0B4A /* elmArrowPull@3x.png in Resources */,
 				C3E4DEA71CEDBE7500FCECF2 /* btnBootGreen@3x.png in Resources */,
 				C388A0D21BCB8D5A002F0B4A /* elmCercleStop@3x.png in Resources */,
@@ -1962,7 +1927,6 @@
 				C37E3FCA1BCFF09D004B849E /* elmCercleGray2@2x.png in Resources */,
 				C388A0BB1BCB8D5A002F0B4A /* btnMapInfo@2x.png in Resources */,
 				C388A0AF1BCB8D5A002F0B4A /* btnDownloadMap@2x.png in Resources */,
-				C3286F8D1D1BFBC20057F85A /* Info.plist in Resources */,
 				C388A0C01BCB8D5A002F0B4A /* btnSearchLog@3x.png in Resources */,
 				C388A0A01BCB8D5A002F0B4A /* btnBack@2x.png in Resources */,
 				C388A0CE1BCB8D5A002F0B4A /* elmBubbleArrowOrange@3x.png in Resources */,
@@ -2047,7 +2011,6 @@
 				C388A1301BCB8D5B002F0B4A /* LoginHelper.m in Sources */,
 				C3DFAEE11BCBE02D00B5AC92 /* AFSecurityPolicy.m in Sources */,
 				C388A1191BCB8D5B002F0B4A /* Loader.m in Sources */,
-				C3286F8F1D1BFBC20057F85A /* RavenConfig.m in Sources */,
 				C388A1041BCB8D5B002F0B4A /* Reachability.m in Sources */,
 				C388A1071BCB8D5B002F0B4A /* SWLongPressGestureRecognizer.m in Sources */,
 				C388A1171BCB8D5B002F0B4A /* MRMessageInterceptor.m in Sources */,
@@ -2058,6 +2021,7 @@
 				C3DCF9241C92AE430019F7AC /* CustomIOSAlertView.m in Sources */,
 				C388A1001BCB8D5B002F0B4A /* MRStopButton.m in Sources */,
 				C388A11D1BCB8D5B002F0B4A /* LogFile.m in Sources */,
+				C3F9AD031CA03F170015B112 /* RavenClient.m in Sources */,
 				C3DFAEE01BCBE02D00B5AC92 /* AFNetworkReachabilityManager.m in Sources */,
 				C388A0921BCB8D5A002F0B4A /* DebugHelper.m in Sources */,
 				C388A0FE1BCB8D5B002F0B4A /* MRNavigationBarProgressView.m in Sources */,
@@ -2074,7 +2038,6 @@
 				C3F0D13B1BC2591500738EEF /* NavigineManager.m in Sources */,
 				C388A1091BCB8D5B002F0B4A /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				C3DFAEE51BCBE02D00B5AC92 /* AFURLSessionManager.m in Sources */,
-				C3286F8E1D1BFBC20057F85A /* RavenClient.m in Sources */,
 				C388A1271BCB8D5B002F0B4A /* NavigineDemoAppDelegate.m in Sources */,
 				C388A11E1BCB8D5B002F0B4A /* LogView.m in Sources */,
 				C388A12B1BCB8D5B002F0B4A /* PopTextViewController.m in Sources */,
@@ -2114,6 +2077,7 @@
 				C388A08B1BCB8D5A002F0B4A /* BTOffView.m in Sources */,
 				C3B953211BD117C200F5E9C8 /* JGActionSheet.m in Sources */,
 				C388A0941BCB8D5A002F0B4A /* DetailLoaderView.m in Sources */,
+				C3F9AD041CA03F170015B112 /* RavenConfig.m in Sources */,
 				C388A11A1BCB8D5B002F0B4A /* LoaderHelper.m in Sources */,
 				C388A10A1BCB8D5B002F0B4A /* SWUtilityButtonView.m in Sources */,
 				C388A1221BCB8D5B002F0B4A /* MapViewController.m in Sources */,

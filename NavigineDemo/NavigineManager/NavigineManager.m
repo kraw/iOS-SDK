@@ -172,7 +172,6 @@ static NSString *_userHash = nil;
     _su = [self.superUsers indexOfObject:[[[UIDevice currentDevice] identifierForVendor] UUIDString]] == NSNotFound ? NO : YES;
     super.delegate = self;
     super.btStateDelegate = self;
-    self.beacons = [NSArray array];
     _pushEnable = NO;
     [self loadSettings];
   }
@@ -259,12 +258,11 @@ static NSString *_userHash = nil;
 
 - (void) loadArchive:(NSString *)location error:(NSError *__autoreleasing *)error{
   [super loadArchive:location error:error];
-  self.beacons = [NSArray arrayWithArray:[self _beaconsList]];
 }
 
 #pragma mark - NavigineCoreDelegate methods
 
-- (void)didRangePushWithTitle:(NSString *)title content:(NSString *)content image:(NSString *)image id:(NSInteger)id{
+- (void)didRangePushWithTitle:(NSString *)title content:(NSString *)content image:(NSString *)image{
   if(!_pushEnable) return;
   UIStoryboard *st = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
   PopTextViewController *ptvc =  [st instantiateViewControllerWithIdentifier:@"ptview"];
@@ -276,8 +274,6 @@ static NSString *_userHash = nil;
   UIViewController *vc = [[UIApplication sharedApplication] keyWindow].rootViewController;
   [vc presentViewController:nav animated:YES completion:nil];
   [self sendPushWithText:title andUserInfo:nil];
-  [YMMYandexMetrica reportEvent:@"Push has been sent"
-                      onFailure:nil];
 }
 
 - (void) didRangeVenues:(NSArray *)venues :(NSArray *)categories{
@@ -308,7 +304,6 @@ static NSString *_userHash = nil;
 }
 
 - (void) beaconFounded:(NCBeacon *)ncBeacon error:(NSError**)error{
-  self.beacons = [NSArray arrayWithArray:[self _beaconsList]];
   if (self.beaconMeasureDelegate && [self.beaconMeasureDelegate respondsToSelector:@selector(beaconFounded: error:)])
     [self.beaconMeasureDelegate beaconFounded:ncBeacon error:error];
 }

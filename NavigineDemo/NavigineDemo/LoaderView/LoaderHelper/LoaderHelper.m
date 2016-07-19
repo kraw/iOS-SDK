@@ -267,7 +267,7 @@
 
 #pragma mark UserHashDelegateMethods
 
--(void) errorWhileDownloadingLocationList:(NSInteger)error{
+-(void) errorWhileDownloadingLocationList:(LoadingError)error{
   self.userHashHelper.delegate = nil;
   if(self.loaderDelegate && [self.loaderDelegate respondsToSelector:@selector(locationListUpdateError:)]){
     [self.loaderDelegate locationListUpdateError:error];

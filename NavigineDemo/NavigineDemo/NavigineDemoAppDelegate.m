@@ -7,6 +7,7 @@
 //
 #include "NavigineDemoAppDelegate.h"
 
+
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "MapViewController.h"
@@ -14,19 +15,22 @@
 #import "CustomTabBarViewController.h"
 #import "MenuViewController.h"
 
+
+
+
 @implementation NavigineDemoAppDelegate
 
-+ (void)initialize
-{
-  if ([self class] == [NavigineDemoAppDelegate class]) {
-    /* Replace API_KEY with your unique API key. Please, read official documentation how to obtain one:
-     https://tech.yandex.com/metrica-mobile-sdk/doc/mobile-sdk-dg/tasks/ios-quickstart-docpage/
-     */
-    [YMMYandexMetrica activateWithApiKey:@"7f985a6f-4158-4633-987d-7bb0c8f2b82b"];
-    //manual log setting for whole library
-    [YMMYandexMetrica setLoggingEnabled:YES];
-  }
-}
+//+ (void)initialize
+//{
+//  if ([self class] == [NavigineDemoAppDelegate class]) {
+//    /* Replace API_KEY with your unique API key. Please, read official documentation how to obtain one:
+//     https://tech.yandex.com/metrica-mobile-sdk/doc/mobile-sdk-dg/tasks/ios-quickstart-docpage/
+//     */
+//    [YMMYandexMetrica activateWithApiKey:@"0ccfc36c-adc3-47cb-bfaa-7d5f0d1397f6"];
+//    //manual log setting for whole library
+//    [YMMYandexMetrica setLoggingEnabled:YES];
+//  }
+//}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

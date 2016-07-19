@@ -200,7 +200,7 @@
   
 }
 
-- (void) errorWhileDownloadingLocationList :(NSInteger)error{
+- (void) errorWhileDownloadingLocationList :(LoadingError)error{
   [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
 }
 

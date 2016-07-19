@@ -2,7 +2,7 @@
 //  Location.h
 //  NavigineSDK
 //
-//  Created by Администратор on 11/03/15.
+//  Created by Pavel Tychinin on 11/03/15.
 //  Copyright (c) 2015 Navigine. All rights reserved.
 //
 
@@ -42,8 +42,8 @@
 @property (nonatomic,strong) NSMutableArray *subLocations;
 
 /**
- *  Is local modified Archive
- */
+*  Is local modified Archive
+*/
 @property (nonatomic,assign) BOOL modified;
 
 

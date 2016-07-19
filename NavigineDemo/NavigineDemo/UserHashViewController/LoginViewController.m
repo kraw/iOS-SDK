@@ -198,10 +198,18 @@
   
 }
 
-- (void) errorWhileDownloadingLocationList:(NSInteger)error{
+- (void) errorWhileDownloadingLocationList:(LoadingError)error{
   [self.navigationItem setRightBarButtonItems:nil animated:NO];
-  if(error == -1)
-    [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
+  NSString *errorString = @"    Internal error. Please contact technical support.";
+  if(error == LoadingErrorInternetConnection){
+    errorString = @"    Cannot connect to server. Check your internet connection.";
+  }
+  else if (error == LoadingErrorInvalidCredentials){
+    errorString = @"    Cannot connect to server. Invalid e-mail or password.";
+  }
+  [self showStatusBarMessage:errorString
+                   withColor:kColorFromHex(0xD36666)
+                   hideAfter:5];
   [self viewDidAppear:NO];
 }
 

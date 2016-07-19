@@ -39,5 +39,5 @@
 - (void) errorWhileDownloading :(NSInteger)error :(LocationInfo *)location;
 - (void) successfullDownloading :(LocationInfo *)location;
 - (void) locationListUpdateSuccessful;
-- (void) locationListUpdateError:(NSInteger)error;
+- (void) locationListUpdateError:(LoadingError)error;
 @end

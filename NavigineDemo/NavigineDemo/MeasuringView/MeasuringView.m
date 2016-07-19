@@ -683,8 +683,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:
   
   for(UIButton *btn in beacons) [btn removeFromSuperview];
   [beacons removeAllObjects];
-  for(NCBeacon* ncBeacon in _navigineManager.beacons){
-    if(ncBeacon.subLocationId == sublocationId && !(ncBeacon.status == NCBeaconDel)){
+  Sublocation *subLocation = [_navigineManager.location subLocationAtId:sublocationId];
+  for(NCBeacon* ncBeacon in subLocation.beacons){
+    if(ncBeacon.status != NCBeaconDel){
       Beacon *oldBeacon = [[Beacon alloc] initWithBeacon:ncBeacon];
       [oldBeacon addTarget:self action:@selector(beaconClicked:) forControlEvents:UIControlEventTouchUpInside];
       oldBeacon.center = CGPointMake(ncBeacon.kX * self.contentView.bounds.size.width, (1.f - ncBeacon.kY) * self.contentView.bounds.size.height);

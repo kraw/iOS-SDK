@@ -12,6 +12,14 @@
 #import "Reachability.h"
 #import "TBXML.h"
 
+typedef NS_ENUM(NSInteger, LoadingError) {
+  LoadingErrorInvalidRequest = 0,
+  LoadingErrorInternetConnection,
+  LoadingErrorInvalidCredentials,
+  LoadingErrorInvalidContent,
+  LoadingErrorInternalError
+};
+
 @protocol LoginHelperDelegate;
 
 @interface LoginHelper : NSObject
@@ -36,6 +44,6 @@
 @protocol LoginHelperDelegate <NSObject>
 @optional
 - (void) changeDownloadingLocationListValue :(NSInteger)value;
-- (void) errorWhileDownloadingLocationList :(NSInteger)error;
+- (void) errorWhileDownloadingLocationList :(LoadingError)error;
 - (void) successfullDownloadingLocationList;
 @end

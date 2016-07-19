@@ -157,7 +157,7 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
 -(void)startDownloadProcess:(NSString *)location :(BOOL)forced{
   if(![self checkInternetConnection]){
     if(self.delegate && [self.delegate respondsToSelector:@selector(errorWhileDownloadingLocationList:)]){
-      [self.delegate errorWhileDownloadingLocationList:-1];
+      [self.delegate errorWhileDownloadingLocationList:LoadingErrorInternetConnection];
     }
   }
   else{
@@ -170,12 +170,12 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
        parameters:params
           success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             if(!responseObject){
-              [self.delegate errorWhileDownloadingLocationList:-1];
+              [self.delegate errorWhileDownloadingLocationList:LoadingErrorInvalidContent];
               return;
             }
             NSDictionary *user = responseObject[@"user"];
             if (!user){
-              [self.delegate errorWhileDownloadingLocationList:-1];
+              [self.delegate errorWhileDownloadingLocationList:LoadingErrorInvalidCredentials];
               return;
             }
             self.userHash = user[@"hash"];
@@ -183,7 +183,7 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
             [self startDownloadingLocation:location];
           }
           failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-            [self.delegate errorWhileDownloadingLocationList:-1];
+            [self.delegate errorWhileDownloadingLocationList:LoadingErrorInvalidRequest];
           }];
   }
 }
@@ -217,7 +217,7 @@ NSString *const kTitleLocationInfo = @"NLocationInfo";
   self.userHashValid = NO;
   [self removeUserHashFromFile];
   if(self.delegate && [self.delegate respondsToSelector:@selector(errorWhileDownloadingLocationList:)]){
-    [self.delegate errorWhileDownloadingLocationList:-2];
+    [self.delegate errorWhileDownloadingLocationList:LoadingErrorInternalError];
   }
 }
 

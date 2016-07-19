@@ -593,11 +593,19 @@
   [self.tableView reloadData];
 }
 
-- (void)locationListUpdateError:(NSInteger)error{
+- (void)locationListUpdateError:(LoadingError)error{
   [self.refreshControl endRefreshing];
   [self.tableView reloadData];
-  if(error == -1)
-    [self showStatusBarMessage:@"    Cannot connect to server. Check your internet connection." withColor:kColorFromHex(0xD36666) hideAfter:5];
+  NSString *errorString = @"    Internal error. Please contact technical support.";
+  if(error == LoadingErrorInternetConnection){
+    errorString = @"    Cannot connect to server. Check your internet connection.";
+  }
+  else if (error == LoadingErrorInvalidCredentials){
+    errorString = @"    Cannot connect to server. Invalid e-mail or password.";
+  }
+  [self showStatusBarMessage:errorString
+                   withColor:kColorFromHex(0xD36666)
+                   hideAfter:5];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
