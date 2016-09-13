@@ -28,6 +28,8 @@
                                        [[NavigineCore defaultCore] startNavigine];
                                        [[NavigineCore defaultCore] startRangePushes];
                                        [[NavigineCore defaultCore] startRangeVenues];
+                                       NavigineCore *core = [NavigineCore defaultCore];
+                                       NSLog(@"%@",core.location.name);
                                        NSData *imageData = [[NavigineCore defaultCore] dataForPNGImageAtIndex:0 error:nil];
                                        UIImage *image = [UIImage imageWithData:imageData];
                                        
