@@ -298,10 +298,13 @@ typedef struct _NavigationResults{
  *  @param title   title of push.
  *  @param content content of push.
  *  @param image   url path to image of push.
+ *  @param expiration   expiration date of push.
  */
 - (void) didRangePushWithTitle :(NSString *)title
                        content :(NSString *)content
-                         image :(NSString *)image;
+                         image :(NSString *)image
+                expirationDate :(NSDate *)expiration
+                   description :(NSString *)description;
 
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.
@@ -314,6 +317,8 @@ typedef struct _NavigationResults{
 - (void) didRangePushWithTitle :(NSString *)title
                        content :(NSString *)content
                          image :(NSString *)image
+                expirationDate :(NSDate *)expiration
+                   description :(NSString *)description
                             id :(NSInteger) id;
 /**
  *  Function is used for checking venues from web site.
