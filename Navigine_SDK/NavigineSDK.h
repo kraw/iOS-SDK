@@ -49,9 +49,7 @@ typedef struct _NavigationResults{
 @protocol NavigineCoreDelegate;
 @protocol NCBluetoothStateDelegate;
 
-@interface NavigineCore : NSObject{
-  BOOL STRICT_MODE;
-}
+@interface NavigineCore : NSObject
 
 @property (nonatomic, strong) Location *location;
 
@@ -283,7 +281,6 @@ typedef struct _NavigationResults{
  *  Function is used for getting result of navigation when app in background or app not running.
  If application is in the background function is called once per second.
  If application not run function is called by OS signal.
- More info: http://developer.radiusnetworks.com/2013/11/13/ibeacon-monitoring-in-the-background-and-foreground.html
  
  *
  *  @param navigationResults structure NavigationResults.
@@ -298,13 +295,10 @@ typedef struct _NavigationResults{
  *  @param title   title of push.
  *  @param content content of push.
  *  @param image   url path to image of push.
- *  @param expiration   expiration date of push.
  */
 - (void) didRangePushWithTitle :(NSString *)title
                        content :(NSString *)content
-                         image :(NSString *)image
-                expirationDate :(NSDate *)expiration
-                   description :(NSString *)description;
+                         image :(NSString *)image;
 
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.
@@ -317,8 +311,6 @@ typedef struct _NavigationResults{
 - (void) didRangePushWithTitle :(NSString *)title
                        content :(NSString *)content
                          image :(NSString *)image
-                expirationDate :(NSDate *)expiration
-                   description :(NSString *)description
                             id :(NSInteger) id;
 /**
  *  Function is used for checking venues from web site.
