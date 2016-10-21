@@ -50,6 +50,7 @@
 - (void) navigationTick: (NSTimer *)timer{
     NavigationResults res = [[NavigineCore defaultCore] getNavigationResults];
     if (res.ErrorCode == 0){
+        NSLog(@"RESULT: %lf %lf",res.X,res.Y);
         _current.center = CGPointMake(_imageView.frame.size.width*res.kX,
                                       _imageView.frame.size.height*(1. - res.kY));
     }
@@ -77,4 +78,13 @@
     // Your code
 }
 
+- (IBAction)startPressed:(id)sender {
+    [[NavigineCore defaultCore] loadArchive:@"Navigine_Proletarsakya" error:nil];
+    [[NavigineCore defaultCore] startNavigine];
+}
+
+- (IBAction)stopPressed:(id)sender {
+    [[NavigineCore defaultCore] stopNavigine];
+    
+}
 @end

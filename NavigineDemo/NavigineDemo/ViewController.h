@@ -14,5 +14,11 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 
 @property (nonatomic, strong) UIImageView *current;
+@property (weak, nonatomic) IBOutlet UIButton *start;
+@property (weak, nonatomic) IBOutlet UIButton *stop;
+- (IBAction)startPressed:(id)sender;
+- (IBAction)stopPressed:(id)sender;
+
+
 @end
 

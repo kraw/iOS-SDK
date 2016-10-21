@@ -209,7 +209,7 @@
             NSString *minorValue = [beacon stringForCharacteristicWithDescriptor:minor];
             
             NSString *stringValue = [[NSString alloc] initWithFormat:@"K-%@-%@",majorValue,minorValue];
-            error = [beacon writeString:stringValue forCharacteristicWithDescriptor:name];
+//            error = [beacon writeString:stringValue forCharacteristicWithDescriptor:name];
             error = [beacon writeString:newInterval forCharacteristicWithDescriptor:interval];
             error = [beacon writeString:newPower forCharacteristicWithDescriptor:power];
             doneBeacons++;

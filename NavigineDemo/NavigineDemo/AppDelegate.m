@@ -19,8 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [[NavigineCore defaultCore] downloadContent:@"0000-0000-0000-0000"
-                                       location:@"Navigine Office"
+    [[NavigineCore defaultCore] downloadContent:@"628B-9792-0789-C136"
+                                       location:@"Navigine_Proletarsakya"
                                     forceReload:NO
                                    processBlock:^(NSInteger loadProcess) {
                                        NSLog(@"%zd",loadProcess);

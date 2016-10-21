@@ -2,7 +2,7 @@
 //  Sublocation.h
 //  NavigineSDK
 //
-//  Created by Администратор on 27/04/15.
+//  Created by Pavel Tychinin on 27/04/15.
 //  Copyright (c) 2015 Navigine. All rights reserved.
 //
 
@@ -10,6 +10,8 @@
 #define NavigineSDK_Sublocation_h
 
 #endif
+
+#import "NCBeacon.h"
 /**
  *  Sublocation in your personal account
  */
@@ -84,6 +86,11 @@
  *  GPS longitude
  */
 @property (nonatomic, assign) double    gpsLongitude;
+
+/**
+ *  Beacons which sublocation contains
+ */
+@property (nonatomic,copy) NSMutableArray    *beacons;
 
 /**
  *  Name of archive file
