@@ -25,28 +25,17 @@
                                    processBlock:^(NSInteger loadProcess) {
                                        NSLog(@"%zd",loadProcess);
                                    } successBlock:^{
-                                       [[NavigineCore defaultCore] startNavigine];
-                                       [[NavigineCore defaultCore] startRangePushes];
-                                       [[NavigineCore defaultCore] startRangeVenues];
-                                       NavigineCore *core = [NavigineCore defaultCore];
-                                       NSLog(@"%@",core.location.name);
-                                       NSData *imageData = [[NavigineCore defaultCore] dataForPNGImageAtIndex:0 error:nil];
-                                       UIImage *image = [UIImage imageWithData:imageData];
-                                       
-                                       ViewController *vc = (ViewController *)[[UIApplication sharedApplication] keyWindow].rootViewController;
-                                       float scale = 1.f;
-                                       if (image.size.width / image.size.height >
-                                           vc.view.frame.size.width / vc.view.frame.size.height){
-                                           scale = vc.view.frame.size.height / image.size.height;
-                                       }
-                                       else{
-                                           scale = vc.view.frame.size.width / image.size.width;
-                                       }
-                                       vc.imageView.frame = CGRectMake(0, 0, image.size.width * scale, image.size.height * scale);
-                                       vc.imageView.image = image;
-                                       vc.sv.contentSize = vc.imageView.frame.size;
+                                       [self setupNavigine];
                                    } failBlock:^(NSError *error) {
                                        NSLog(@"Error:%@",error);
+                                       if (error){
+                                           //Connection problem. Try to start Navigine
+                                           NSError *navigineError = nil;
+                                           [[NavigineCore defaultCore] loadArchive:@"Navigine_Proletarsakya" error:&navigineError];
+                                           if (!navigineError){
+                                               [self setupNavigine];
+                                           }
+                                       }
                                    }];
     return YES;
 }
@@ -71,6 +60,29 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(void) setupNavigine{
+    [[NavigineCore defaultCore] startNavigine];
+    [[NavigineCore defaultCore] startRangePushes];
+    [[NavigineCore defaultCore] startRangeVenues];
+    NavigineCore *core = [NavigineCore defaultCore];
+    NSLog(@"%@",core.location.name);
+    NSData *imageData = [[NavigineCore defaultCore] dataForPNGImageAtIndex:0 error:nil];
+    UIImage *image = [UIImage imageWithData:imageData];
+    
+    ViewController *vc = (ViewController *)[[UIApplication sharedApplication] keyWindow].rootViewController;
+    float scale = 1.f;
+    if (image.size.width / image.size.height >
+        vc.view.frame.size.width / vc.view.frame.size.height){
+        scale = vc.view.frame.size.height / image.size.height;
+    }
+    else{
+        scale = vc.view.frame.size.width / image.size.width;
+    }
+    vc.imageView.frame = CGRectMake(0, 0, image.size.width * scale, image.size.height * scale);
+    vc.imageView.image = image;
+    vc.sv.contentSize = vc.imageView.frame.size;
 }
 
 @end
