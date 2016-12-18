@@ -8,18 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "NavigineSDK.h"
+#import "UIView+Additions.h"
+#define kColorFromHex(color)[UIColor colorWithRed:((float)((color & 0xFF0000) >> 16))/255.0 green:((float)((color & 0xFF00) >> 8))/255.0 blue:((float)(color & 0xFF))/255.0 alpha:1.0]
 
 @interface MapPin : UIButton
-@property (nonatomic, assign) CGRect originalFrame;
-@property (nonatomic, assign) CGPoint originalCenter;
-@property (nonatomic, strong) UIView *mapView;
-
-@property (nonatomic, assign) CGPoint mapViewOriginalCenter;
-@property (nonatomic, strong) UIButton *btnVenue;
+@property (nonatomic, strong) UIButton *popUp;
 @property (nonatomic, strong) Venue *venue;
-
-@property (nonatomic, assign) CGFloat xShift;
-@property (nonatomic, assign) CGFloat yShift;
 
 - (id)initWithVenue:(Venue *)venue;
 - (void) resizeMapPinWithZoom: (CGFloat) zoom;

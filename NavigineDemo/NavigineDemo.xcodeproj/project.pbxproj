@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C31B68B21DF5982300F61EF9 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C31B68B11DF5982300F61EF9 /* UIView+Additions.m */; };
+		C31B68B61DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C31B68B41DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png */; };
+		C31B68B71DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C31B68B51DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png */; };
 		C376D6421D76C7C3009CB5BA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C376D6411D76C7C3009CB5BA /* libz.tbd */; };
 		C376D6441D76C7DA009CB5BA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C376D6431D76C7DA009CB5BA /* libc++.tbd */; };
 		C376D6481D76C80E009CB5BA /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C376D6471D76C80E009CB5BA /* CoreBluetooth.framework */; };
@@ -16,6 +19,9 @@
 		C376D6501D76C855009CB5BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C376D64F1D76C855009CB5BA /* MobileCoreServices.framework */; };
 		C376D6521D76C862009CB5BA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C376D6511D76C862009CB5BA /* AVFoundation.framework */; };
 		C376D6541D76D112009CB5BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C376D6531D76D112009CB5BA /* UIKit.framework */; };
+		C386A8CA1DEC655D003ABFC7 /* elmVenueIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C386A8C81DEC655D003ABFC7 /* elmVenueIcon@2x.png */; };
+		C386A8CB1DEC655D003ABFC7 /* elmVenueIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C386A8C91DEC655D003ABFC7 /* elmVenueIcon@3x.png */; };
+		C386A8CF1DEC6E21003ABFC7 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = C386A8CE1DEC6E21003ABFC7 /* MapPin.m */; };
 		C3B2741C1D7454090077D98B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B2741B1D7454090077D98B /* main.m */; };
 		C3B2741F1D7454090077D98B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B2741E1D7454090077D98B /* AppDelegate.m */; };
 		C3B274221D7454090077D98B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B274211D7454090077D98B /* ViewController.m */; };
@@ -45,6 +51,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C31B68B01DF5982300F61EF9 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
+		C31B68B11DF5982300F61EF9 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		C31B68B31DF5988900F61EF9 /* NavigineDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NavigineDemo-Prefix.pch"; sourceTree = "<group>"; };
+		C31B68B41DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elmBubbleArrowOrange@2x.png"; sourceTree = "<group>"; };
+		C31B68B51DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elmBubbleArrowOrange@3x.png"; sourceTree = "<group>"; };
 		C376D6411D76C7C3009CB5BA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		C376D6431D76C7DA009CB5BA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		C376D6471D76C80E009CB5BA /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -54,6 +65,10 @@
 		C376D64F1D76C855009CB5BA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C376D6511D76C862009CB5BA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C376D6531D76D112009CB5BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C386A8C81DEC655D003ABFC7 /* elmVenueIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elmVenueIcon@2x.png"; sourceTree = "<group>"; };
+		C386A8C91DEC655D003ABFC7 /* elmVenueIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elmVenueIcon@3x.png"; sourceTree = "<group>"; };
+		C386A8CD1DEC6E21003ABFC7 /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
+		C386A8CE1DEC6E21003ABFC7 /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
 		C3B274171D7454090077D98B /* NavigineDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigineDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3B2741B1D7454090077D98B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C3B2741D1D7454090077D98B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -115,6 +130,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C31B68AF1DF5982300F61EF9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C31B68B01DF5982300F61EF9 /* UIView+Additions.h */,
+				C31B68B11DF5982300F61EF9 /* UIView+Additions.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C386A8C71DEC655D003ABFC7 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				C31B68B41DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png */,
+				C31B68B51DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png */,
+				C386A8C81DEC655D003ABFC7 /* elmVenueIcon@2x.png */,
+				C386A8C91DEC655D003ABFC7 /* elmVenueIcon@3x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		C386A8CC1DEC6E21003ABFC7 /* MapPin */ = {
+			isa = PBXGroup;
+			children = (
+				C386A8CD1DEC6E21003ABFC7 /* MapPin.h */,
+				C386A8CE1DEC6E21003ABFC7 /* MapPin.m */,
+			);
+			path = MapPin;
+			sourceTree = "<group>";
+		};
 		C3B2740E1D7454090077D98B = {
 			isa = PBXGroup;
 			children = (
@@ -147,8 +191,12 @@
 		C3B274191D7454090077D98B /* NavigineDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C31B68AF1DF5982300F61EF9 /* Helpers */,
+				C386A8CC1DEC6E21003ABFC7 /* MapPin */,
+				C386A8C71DEC655D003ABFC7 /* images */,
 				C3B2741D1D7454090077D98B /* AppDelegate.h */,
 				C3B2741E1D7454090077D98B /* AppDelegate.m */,
+				C31B68B31DF5988900F61EF9 /* NavigineDemo-Prefix.pch */,
 				C3B274201D7454090077D98B /* ViewController.h */,
 				C3B274211D7454090077D98B /* ViewController.m */,
 				C3B274231D7454090077D98B /* Main.storyboard */,
@@ -308,6 +356,10 @@
 			files = (
 				C3B2742A1D7454090077D98B /* LaunchScreen.storyboard in Resources */,
 				C3B274271D7454090077D98B /* Assets.xcassets in Resources */,
+				C386A8CA1DEC655D003ABFC7 /* elmVenueIcon@2x.png in Resources */,
+				C31B68B61DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png in Resources */,
+				C31B68B71DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png in Resources */,
+				C386A8CB1DEC655D003ABFC7 /* elmVenueIcon@3x.png in Resources */,
 				C3B274251D7454090077D98B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,8 +385,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C386A8CF1DEC6E21003ABFC7 /* MapPin.m in Sources */,
 				C3B274221D7454090077D98B /* ViewController.m in Sources */,
 				C3B2741F1D7454090077D98B /* AppDelegate.m in Sources */,
+				C31B68B21DF5982300F61EF9 /* UIView+Additions.m in Sources */,
 				C3B2741C1D7454090077D98B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 9L9SSEDTLA;
+				GCC_PREFIX_HEADER = "NavigineDemo/NavigineDemo-Prefix.pch";
 				INFOPLIST_FILE = NavigineDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -502,6 +557,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 9L9SSEDTLA;
+				GCC_PREFIX_HEADER = "NavigineDemo/NavigineDemo-Prefix.pch";
 				INFOPLIST_FILE = NavigineDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

@@ -165,6 +165,7 @@ typedef struct _NavigationResults{
  *
  *  @return NSArray object – array with Vertex structures.
  */
+- (NSArray*)makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
 
 - (void) addTatget:(int)id :(double)x :(double)y;
 
@@ -285,9 +286,7 @@ typedef struct _NavigationResults{
  *
  *  @param navigationResults structure NavigationResults.
  */
-- (void) navigationResultsInBackground :(NavigationResults)navigationResults;
-
-- (void) customBeaconsInfo: (NSString *) localName;
+//- (void) navigationResultsInBackground :(NavigationResults)navigationResults;
 
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.

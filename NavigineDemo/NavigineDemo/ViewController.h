@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MapPin.h"
 #import "NavigineSDK.h"
 
 @interface ViewController : UIViewController <NavigineCoreDelegate,UIScrollViewDelegate>
