@@ -30,7 +30,6 @@
 		C3B2742A1D7454090077D98B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3B274281D7454090077D98B /* LaunchScreen.storyboard */; };
 		C3B274351D7454090077D98B /* NavigineDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B274341D7454090077D98B /* NavigineDemoTests.m */; };
 		C3B274401D7454090077D98B /* NavigineDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B2743F1D7454090077D98B /* NavigineDemoUITests.m */; };
-		C3B274561D7455780077D98B /* libNavigineSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B2744F1D7455780077D98B /* libNavigineSDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,14 +84,6 @@
 		C3B2743B1D7454090077D98B /* NavigineDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NavigineDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3B2743F1D7454090077D98B /* NavigineDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigineDemoUITests.m; sourceTree = "<group>"; };
 		C3B274411D7454090077D98B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C3B2744E1D7455780077D98B /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		C3B2744F1D7455780077D98B /* libNavigineSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNavigineSDK.a; sourceTree = "<group>"; };
-		C3B274501D7455780077D98B /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
-		C3B274511D7455780077D98B /* NavigineSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigineSDK.h; sourceTree = "<group>"; };
-		C3B274521D7455780077D98B /* NCBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCBeacon.h; sourceTree = "<group>"; };
-		C3B274531D7455780077D98B /* Sublocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sublocation.h; sourceTree = "<group>"; };
-		C3B274541D7455780077D98B /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Venue.h; sourceTree = "<group>"; };
-		C3B274551D7455780077D98B /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +100,6 @@
 				C376D6481D76C80E009CB5BA /* CoreBluetooth.framework in Frameworks */,
 				C376D6441D76C7DA009CB5BA /* libc++.tbd in Frameworks */,
 				C376D6421D76C7C3009CB5BA /* libz.tbd in Frameworks */,
-				C3B274561D7455780077D98B /* libNavigineSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +193,6 @@
 				C3B274261D7454090077D98B /* Assets.xcassets */,
 				C3B274281D7454090077D98B /* LaunchScreen.storyboard */,
 				C3B2742B1D7454090077D98B /* Info.plist */,
-				C3B2744D1D7455780077D98B /* NavigineSDK */,
 				C3B2741A1D7454090077D98B /* Supporting Files */,
 			);
 			path = NavigineDemo;
@@ -233,21 +222,6 @@
 				C3B274411D7454090077D98B /* Info.plist */,
 			);
 			path = NavigineDemoUITests;
-			sourceTree = "<group>";
-		};
-		C3B2744D1D7455780077D98B /* NavigineSDK */ = {
-			isa = PBXGroup;
-			children = (
-				C3B2744E1D7455780077D98B /* Category.h */,
-				C3B2744F1D7455780077D98B /* libNavigineSDK.a */,
-				C3B274501D7455780077D98B /* Location.h */,
-				C3B274511D7455780077D98B /* NavigineSDK.h */,
-				C3B274521D7455780077D98B /* NCBeacon.h */,
-				C3B274531D7455780077D98B /* Sublocation.h */,
-				C3B274541D7455780077D98B /* Venue.h */,
-				C3B274551D7455780077D98B /* Vertex.h */,
-			);
-			path = NavigineSDK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "NavigineSDK.h"
+//#import "NavigineSDK.h"
 #import "ViewController.h"
 
 @interface AppDelegate ()
@@ -19,24 +19,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [[NavigineCore defaultCore] downloadContent:@"628B-9792-0789-C136"
-                                       location:@"Navigine_Proletarsakya"
-                                    forceReload:NO
-                                   processBlock:^(NSInteger loadProcess) {
-                                       NSLog(@"%zd",loadProcess);
-                                   } successBlock:^{
-                                       [self setupNavigine];
-                                   } failBlock:^(NSError *error) {
-                                       NSLog(@"Error:%@",error);
-                                       if (error){
-                                           //Connection problem. Try to start Navigine
-                                           NSError *navigineError = nil;
-                                           [[NavigineCore defaultCore] loadArchive:@"Navigine_Proletarsakya" error:&navigineError];
-                                           if (!navigineError){
-                                               [self setupNavigine];
-                                           }
-                                       }
-                                   }];
+//    [[NavigineCore defaultCore] downloadContent:@"628B-9792-0789-C136"
+//                                       location:@"Navigine_Proletarsakya"
+//                                    forceReload:NO
+//                                   processBlock:^(NSInteger loadProcess) {
+//                                       NSLog(@"%zd",loadProcess);
+//                                   } successBlock:^{
+//                                       [self setupNavigine];
+//                                   } failBlock:^(NSError *error) {
+//                                       NSLog(@"Error:%@",error);
+//                                       if (error){
+//                                           //Connection problem. Try to start Navigine
+//                                           NSError *navigineError = nil;
+//                                           [[NavigineCore defaultCore] loadArchive:@"Navigine_Proletarsakya" error:&navigineError];
+//                                           if (!navigineError){
+//                                               [self setupNavigine];
+//                                           }
+//                                       }
+//                                   }];
     return YES;
 }
 
@@ -63,26 +63,26 @@
 }
 
 -(void) setupNavigine{
-    [[NavigineCore defaultCore] startNavigine];
-    [[NavigineCore defaultCore] startRangePushes];
-    [[NavigineCore defaultCore] startRangeVenues];
-    NavigineCore *core = [NavigineCore defaultCore];
-    NSLog(@"%@",core.location.name);
-    NSData *imageData = [[NavigineCore defaultCore] dataForPNGImageAtIndex:0 error:nil];
-    UIImage *image = [UIImage imageWithData:imageData];
-    
-    ViewController *vc = (ViewController *)[[UIApplication sharedApplication] keyWindow].rootViewController;
-    float scale = 1.f;
-    if (image.size.width / image.size.height >
-        vc.view.frame.size.width / vc.view.frame.size.height){
-        scale = vc.view.frame.size.height / image.size.height;
-    }
-    else{
-        scale = vc.view.frame.size.width / image.size.width;
-    }
-    vc.imageView.frame = CGRectMake(0, 0, image.size.width * scale, image.size.height * scale);
-    vc.imageView.image = image;
-    vc.sv.contentSize = vc.imageView.frame.size;
+//    [[NavigineCore defaultCore] startNavigine];
+//    [[NavigineCore defaultCore] startRangePushes];
+//    [[NavigineCore defaultCore] startRangeVenues];
+//    NavigineCore *core = [NavigineCore defaultCore];
+//    NSLog(@"%@",core.location.name);
+//    NSData *imageData = [[NavigineCore defaultCore] dataForPNGImageAtIndex:0 error:nil];
+//    UIImage *image = [UIImage imageWithData:imageData];
+//    
+//    ViewController *vc = (ViewController *)[[UIApplication sharedApplication] keyWindow].rootViewController;
+//    float scale = 1.f;
+//    if (image.size.width / image.size.height >
+//        vc.view.frame.size.width / vc.view.frame.size.height){
+//        scale = vc.view.frame.size.height / image.size.height;
+//    }
+//    else{
+//        scale = vc.view.frame.size.width / image.size.width;
+//    }
+//    vc.imageView.frame = CGRectMake(0, 0, image.size.width * scale, image.size.height * scale);
+//    vc.imageView.image = image;
+//    vc.sv.contentSize = vc.imageView.frame.size;
 }
 
 @end
