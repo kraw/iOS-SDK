@@ -167,8 +167,11 @@ typedef struct _NavigationResults{
  */
 - (NSArray*)makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
 
+- (void) setGraphTag:(NSString *)tag;
+- (NSString *)getGraphTag;
+- (NSString *)getGraphDescription:(NSString *)tag;
+- (NSArray *)getGraphTags;
 - (void) addTatget:(int)id :(double)x :(double)y;
-
 - (void) cancelTargets;
 
 - (NSArray *) routePaths;
