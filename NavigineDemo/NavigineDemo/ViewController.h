@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MapPin.h"
-//#import "NavigineSDK.h"
+#import "NavigineSDK.h"
 
-@interface ViewController : UIViewController <UIScrollViewDelegate>
+@interface ViewController : UIViewController <UIScrollViewDelegate, NavigineCoreDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 

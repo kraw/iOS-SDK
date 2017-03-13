@@ -8,24 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSInteger, NCBeaconStatus) {
   NCBeaconOld = 0,
   NCBeaconNew,
   NCBeaconMod,
   NCBeaconDel,
-} NCBeaconStatus;
+};
 
-@interface NCBeacon : NSObject
-@property (nonatomic, assign) int id;
-@property (nonatomic, assign) int locationId;
-@property (nonatomic, assign) int subLocationId;
-@property (nonatomic, assign) int major;
-@property (nonatomic, assign) int minor;
-@property (nonatomic, strong) NSString* uuid;
-@property (nonatomic, strong) NSString* name;
+@interface NCBeacon : NSObject <NSCoding>
+@property (nonatomic, assign) NSInteger      id;
+@property (nonatomic, assign) NSInteger      locationId;
+@property (nonatomic, assign) NSInteger      sublocationId;
+@property (nonatomic, assign) NSInteger      major;
+@property (nonatomic, assign) NSInteger      minor;
+@property (nonatomic, strong) NSString       *uuid;
+@property (nonatomic, strong) NSString       *name;
+@property (nonatomic, assign) NSNumber       *kX;
+@property (nonatomic, assign) NSNumber       *kY;
 @property (nonatomic, assign) NCBeaconStatus status;
-@property (nonatomic, assign) double kX;
-@property (nonatomic, assign) double kY;
 
-- (id) initWithBeacon: (NCBeacon*) beacon;
 @end

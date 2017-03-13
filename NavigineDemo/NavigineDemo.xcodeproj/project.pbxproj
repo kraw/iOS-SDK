@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FA232051E76A92F004C5268 /* libNavigineSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA231FD1E76A92F004C5268 /* libNavigineSDK.a */; };
 		C31B68B21DF5982300F61EF9 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C31B68B11DF5982300F61EF9 /* UIView+Additions.m */; };
 		C31B68B61DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C31B68B41DF5A70100F61EF9 /* elmBubbleArrowOrange@2x.png */; };
 		C31B68B71DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C31B68B51DF5A70100F61EF9 /* elmBubbleArrowOrange@3x.png */; };
@@ -50,6 +51,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3FA231FD1E76A92F004C5268 /* libNavigineSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNavigineSDK.a; sourceTree = "<group>"; };
+		3FA231FE1E76A92F004C5268 /* NavigineSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigineSDK.h; sourceTree = "<group>"; };
+		3FA231FF1E76A92F004C5268 /* NCBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCBeacon.h; sourceTree = "<group>"; };
+		3FA232001E76A92F004C5268 /* NCCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCCategory.h; sourceTree = "<group>"; };
+		3FA232011E76A92F004C5268 /* NCLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCLocation.h; sourceTree = "<group>"; };
+		3FA232021E76A92F004C5268 /* NCSublocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCSublocation.h; sourceTree = "<group>"; };
+		3FA232031E76A92F004C5268 /* NCVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCVenue.h; sourceTree = "<group>"; };
+		3FA232041E76A92F004C5268 /* NCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCVertex.h; sourceTree = "<group>"; };
 		C31B68B01DF5982300F61EF9 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
 		C31B68B11DF5982300F61EF9 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		C31B68B31DF5988900F61EF9 /* NavigineDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NavigineDemo-Prefix.pch"; sourceTree = "<group>"; };
@@ -96,6 +105,7 @@
 				C376D6501D76C855009CB5BA /* MobileCoreServices.framework in Frameworks */,
 				C376D64E1D76C844009CB5BA /* Foundation.framework in Frameworks */,
 				C376D64C1D76C835009CB5BA /* CoreMotion.framework in Frameworks */,
+				3FA232051E76A92F004C5268 /* libNavigineSDK.a in Frameworks */,
 				C376D64A1D76C826009CB5BA /* CoreLocation.framework in Frameworks */,
 				C376D6481D76C80E009CB5BA /* CoreBluetooth.framework in Frameworks */,
 				C376D6441D76C7DA009CB5BA /* libc++.tbd in Frameworks */,
@@ -120,6 +130,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FA231FC1E76A92F004C5268 /* NavigineSDK */ = {
+			isa = PBXGroup;
+			children = (
+				3FA231FD1E76A92F004C5268 /* libNavigineSDK.a */,
+				3FA231FE1E76A92F004C5268 /* NavigineSDK.h */,
+				3FA231FF1E76A92F004C5268 /* NCBeacon.h */,
+				3FA232001E76A92F004C5268 /* NCCategory.h */,
+				3FA232011E76A92F004C5268 /* NCLocation.h */,
+				3FA232021E76A92F004C5268 /* NCSublocation.h */,
+				3FA232031E76A92F004C5268 /* NCVenue.h */,
+				3FA232041E76A92F004C5268 /* NCVertex.h */,
+			);
+			path = NavigineSDK;
+			sourceTree = "<group>";
+		};
 		C31B68AF1DF5982300F61EF9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +218,7 @@
 				C3B274261D7454090077D98B /* Assets.xcassets */,
 				C3B274281D7454090077D98B /* LaunchScreen.storyboard */,
 				C3B2742B1D7454090077D98B /* Info.plist */,
+				3FA231FC1E76A92F004C5268 /* NavigineSDK */,
 				C3B2741A1D7454090077D98B /* Supporting Files */,
 			);
 			path = NavigineDemo;

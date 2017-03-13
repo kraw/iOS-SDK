@@ -7,11 +7,10 @@
 //
 #import <CoreGraphics/CGGeometry.h>
 
-#import "Vertex.h"
-#import "Venue.h"
-#import "Category.h"
-#import "Location.h"
-
+#import "NCVertex.h"
+#import "NCVenue.h"
+#import "NCCategory.h"
+#import "NCLocation.h"
 
 typedef NS_ENUM(NSInteger, NCBluetoothState) {
   NCBluetoothStateUnknown = 0,
@@ -51,21 +50,17 @@ typedef struct _NavigationResults{
 
 @interface NavigineCore : NSObject
 
-@property (nonatomic, strong) Location *location;
+@property (nonatomic, strong) NSString *userHash;
+
+@property (nonatomic, strong) NSString *server;
+
+@property (nonatomic, strong) NCLocation *location;
+
 
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
 
 + (NavigineCore *) defaultCore;
-
-/**
- *  Function is used to initialize NavigineCore for beacons with specific server
- *
- *  @param server server which SDK use
- *
- *  @return object of super class
- */
-- (id) initWithServer :(NSString *)server;
 
 /**
  *  Function is used for downloading location and start navigation
@@ -80,12 +75,18 @@ typedef struct _NavigationResults{
  *  @param successBlock run when download complete successfull
  *  @param failBlock    show error message and stop downloading
  */
-- (void) downloadContent :(NSString *)userHash
-                location :(NSString *)location
-             forceReload :(BOOL) forced
-            processBlock :(void(^)(NSInteger loadProcess))processBlock
-            successBlock :(void(^)(NSDictionary *userInfo))successBlock
-               failBlock :(void(^)(NSError *error))failBlock;
+
+- (void) downloadLocationById :(NSInteger)locationId
+                  forceReload :(BOOL) forced
+                 processBlock :(void(^)(NSInteger loadProcess))processBlock
+                 successBlock :(void(^)(NSDictionary *userInfo))successBlock
+                    failBlock :(void(^)(NSError *error))failBlock;
+
+- (void) downloadLocationByName :(NSString *)location
+                    forceReload :(BOOL) forced
+                   processBlock :(void(^)(NSInteger loadProcess))processBlock
+                   successBlock :(void(^)(NSDictionary *userInfo))successBlock
+                      failBlock :(void(^)(NSError *error))failBlock;
 
 /**
  *  Function is used for starting Navigine service.
@@ -121,7 +122,13 @@ typedef struct _NavigationResults{
  *
  *  @return the download process identifier. This number is used further for checking the download process state and for download process terminating.
  */
-- (int) startLocationLoader :(NSString *)userHash :(NSString*) location :(BOOL) forced;
+- (int)startLocationLoaderByUserHash: (NSString *)userHash
+                        locationId: (NSInteger)locationId
+                            forced: (BOOL) forced;
+
+- (int)startLocationLoaderByUserHash: (NSString *)userHash
+                      locationName: (NSString *)location
+                            forced: (BOOL) forced;
 
 /**
  *  Function is used for checking the download process state and progress.
@@ -151,27 +158,28 @@ typedef struct _NavigationResults{
  *  @param error - error if archive invalid.
  */
 
-- (void) loadArchive: (NSString *)location error:(NSError **)error;
+- (void) loadArchiveById :(NSInteger)locationId
+                   error :(NSError * __autoreleasing *)error;
+
+- (void) loadArchiveByName :(NSString *)location
+                     error :(NSError * __autoreleasing *)error;
 
 /**
  *  Function is used for making route from one position to other.
  *
- *  @param id1 sublocation id of start point.
- *  @param x1  X coordinate of start point.
- *  @param y1  Y coordinate of start point.
- *  @param id2 sublocation id of finish point.
- *  @param x2  X coordinate of finish point.
- *  @param y2  Y coordinate of finish point.
+ *  @param startPoint start vertex.
+ *  @param endPoint  end vertex.
  *
- *  @return NSArray object – array with Vertex structures.
+ *  @return NSArray object – array with NCVertex structures.
  */
-- (NSArray*)makeRoute:(int)id1 :(double)x1 :(double)y1 :(int)id2 :(double)x2 :(double)y2;
+- (NSArray *) makeRouteFrom: (NCVertex *)startPoint
+                         to: (NCVertex *)endPoint;
 
 - (void) setGraphTag:(NSString *)tag;
 - (NSString *)getGraphTag;
 - (NSString *)getGraphDescription:(NSString *)tag;
 - (NSArray *)getGraphTags;
-- (void) addTatget:(int)id :(double)x :(double)y;
+- (void) addTatget:(NCVertex *)target;
 - (void) cancelTargets;
 
 - (NSArray *) routePaths;
@@ -179,12 +187,12 @@ typedef struct _NavigationResults{
 /**
  *  Function is used for cheking pushes from web site
  */
-- (void) startRangePushes;
+- (void) startPushManager;
 
 /**
  *  Function is used for cheking venues from web site
  */
-- (void) startRangeVenues;
+- (void) startVenueManager;
 
 /**
  *  Function is used for getting location id
@@ -281,26 +289,6 @@ typedef struct _NavigationResults{
 
 @protocol NavigineCoreDelegate <NSObject>
 @optional
-/**
- *  Function is used for getting result of navigation when app in background or app not running.
- If application is in the background function is called once per second.
- If application not run function is called by OS signal.
- 
- *
- *  @param navigationResults structure NavigationResults.
- */
-//- (void) navigationResultsInBackground :(NavigationResults)navigationResults;
-
-/**
- *  Tells the delegate that push in range. Function is called by the timeout of the web site.
- *
- *  @param title   title of push.
- *  @param content content of push.
- *  @param image   url path to image of push.
- */
-- (void) didRangePushWithTitle :(NSString *)title
-                       content :(NSString *)content
-                         image :(NSString *)image;
 
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.
@@ -317,8 +305,8 @@ typedef struct _NavigationResults{
 /**
  *  Function is used for checking venues from web site.
  *
- *  @param venues     NSArray object – array with Venue structures.
- *  @param categories NSArray object – array with Categories structures.
+ *  @param venues     NSArray object – array with NCVenue structures.
+ *  @param categories NSArray object – array with NCCategories structures.
  */
 - (void) didRangeVenues :(NSArray *)venues :(NSArray *)categories;
 
