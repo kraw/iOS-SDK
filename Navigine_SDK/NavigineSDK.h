@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, NCBluetoothState) {
   NCBluetoothStateLocationAuthorizedWhenInUse
 };
 
-/**
+/** 
  *  Structure with results of Navigation
  */
 typedef struct _NavigationResults{
