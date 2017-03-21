@@ -82,6 +82,7 @@ typedef struct _NavigationResults{
                  successBlock :(void(^)(NSDictionary *userInfo))successBlock
                     failBlock :(void(^)(NSError *error))failBlock;
 
+
 - (void) downloadLocationByName :(NSString *)location
                     forceReload :(BOOL) forced
                    processBlock :(void(^)(NSInteger loadProcess))processBlock
