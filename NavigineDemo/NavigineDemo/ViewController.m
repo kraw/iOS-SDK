@@ -30,7 +30,7 @@
     _sv.zoomScale = 1.f;
     _sv.maximumZoomScale = 2.f;
     [_sv addSubview:_imageView];
-    [NavigineCore defaultCore].userHash = @"628B-9792-0789-C136";
+    [NavigineCore defaultCore].userHash = @"7956-D430-B707-B25D";
     [NavigineCore defaultCore].delegate = self;
     
     // Point on map
@@ -50,15 +50,16 @@
     tapPress.delaysTouchesBegan   = NO;
     [_sv addGestureRecognizer:tapPress];
     
-    [[NavigineCore defaultCore] downloadLocationByName:@"Navigine_Proletarsakya"
-                                           forceReload:NO
-                                          processBlock:^(NSInteger loadProcess) {
-                                              NSLog(@"%zd",loadProcess);
-                                          } successBlock:^(NSDictionary *userInfo) {
-                                              [self setupNavigine];
-                                          } failBlock:^(NSError *error) {
-                                              NSLog(@"%@",error);
-                                          }];
+    
+    [[NavigineCore defaultCore] downloadLocationById:1854
+                                         forceReload:true
+                                        processBlock:^(NSInteger loadProcess) {
+                                            NSLog(@"%zd",loadProcess);
+                                        } successBlock:^(NSDictionary *userInfo) {
+                                            [self setupNavigine];
+                                        } failBlock:^(NSError *error) {
+                                            NSLog(@"%@",error);
+                                        }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
