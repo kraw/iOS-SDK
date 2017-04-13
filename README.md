@@ -42,4 +42,4 @@ Besides the bt5 application sources, the folder contains all necessary header fi
 Refer to [Setting Up iBeacon Infrastructure](http://docs.navigine.com/is_ibeacon_configuration.html) for details on creating an infrastructure based on using iBeacons.
 
 ## How to
-* [Save data to heatmaps](https://github.com/Navigine/iOS-SDK/wiki/Save-Data-to-heatmaps-on-Navigine-iOS-App)
+* [Save Data to heatmaps on Navigine iOS App](https://github.com/Navigine/iOS-SDK/wiki/Save-Data-to-heatmaps-on-Navigine-iOS-App)
