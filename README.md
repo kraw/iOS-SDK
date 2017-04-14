@@ -40,6 +40,3 @@ You can use the Navigine application for setting up your iBeacon infrastructure.
 Besides the bt5 application sources, the folder contains all necessary header files, XCode project files, tests, and whatever you might need when working with the bt5 application for setting up your iBeacon infrastructure.
 
 Refer to [Setting Up iBeacon Infrastructure](http://docs.navigine.com/is_ibeacon_configuration.html) for details on creating an infrastructure based on using iBeacons.
-
-## How to
-* [Save Data to heatmaps on Navigine iOS App](https://github.com/Navigine/iOS-SDK/wiki/Save-Data-to-heatmaps-on-Navigine-iOS-App)
