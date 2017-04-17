@@ -23,8 +23,8 @@ typedef NS_ENUM(NSInteger, NCBeaconStatus) {
 @property (nonatomic, assign) NSInteger      minor;
 @property (nonatomic, strong) NSString       *uuid;
 @property (nonatomic, strong) NSString       *name;
-@property (nonatomic, assign) NSNumber       *kX;
-@property (nonatomic, assign) NSNumber       *kY;
+@property (nonatomic, strong) NSNumber       *kX;
+@property (nonatomic, strong) NSNumber       *kY;
 @property (nonatomic, assign) NCBeaconStatus status;
 
 @end

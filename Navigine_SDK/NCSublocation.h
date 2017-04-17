@@ -10,7 +10,7 @@
 #define NavigineSDK_Sublocation_h
 
 #endif
-
+#import <UIKit/UIKit.h>
 #import "NCBeacon.h"
 /**
  *  Sublocation in your personal account
@@ -56,6 +56,11 @@
  *  Data of jpg image or nil if jpg image not exists
  */
 @property (nonatomic, copy)   NSData    *jpgImage;
+
+/**
+ *  UImage of map or nil if image invalid
+ */
+@property (nonatomic, copy)   UIImage    *image;
 
 /**
  *  Width of image in meters

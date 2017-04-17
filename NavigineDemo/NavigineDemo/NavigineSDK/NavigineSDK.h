@@ -7,9 +7,9 @@
 //
 #import <CoreGraphics/CGGeometry.h>
 
-#import "NCVertex.h"
+#import "NCDeviceInfo.h"
+#import "NCDevicePath.h"
 #import "NCVenue.h"
-#import "NCCategory.h"
 #import "NCLocation.h"
 
 typedef NS_ENUM(NSInteger, NCBluetoothState) {
@@ -51,11 +51,10 @@ typedef struct _NavigationResults{
 @interface NavigineCore : NSObject
 
 @property (nonatomic, strong) NSString *userHash;
-
 @property (nonatomic, strong) NSString *server;
-
 @property (nonatomic, strong) NCLocation *location;
 
+@property (nonatomic, strong) NCDeviceInfo *deviceInfo;
 
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
@@ -104,7 +103,6 @@ typedef struct _NavigationResults{
  *  @return structure NavigationResults.
  */
 - (NavigationResults) getNavigationResults;
-
 
 /**
  *  Function is used for creating a content download process from the server.
@@ -175,6 +173,9 @@ typedef struct _NavigationResults{
 - (NSArray *) makeRouteFrom: (NCVertex *)startPoint
                          to: (NCVertex *)endPoint;
 
+- (void) setTarget:(NCVertex *)target;
+- (void) cancelTarget;
+
 - (void) setGraphTag:(NSString *)tag;
 - (NSString *)getGraphTag;
 - (NSString *)getGraphDescription:(NSString *)tag;
@@ -204,7 +205,7 @@ typedef struct _NavigationResults{
 - (NSInteger) locationId:(NSError **)error;
 
 /**
- *  Function is used for getting image from zip (SVG, PNG)
+ *  Function is used for getting image (SVG, PNG)
  *
  *  @param index  the ordinal sublocation in admin panel
  *  @param imData image data
@@ -215,7 +216,7 @@ typedef struct _NavigationResults{
 - (NSData *) dataForPNGImageAtIndex:(NSInteger)index error:(NSError **)error;
 
 /**
- *  Function is used for getting image from zip (SVG, PNG)
+ *  Function is used for getting image (SVG, PNG)
  *
  *  @param index  sublocation id
  *  @param imData image data
@@ -290,6 +291,8 @@ typedef struct _NavigationResults{
 @protocol NavigineCoreDelegate <NSObject>
 @optional
 
+- (void) didChangeDeviceInfo:(NCDeviceInfo *)deviceInfo error:(NSInteger)error;
+
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.
  *
@@ -328,10 +331,7 @@ typedef struct _NavigationResults{
 - (void) didRangeBeacons:(NSArray *)beacons;
 - (void) getLatitude: (double)latitude Longitude:(double)longitude;
 
-- (void) updateSteps: (NSNumber *)numberOfSteps with:(NSNumber *)distance;
-- (void) yawCalculatedByIos: (double)yaw;
-
-- (void) beaconFounded: (NSObject *)beacon error:(NSError **)error;
+- (void) beaconFounded: (NCBeacon *)beacon error:(NSError **)error;
 - (void) measuringBeaconWithProcess: (NSInteger) process;
 
 @end

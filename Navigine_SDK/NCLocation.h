@@ -36,6 +36,11 @@
 @property (nonatomic,strong) NSMutableArray *sublocations;
 
 /**
+ *  NCLocationViewController
+ */
+@property (nonatomic,copy) UIViewController *viewController;
+
+/**
 *  Is local modified Archive
 */
 @property (nonatomic,assign) BOOL modified;
