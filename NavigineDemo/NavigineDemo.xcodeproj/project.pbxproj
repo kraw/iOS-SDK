@@ -538,6 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 9L9SSEDTLA;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "NavigineDemo/NavigineDemo-Prefix.pch";
 				INFOPLIST_FILE = NavigineDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -545,6 +546,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NavigineDemo/NavigineSDK",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = Navigine.NavigineDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -557,6 +559,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 9L9SSEDTLA;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "NavigineDemo/NavigineDemo-Prefix.pch";
 				INFOPLIST_FILE = NavigineDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -564,6 +567,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/NavigineDemo/NavigineSDK",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = Navigine.NavigineDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

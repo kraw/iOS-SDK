@@ -60,7 +60,7 @@
 /**
  *  UImage of map or nil if image invalid
  */
-@property (nonatomic, copy)   UIImage    *image;
+@property (nonatomic, strong)   UIImage    *image;
 
 /**
  *  Width of image in meters
