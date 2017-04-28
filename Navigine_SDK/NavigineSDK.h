@@ -59,7 +59,10 @@ typedef struct _NavigationResults{
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
 
-+ (NavigineCore *) defaultCore;
+- (id) initWithUserHash:(NSString *)userHash;
+
+- (id) initWithUserHash:(NSString *)userHash
+                 server:(NSString *)server;
 
 /**
  *  Function is used for downloading location and start navigation

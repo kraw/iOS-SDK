@@ -15,6 +15,7 @@
 }
 @property (nonatomic, strong) MapPin *pressedPin;
 @property (nonatomic, assign) BOOL isRouting;
+@property (nonatomic, strong) NavigineCore *navigineCore;
 @end
 
 @implementation ViewController
@@ -30,8 +31,9 @@
     _sv.zoomScale = 1.f;
     _sv.maximumZoomScale = 2.f;
     [_sv addSubview:_imageView];
-    [NavigineCore defaultCore].userHash = @"7956-D430-B707-B25D";
-    [NavigineCore defaultCore].delegate = self;
+    _navigineCore = [[NavigineCore alloc] initWithUserHash:@"0000-0000-0000-0000"
+                                                    server:@"https://api.navigine.com"];
+    _navigineCore.delegate = self;
     
     // Point on map
     _current = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -51,15 +53,15 @@
     [_sv addGestureRecognizer:tapPress];
     
     
-    [[NavigineCore defaultCore] downloadLocationById:1854
-                                         forceReload:true
-                                        processBlock:^(NSInteger loadProcess) {
-                                            NSLog(@"%zd",loadProcess);
-                                        } successBlock:^(NSDictionary *userInfo) {
-                                            [self setupNavigine];
-                                        } failBlock:^(NSError *error) {
-                                            NSLog(@"%@",error);
-                                        }];
+    [_navigineCore downloadLocationById:1571
+                            forceReload:true
+                           processBlock:^(NSInteger loadProcess) {
+                               NSLog(@"%zd",loadProcess);
+                           } successBlock:^(NSDictionary *userInfo) {
+                               [self setupNavigine];
+                           } failBlock:^(NSError *error) {
+                               NSLog(@"%@",error);
+                           }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -72,7 +74,7 @@
 }
 
 - (void) navigationTick: (NSTimer *)timer{
-    NavigationResults res = [[NavigineCore defaultCore] getNavigationResults];
+    NavigationResults res = [_navigineCore getNavigationResults];
     if (res.ErrorCode == 0){
         NSLog(@"RESULT: %lf %lf",res.X,res.Y);
         _current.center = CGPointMake(_imageView.width / _sv.zoomScale * res.kX,
@@ -83,8 +85,8 @@
     }
     if (_isRouting){
         
-        NSArray *path = [[NavigineCore defaultCore] routePaths].firstObject;
-        NSNumber *distance = [[NavigineCore defaultCore] routeDistances].firstObject;
+        NSArray *path = [_navigineCore routePaths].firstObject;
+        NSNumber *distance = [_navigineCore routeDistances].firstObject;
         [self drawRouteWithPath:path andDistance:distance];
     }
 }
@@ -104,7 +106,7 @@
         
         for (int i = 0; i < path.count; i++ ){
             NCVertex *vertex = path[i];
-            CGSize imageSizeInMeters = [[NavigineCore defaultCore] sizeForImageAtIndex:0 error:nil];
+            CGSize imageSizeInMeters = [_navigineCore sizeForImageAtIndex:0 error:nil];
             
             CGFloat xPoint =  (vertex.x.doubleValue / imageSizeInMeters.width) * (_imageView.width / _sv.zoomScale);
             CGFloat yPoint =  (1. - vertex.y.doubleValue / imageSizeInMeters.height)  * (_imageView.height / _sv.zoomScale);
@@ -159,15 +161,15 @@
 }
 
 - (void)popUpPressed:(id)sender {
-    NavigationResults res = [[NavigineCore defaultCore] getNavigationResults];
-    CGSize imageSizeInMeters = [[NavigineCore defaultCore] sizeForImageAtIndex:0 error:nil];
+    NavigationResults res = [_navigineCore getNavigationResults];
+    CGSize imageSizeInMeters = [_navigineCore sizeForImageAtIndex:0 error:nil];
     CGFloat xPoint = _pressedPin.centerX /_imageView.width * imageSizeInMeters.width;
     CGFloat yPoint = (1. - _pressedPin.centerY /_imageView.height) * imageSizeInMeters.height;
     NCVertex *vertex = [[NCVertex alloc] init];
     vertex.sublocationId = res.outSubLocation;
     vertex.x = @(xPoint);
     vertex.y = @(yPoint);
-    [[NavigineCore defaultCore] addTatget:vertex];
+    [_navigineCore addTatget:vertex];
     [_pressedPin.popUp removeFromSuperview];
     _pressedPin.popUp.hidden = YES;
     _isRouting = YES;
@@ -206,7 +208,7 @@
 
 - (void) didRangeVenues:(NSArray *)venues :(NSArray *)categories{
     for (NCVenue *v in venues) {
-        [self addPinToMapWithVenue:v  andImage:[UIImage imageNamed:@"elmVenueIcon"]];
+        [self addPinToMapWithVenue:v andImage:[UIImage imageNamed:@"elmVenueIcon"]];
     }
 }
 
@@ -221,11 +223,11 @@
 
 
 -(void) setupNavigine{
-    [[NavigineCore defaultCore] startNavigine];
-    [[NavigineCore defaultCore] startPushManager];
-    [[NavigineCore defaultCore] startVenueManager];
+    [_navigineCore startNavigine];
+    [_navigineCore startPushManager];
+    [_navigineCore startVenueManager];
     
-    NCLocation *location = [NavigineCore defaultCore].location;
+    NCLocation *location = _navigineCore.location;
     NCSublocation *sublocation = [location subLocationAtIndex:0];
 
     NSData *imageData = sublocation.pngImage;
