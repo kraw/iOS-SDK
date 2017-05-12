@@ -25,24 +25,6 @@ typedef NS_ENUM(NSInteger, NCBluetoothState) {
 };
 
 /**
- *  Structure with results of Navigation
- */
-typedef struct _NavigationResults{
-  double outStepLength;  // delete before deploy
-  int    outStepCounter; // delete before deploy
-  
-  int    outLocation;    // location id of your position
-  int    outSubLocation; // sublocation id of your position
-  double X;              // X coordinate of your position (m).
-  double kX;
-  double Y;              // Y coordinate of your position (m)
-  double kY;
-  double Yaw;            // yaw angle(radians)
-  double R;              // Accuracy radius
-  int    ErrorCode;      // Error code. If 0 - all is good.
-}NavigationResults;
-
-/**
  *  Protocol is used for getting pushes in timeout
  */
 @protocol NavigineCoreDelegate;
@@ -53,8 +35,7 @@ typedef struct _NavigationResults{
 @property (nonatomic, strong) NSString *userHash;
 @property (nonatomic, strong) NSString *server;
 @property (nonatomic, strong) NCLocation *location;
-
-@property (nonatomic, strong) NCDeviceInfo *deviceInfo;
+@property (nonatomic, strong, readonly) NCDeviceInfo *deviceInfo;
 
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
@@ -99,13 +80,6 @@ typedef struct _NavigationResults{
  *  Function is used for forced termination of Navigine service.
  */
 - (void) stopNavigine;
-
-/**
- *  Function is used for getting result of navigation
- *
- *  @return structure NavigationResults.
- */
-- (NavigationResults) getNavigationResults;
 
 /**
  *  Function is used for creating a content download process from the server.
@@ -173,8 +147,8 @@ typedef struct _NavigationResults{
  *
  *  @return NSArray object – array with NCVertex structures.
  */
-- (NSArray *) makeRouteFrom: (NCVertex *)startPoint
-                         to: (NCVertex *)endPoint;
+- (NCDevicePath *) makeRouteFrom: (NCVertex *)startPoint
+                              to: (NCVertex *)endPoint;
 
 - (void) setTarget:(NCVertex *)target;
 - (void) cancelTarget;
@@ -186,8 +160,6 @@ typedef struct _NavigationResults{
 - (void) addTatget:(NCVertex *)target;
 - (void) cancelTargets;
 
-- (NSArray *) routePaths;
-- (NSArray *) routeDistances;
 /**
  *  Function is used for cheking pushes from web site
  */
@@ -197,76 +169,6 @@ typedef struct _NavigationResults{
  *  Function is used for cheking venues from web site
  */
 - (void) startVenueManager;
-
-/**
- *  Function is used for getting location id
- *
- *  @param id location id
- *
- *  @return error (0 if ok)
- */
-- (NSInteger) locationId:(NSError **)error;
-
-/**
- *  Function is used for getting image (SVG, PNG)
- *
- *  @param index  the ordinal sublocation in admin panel
- *  @param imData image data
- *
- *  @return error (0 if ok)
- */
-- (NSData *) dataForSVGImageAtIndex:(NSInteger)index error:(NSError **)error;
-- (NSData *) dataForPNGImageAtIndex:(NSInteger)index error:(NSError **)error;
-
-/**
- *  Function is used for getting image (SVG, PNG)
- *
- *  @param index  sublocation id
- *  @param imData image data
- *
- *  @return error (0 if ok)
- */
-- (NSData *) dataForSVGImageAtId:(NSInteger)id error:(NSError **)error;
-- (NSData *) dataForPNGImageAtId:(NSInteger)id error:(NSError **)error;
-
-/**
- *  Function is used for getting current location version
- *
- *  @param currentVersion current location version
- *
- *  @return error (0 if ok)
- */
-- (NSInteger) currentVersion:(NSError **)error;
-/**
- *  Function is used for getting "index"->"id" sublocation dictionary
- *
- *  @param sublocDictionary sublocation dictionary
- *
- *  @return error (0 if ok)
- */
-- (NSArray *) arrayWithSublocationsId: (NSError **)error;
-/**
- *  Function is used for getting width and height
- *
- *  @param width  width
- *  @param height height
- *  @param index  the ordinal sublocation in admin panel
- *
- *  @return error (0 if ok)
- */
-
-- (CGSize) sizeForImageAtIndex:(NSInteger)index error:(NSError **)error;
-
-/**
- *  Function is used for getting width and height of sublocation
- *
- *  @param width  width
- *  @param height height
- *  @param id     sublocation id
- *
- *  @return error (0 if ok)
- */
-- (CGSize) sizeForImageAtId:(NSInteger)id error:(NSError **)error;
 
 /**
  *  Function is used for converting local coordinates to GPS coordinates
@@ -283,18 +185,18 @@ typedef struct _NavigationResults{
 /**
  *  Function is used for sending data to server using POST sequests
  */
-- (void) startSendingPostRequests:(NSError **)error;
+- (void) startSendingPostRequests;
 /**
  * Function is used to stop sending data to server
  */
 - (void) stopSendingPostRequests;
 
+- (void) registerToken:(NSData *)token;
+
 @end
 
 @protocol NavigineCoreDelegate <NSObject>
 @optional
-
-- (void) didChangeDeviceInfo:(NCDeviceInfo *)deviceInfo error:(NSInteger)error;
 
 /**
  *  Tells the delegate that push in range. Function is called by the timeout of the web site.

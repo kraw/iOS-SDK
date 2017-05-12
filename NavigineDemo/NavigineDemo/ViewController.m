@@ -74,27 +74,27 @@
 }
 
 - (void) navigationTick: (NSTimer *)timer{
-    NavigationResults res = [_navigineCore getNavigationResults];
-    if (res.ErrorCode == 0){
-        NSLog(@"RESULT: %lf %lf",res.X,res.Y);
-        _current.center = CGPointMake(_imageView.width / _sv.zoomScale * res.kX,
-                                      _imageView.height / _sv.zoomScale * (1. - res.kY));
+    NCDeviceInfo *res = _navigineCore.deviceInfo;
+    if (res.error.code == 0){
+        NSLog(@"RESULT: %lf %lf", res.x, res.y);
+        _current.center = CGPointMake(_imageView.width / _sv.zoomScale * res.kx,
+                                      _imageView.height / _sv.zoomScale * (1. - res.ky));
     }
     else{
-        NSLog(@"Error code:%zd",res.ErrorCode);
+        NSLog(@"Error code:%zd",res.error.code);
     }
     if (_isRouting){
-        
-        NSArray *path = [_navigineCore routePaths].firstObject;
-        NSNumber *distance = [_navigineCore routeDistances].firstObject;
+        NCDevicePath *devicePath = res.paths.firstObject;
+        NSArray *path = devicePath.path;
+        float distance = devicePath.lenght;
         [self drawRouteWithPath:path andDistance:distance];
     }
 }
 
 -(void) drawRouteWithPath: (NSArray *)path
-              andDistance: (NSNumber *)distance {
+              andDistance: (float)distance {
 //    // We check that we are close to the finish point of the route
-    if (distance.doubleValue <= 3.){
+    if (distance <= 3.){
 //        [self stopRoute];
     }
     else{
@@ -106,7 +106,8 @@
         
         for (int i = 0; i < path.count; i++ ){
             NCVertex *vertex = path[i];
-            CGSize imageSizeInMeters = [_navigineCore sizeForImageAtIndex:0 error:nil];
+            NCSublocation *sublocation = _navigineCore.location.sublocations[0];
+            CGSize imageSizeInMeters = CGSizeMake(sublocation.width, sublocation.height);
             
             CGFloat xPoint =  (vertex.x.doubleValue / imageSizeInMeters.width) * (_imageView.width / _sv.zoomScale);
             CGFloat yPoint =  (1. - vertex.y.doubleValue / imageSizeInMeters.height)  * (_imageView.height / _sv.zoomScale);
@@ -161,12 +162,14 @@
 }
 
 - (void)popUpPressed:(id)sender {
-    NavigationResults res = [_navigineCore getNavigationResults];
-    CGSize imageSizeInMeters = [_navigineCore sizeForImageAtIndex:0 error:nil];
+//    NavigationResults res = [_navigineCore getNavigationResults];
+    NCDeviceInfo *res = _navigineCore.deviceInfo;
+    NCSublocation *sublocation = _navigineCore.location.sublocations[0];
+    CGSize imageSizeInMeters = CGSizeMake(sublocation.width, sublocation.height);
     CGFloat xPoint = _pressedPin.centerX /_imageView.width * imageSizeInMeters.width;
     CGFloat yPoint = (1. - _pressedPin.centerY /_imageView.height) * imageSizeInMeters.height;
     NCVertex *vertex = [[NCVertex alloc] init];
-    vertex.sublocationId = res.outSubLocation;
+    vertex.sublocationId = res.subLocation;
     vertex.x = @(xPoint);
     vertex.y = @(yPoint);
     [_navigineCore addTatget:vertex];

@@ -25,4 +25,5 @@
 @property (nonatomic, assign) float roll;
 @property (nonatomic, strong) NSArray *paths;
 @property (nonatomic, strong) NSArray *zones;
+@property (nonatomic, strong) NSError *error;
 @end

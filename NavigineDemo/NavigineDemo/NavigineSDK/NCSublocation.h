@@ -15,7 +15,7 @@
 /**
  *  Sublocation in your personal account
  */
-@interface NCSublocation :NSObject<NSCoding>
+@interface NCSublocation :NSObject <NSCoding>
 
 /**
  *  Sublocation id in personal account
