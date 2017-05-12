@@ -34,6 +34,13 @@ SDK and corresponding header files reside in the Navigine_SDK folder.
 
 Refer to the [Navigation_SDK sub-folder](https://github.com/Navigine/iOS-SDK/tree/master/Navigine_SDK) for header files used for iOS indoor navigation.
 
+
+## Navigation SDK
+
+Navigine SDK for Android applications enables you to develop your own indoor navigation apps using the well-developed methods, classes, and functions created by the Navigine team.
+The SDK file resides in the NavigineSDK folder.
+Find formal description of Navigine-SDK API including the list of classes and their public fields and methods at [Navigine SDK wiki](https://github.com/Navigine/iOS-SDK/wiki).
+
 ## iBeacon Configuration Application
 
 You can use the Navigine application for setting up your iBeacon infrastructure. Source files for this application reside in the bt5 folder.
