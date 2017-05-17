@@ -13,15 +13,17 @@
 #import "NCLocation.h"
 
 typedef NS_ENUM(NSInteger, NCBluetoothState) {
-  NCBluetoothStateUnknown = 0,
-  NCBluetoothStatePoweredOff,
-  NCBluetoothStateUnsupported,
-  NCBluetoothStateUnauthorized,
-  NCBluetoothStateLocationDenied,
-  NCBluetoothStateLocationNotDetermined,
-  NCBluetoothStateLocationRestricted,
-  NCBluetoothStateLocationAuthorizedAlways,
-  NCBluetoothStateLocationAuthorizedWhenInUse
+  NCBluetoothStateUnknown = 0,                // State unknown, update imminent
+  NCBluetoothStatePoweredOff,                 // Bluetooth is currently powered off.
+  NCBluetoothStateUnsupported,                // The platform doesn't support the Bluetooth Low Energy Central/Client role
+  NCBluetoothStateUnauthorized,               // The application is not authorized to use the Bluetooth Low Energy Central/Client role.
+  NCBluetoothStateLocationDenied,             // User has explicitly denied authorization for this application, or
+                                              // location services are disabled in Settings.
+  NCBluetoothStateLocationNotDetermined,      // User has not yet made a choice with regards to this application
+  NCBluetoothStateLocationRestricted,         // This application is not authorized to use location services.
+  NCBluetoothStateLocationAuthorizedAlways,   // User has granted authorization to use their location at any time
+  NCBluetoothStateLocationAuthorizedWhenInUse // User has granted authorization to use their location only when your app
+                                              // is visible to them
 };
 
 /**
@@ -35,7 +37,9 @@ typedef NS_ENUM(NSInteger, NCBluetoothState) {
 @property (nonatomic, strong) NSString *userHash;
 @property (nonatomic, strong) NSString *server;
 @property (nonatomic, strong) NCLocation *location;
+
 @property (nonatomic, strong, readonly) NCDeviceInfo *deviceInfo;
+@property (nonatomic, assign, readonly) NCBluetoothState bluetoothState;
 
 @property (nonatomic, weak) NSObject <NavigineCoreDelegate> *delegate;
 @property (nonatomic, weak) NSObject <NCBluetoothStateDelegate> *btStateDelegate;
