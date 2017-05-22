@@ -98,6 +98,11 @@
 @property (nonatomic,copy) NSMutableArray    *beacons;
 
 /**
+ *  Venues which sublocation contains
+ */
+@property (nonatomic,copy) NSMutableArray    *venues;
+
+/**
  *  Name of archive file
  */
 @property (nonatomic,copy) NSString    *archiveFile;

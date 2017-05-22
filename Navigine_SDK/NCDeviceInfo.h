@@ -10,7 +10,6 @@
 
 @interface NCDeviceInfo : NSObject <NSCoding>
 @property (nonatomic, strong) NSString *id;
-@property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSDate *time;
 @property (nonatomic, assign) NSInteger location;
 @property (nonatomic, assign) NSInteger subLocation;
