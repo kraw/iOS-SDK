@@ -31,7 +31,7 @@
     _sv.zoomScale = 1.f;
     _sv.maximumZoomScale = 2.f;
     [_sv addSubview:_imageView];
-    _navigineCore = [[NavigineCore alloc] initWithUserHash: @"2148-60E1-6206-72C6"
+    _navigineCore = [[NavigineCore alloc] initWithUserHash: @"0000-0000-0000-0000"
                                                     server: @"https://api.navigine.com"];
     _navigineCore.delegate = self;
     
@@ -52,7 +52,7 @@
     tapPress.delaysTouchesBegan   = NO;
     [_sv addGestureRecognizer:tapPress];
     
-    [_navigineCore downloadLocationById:1783
+    [_navigineCore downloadLocationById:100
                             forceReload:true
                            processBlock:^(NSInteger loadProcess) {
                                NSLog(@"%zd",loadProcess);
